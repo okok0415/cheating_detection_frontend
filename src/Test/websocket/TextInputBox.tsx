@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { WebSocketContext } from './WebSocketProvider';
 
+
 function TextInputBox() {
     const [message, setMessage] = useState("");
     const ws = useContext(WebSocketContext);
@@ -10,11 +11,13 @@ function TextInputBox() {
     }
 
     const handleClickSubmit = () => {
-        ws.current.send(JSON.stringify({
-            username: 'lim',
-            message: message
-        }))
+        const jsonStr = JSON.stringify({
+            'peer': "lim",
+            'action': "new-peer",
+            'message': message
+        })
 
+        ws.current.send(jsonStr);
         setMessage('');
     }
 

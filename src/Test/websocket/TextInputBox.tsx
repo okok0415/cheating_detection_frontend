@@ -3,7 +3,7 @@ import { WebSocketContext } from './WebSocketProvider';
 
 
 function TextInputBox() {
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState<any>("");
     const ws = useContext(WebSocketContext);
 
     const handleChangeText = (e: any) => {
@@ -13,12 +13,13 @@ function TextInputBox() {
     const handleClickSubmit = () => {
         const jsonStr = JSON.stringify({
             'peer': "lim",
-            'action': "new-peer",
+            'action': "new-peer2",
+            'receiver_channel_name': 'lobby',
             'message': message
         })
 
         ws.current.send(jsonStr);
-        setMessage('');
+        setMessage("");
     }
 
     return (

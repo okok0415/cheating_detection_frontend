@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { TestRouter } from "./Test/TestRouter"
+import "./CSS/App.css";
 function App(): any {
   return (
     <BrowserRouter>

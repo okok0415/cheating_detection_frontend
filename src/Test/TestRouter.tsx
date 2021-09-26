@@ -1,15 +1,17 @@
 
-import WebSocketProvider from "./websocket/WebSocketProvider";
-import Chatting from "./websocket/Chatting";
-import TextInputBox from "./websocket/TextInputBox";
-
+import HTML from "./websocket/HTML";
 export const TestRouter = () => {
+
     return (
         <>
+            <HTML />
+        </>
+    )
+}
+
+/*
             <WebSocketProvider>
                 <Chatting />
                 <TextInputBox />
             </WebSocketProvider>
-        </>
-    )
-}
+*/

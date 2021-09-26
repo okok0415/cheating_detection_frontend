@@ -45,7 +45,9 @@ function Chatting() {
         if (action === "new-peer") {
             createOfferer(peerUsername, receiver_channel_name);
             return;
-        } else {
+        }
+        /*
+        else {
             if (message.length <= 10) {
                 setMessage([
                     ...message,
@@ -59,6 +61,7 @@ function Chatting() {
                 ])
             }
         }
+        */
     };
 
 
@@ -67,21 +70,31 @@ function Chatting() {
         const peer = new RTCPeerConnection(undefined);
 
         addLocalTracks(peer)
-
         const dc = peer.createDataChannel('channel')
         dc.onopen = () => {
             console.log('Connection opened!');
         }
         dc.onmessage = (evt) => {
-            const message = evt.data;
-            console.log(message, "EVENTDATA!!");
+            const data = JSON.parse(evt.data);
+            if (message.length <= 10) {
+                setMessage([
+                    ...message,
+                    `${data.peer} : ${data.message}`
+                ])
+            } else {
+                message.splice(1, 1);
+                setMessage([
+                    ...message,
+                    `${data.peer} : ${data.message}`
+                ])
+            }
         }
 
         const remoteVideo = createVideo(peerUsername);
         setOnTrack(peer, remoteVideo);
 
         mapPeers[peerUsername] = [peer, dc];
-
+        console.log("map peer is", mapPeers)
         peer.oniceconnectionstatechange = () => {
             const iceConnectionState = peer.iceConnectionState;
 
@@ -107,7 +120,7 @@ function Chatting() {
                     {
                         'peer': peerUsername,
                         'action': "new-offer",
-                        'receiver_channel_name': "receiver_channel_name",
+                        'receiver_channel_name': receiver_channel_name,
                         'message': ''
                     }
                 )
@@ -116,6 +129,62 @@ function Chatting() {
 
         peer.createOffer()
             .then(o => peer.setLocalDescription(o))
+            .then(() => {
+                console.log("Local description set successful");
+            })
+
+    }
+
+    const createAnswerer = (offer: any, peerUsername: string, receiver_channel_name: string) => {
+        const peer: any = new RTCPeerConnection(undefined);
+
+        addLocalTracks(peer)
+
+        peer.ondatachannel = (e: any) => {
+            peer.dc = e.channel;
+            peer.dc.onopen = () => {
+                console.log("Connection opened!!");
+            }
+        }
+
+        const remoteVideo = createVideo(peerUsername);
+        setOnTrack(peer, remoteVideo);
+
+        mapPeers[peerUsername] = [peer, peer.dc];
+
+        peer.oniceconnectionstatechange = () => {
+            const iceConnectionState = peer.iceConnectionState;
+
+            if (iceConnectionState === 'failed' || iceConnectionState === "disconnected" || iceConnectionState === 'closed') {
+                delete mapPeers[peerUsername];
+                if (iceConnectionState !== 'closed') {
+                    peer.close()
+                }
+
+                removeVideo(remoteVideo);
+            }
+        }
+
+        peer.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
+            if (event.candidate) {
+                console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
+                return;
+            }
+
+            ws.current.send(
+                JSON.stringify(
+                    {
+                        'peer': peerUsername,
+                        'action': "new-offer",
+                        'receiver_channel_name': receiver_channel_name,
+                        'message': ''
+                    }
+                )
+            )
+        }
+
+        peer.createOffer()
+            .then((o: any) => peer.setLocalDescription(o))
             .then(() => {
                 console.log("Local description set successful");
             })

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+
+
+
+:root{
+    --font : 'Noto Sans KR', sans-serif;
+    --background: rgb(246, 246, 246);
+    --btn-color: rgb(219,219,219);
+    --btn-color-accent: rgb(200,200,200);
+    --bg:  white;
+    --bg-accent: rgb(50, 50, 50);
+    --text-color: rgb(64, 64, 64);
+    --nav-size: 60px;
+    --border: 1px solid rgb(219, 219, 219);
+    --border-radius: 8px;
+    --speed: 500ms; 
+    --dark : rgb(38, 38, 38);
+    --input : rgb(250, 251, 252);
+    --sidebar-accent: rgb(234, 236, 238);
+    --sidebar-accent-accent: rgb(226, 228, 230);
+}
+
+body{
+    font-family: var(--font);
+}

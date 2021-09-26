@@ -5,6 +5,7 @@
 :root{
     --font : 'Noto Sans KR', sans-serif;
     --background: rgb(246, 246, 246);
+    --background-accent: rgb(226, 226, 226);
     --btn-color: rgb(219,219,219);
     --btn-color-accent: rgb(200,200,200);
     --bg:  white;

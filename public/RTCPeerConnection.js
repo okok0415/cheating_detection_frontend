@@ -211,9 +211,11 @@ messageInput.addEventListener('keyup', function (event) {
 });
 
 btnSendMsg.onclick = btnSendMsgOnClick;
-
+btnSendMsg.onkeypress = btnSendMsgOnKeyPress;
 function btnSendMsgOnClick() {
     var message = messageInput.value;
+    const [msg, setMsg] = useState([""]);
+
 
     var li = document.createElement("li");
     li.appendChild(document.createTextNode("Me: " + message));
@@ -230,7 +232,29 @@ function btnSendMsgOnClick() {
 
     messageInput.value = '';
 }
+function btnSendMsgOnKeyPress(e) {
+    if (e.keyCode == 13) {
+        var message = messageInput.value;
 
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Me: " + message));
+        ul.appendChild(li);
+
+        var dataChannels = getDataChannels();
+
+        console.log('Sending: ', message);
+
+        // send to all data channels
+        for (index in dataChannels) {
+            dataChannels[index].send(username + ': ' + message);
+        }
+
+        messageInput.value = '';
+    }
+    else {
+        return;
+    }
+}
 const constraints = {
     'video': true,
     'audio': true
@@ -706,6 +730,7 @@ function createVideo(peerUsername) {
     // wrapper for the video and button elements
     var videoWrapper = document.createElement('div');
     videoWrapper.id = peerUsername;
+    videoWrapper.innerText = peerUsername;
 
     // add the wrapper to the video container
     videoContainer.appendChild(videoWrapper);

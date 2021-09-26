@@ -60,7 +60,7 @@ function HTML() {
                         <div id="messages">
                             <ul id="message-list"></ul>
                         </div>
-                        <div id="ct"><input id="msg" /><button id="btn-send-msg">send</button></div>
+                        <div id="ct"><input id="msg" /><div id="btn-send-msg">전송</div></div>
 
                     </div>
                 </div>

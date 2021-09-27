@@ -1,68 +1,167 @@
-.nav{
-    position: relative;   
-    width: 590px;
-    height: 50px;
-    background-color: black;
-    border-radius: 8px;
-    font-size: 0;
-    box-shadow: 0 2px 3px 0 rgba(0,0,0,.1);
-}
 
-.nav a{
-    font-size: 15px;
-    text-transform: uppercase;
-    color: white;
-    text-decoration: none;
-    line-height: 50px;
-    position: relative;
-    z-index: 1;
-    display: inline-block;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  a {
+    color: var(--text-color);
+    text-decoration: none;;
+  }
+  
+  /* Top Navigation Bar */
+  
+  /* <nav> */
+  .navbar {
+    width : 100vw;
+    height: var(--nav-size);
+    background-color: var(--bg);
+
+    border-bottom: var(--border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+
+
+  /* <ul> */
+  .navbar-nav {
+    max-width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    grid-gap: 10px;
+    list-style: none;
     text-align: center;
-}
+    width: 70vw;
+    justify-content: end;
+  }
+  
+  .navbar-title {
+    color: var(--text-color);
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+  }
 
-.nav .animation{
+  .navbar-title svg{
+      width: 200px;
+      height: 75px;
+  }
+  /* <li> */
+  .nav-item {
+    width: calc(var(--nav-size) * 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Icon Button */
+  .icon-button {
+    --button-size: calc(var(--nav-size) * 0.5);
+    width: var(--button-size);
+    height: var(--button-size);
+    background-color: var(--bg);
+    border-radius: 50%;
+    padding: 5px;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 300ms;
+
+    font-size:1em;
+
+    font-weight: bold;
+  }
+  
+
+  .icon-button svg { 
+    fill: var(--first);
+    width: 20px;
+    height: 20px;
+  }
+  
+  
+  /* Dropdown Menu */
+  
+  .dropdown {
     position: absolute;
-    height: 5px;
-    bottom: 0;
-    z-index: 0;
-    background-color: aqua;
-    border-radius: 8px;
-    transition: all .5s ease 0s;
-}
-
-a:nth-child(1){
-    width: 100px;
-}
-
-.nav .start-home,a:nth-child(1):hover~.animation{
-    width:100px;
-    left: 0;
-}
-a:nth-child(2){
-    width: 110px;
-}
-.nav .start-about,a:nth-child(2):hover~.animation{
-    width:110px;
-    left: 100px;
-}
-a:nth-child(3){
-    width: 100px;
-}
-.nav .start-blog,a:nth-child(3):hover~.animation{
-    width:100px;
-    left: 210px;
-}
-a:nth-child(4){
+    top: 58px;
     width: 160px;
-}
-.nav .start-portfolio,a:nth-child(4):hover~.animation{
-    width:160px;
-    left: 310px;
-}
-a:nth-child(5){
-    width: 120px;
-}
-.nav .start-contact,a:nth-child(5):hover~.animation{
-    width:120px;
-    left: 470px;
-}
+    transform: translateX(-45%);
+    background-color: var(--bg);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    overflow: hidden;
+    transition: height var(--speed) ease;
+  }
+  
+  .menu {
+    width: 100%;
+  }
+  
+  .menu-item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius);
+    transition: background var(--speed);
+    padding: 0.5rem;
+  }
+  
+  .menu-item .icon-button {
+    margin-right: 0.5rem;
+  }
+  
+  
+  .menu-item .icon-button:hover {
+    filter: none;
+  }
+  
+  .menu-item:hover {
+    background-color: #525357;
+  }
+  
+  .icon-right {
+    margin-left: auto;
+  }
+  
+  /* CSSTransition classes  */
+  .menu-primary-enter {
+    position: absolute;
+    transform: translateX(-110%);
+  }
+  .menu-primary-enter-active {
+    transform: translateX(0%);
+    transition: all var(--speed) ease;
+  }
+  .menu-primary-exit {
+    position: absolute;
+  }
+  .menu-primary-exit-active {
+    transform: translateX(-110%);
+    transition: all var(--speed) ease;
+  }
+  
+  
+  .menu-secondary-enter {
+    transform: translateX(110%);
+  }
+  .menu-secondary-enter-active {
+    transform: translateX(0%);
+    transition: all var(--speed) ease;
+  }
+
+  .menu-secondary-exit-active {
+    transform: translateX(110%);
+    transition: all var(--speed) ease;
+  }
+  

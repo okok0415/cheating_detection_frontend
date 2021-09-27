@@ -214,11 +214,9 @@ btnSendMsg.onclick = btnSendMsgOnClick;
 btnSendMsg.onkeypress = btnSendMsgOnKeyPress;
 function btnSendMsgOnClick() {
     var message = messageInput.value;
-    const [msg, setMsg] = useState([""]);
-
 
     var li = document.createElement("li");
-    li.appendChild(document.createTextNode("Me: " + message));
+    li.appendChild(document.createTextNode("나: " + message));
     ul.appendChild(li);
 
     var dataChannels = getDataChannels();
@@ -234,22 +232,7 @@ function btnSendMsgOnClick() {
 }
 function btnSendMsgOnKeyPress(e) {
     if (e.keyCode == 13) {
-        var message = messageInput.value;
-
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Me: " + message));
-        ul.appendChild(li);
-
-        var dataChannels = getDataChannels();
-
-        console.log('Sending: ', message);
-
-        // send to all data channels
-        for (index in dataChannels) {
-            dataChannels[index].send(username + ': ' + message);
-        }
-
-        messageInput.value = '';
+        btnSendMsgOnClick();
     }
     else {
         return;
@@ -464,7 +447,7 @@ function createOfferer(peerUsername, localScreenSharing, remoteScreenSharing, re
 
     peer.onicecandidate = (event) => {
         if (event.candidate) {
-            console.log("New Ice Candidate! Reprinting SDP" + JSON.stringify(peer.localDescription));
+            //console.log("New Ice Candidate! Reprinting SDP" + JSON.stringify(peer.localDescription));
             return;
         }
 

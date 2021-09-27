@@ -58,7 +58,7 @@ function HTML() {
                     <div id="chat">
                         <div className="chat-title">채팅</div>
                         <div id="messages">
-                            <ul id="message-list"></ul>
+                            <div id="message-list"></div>
                         </div>
                         <div id="ct"><input id="msg" /><div id="btn-send-msg">전송</div></div>
 

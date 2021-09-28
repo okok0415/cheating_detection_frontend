@@ -61,6 +61,9 @@
     align-items: center;
     justify-content: center;
   }
+  .line-test{
+    border-bottom: 2px solid var(--btn-color-accent);
+  }
   
   /* Icon Button */
   .icon-button {

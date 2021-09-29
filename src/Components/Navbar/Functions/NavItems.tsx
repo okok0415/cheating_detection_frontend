@@ -11,7 +11,7 @@ function NavItem(props: any) {
 
     return (
         <li className={props.border ? 'nav-item line-test' : 'nav-item'}>
-            <Link to={props.url} className='icon-button' onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onClick={replaceURL}>
+            <Link to={props.url} className={typeof (props.item) == "string" ? "string-button" : 'icon-button'} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onClick={replaceURL}>
                 {props.item}
             </Link>
 

@@ -1,9 +1,11 @@
 .register{
     display: flex;
     justify-content: center;
+    background-color: var(--blue-color);
 }
 .register-form {
     display: grid;
+    margin-bottom: 20px;
 }
 .register-form svg{
     width:250px;
@@ -13,17 +15,110 @@
     display:flex;
     justify-content: center;
     margin-bottom: 10px;
+    font-weight: bold;
+    font-size : 20px;
+}
+
+
+.input-div{
+    position: relative;
+    display: grid;
+    grid-template-columns: 7% 93%;
+    margin: 12px 0;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+
+}
+
+.input-div:after, .input-div:before{
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    width: 0px;
+    height: 2px;
+    background-color: var(--text-color);
+}
+
+.input-div:after{
+    right: 50%;
+}
+
+.input-div:before{
+    left: 50%;
+}
+
+.input-div.focus:before, .input-div.focus:after{
+	width: 50%;
+    transition : .3s;
+}
+.input-div.focus .i i{
+    color: var(--sidebar-accent-accent);
+}
+
+.input-div.focus div h5{
+    top: -15px;
+    font-size: 12px;
+}
+
+.input-div.one{
+    margin-top:0;
+}
+.input-div.two{
+    margin-bottom : 4px;
+}
+
+.i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.i i{
+    color:#d9d9d9;
+}
+
+.input-div > div{
+    position: relative;
+    height: 45px;
+    display: flex;
+}
+
+.input-div > div > h5{
+    position: absolute;
+    left:10px;
+    transform: translateY(-75%);
+    color: var(--text-color-light);
+    font-size: 18px;
+    transition: .3s;
+}
+
+.input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.2rem;
+    padding-left: 10px;
+    color: #555;
 }
 
 .label{
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 30px 70px 5fr;
+    padding-bottom: 5px;
     margin-bottom: 10px;
+    border-bottom: 2px solid #d9d9d9;
 }
 
 .label .left{
-    text-align: right;
+    text-align: left;
     padding: 8px;
+    color: var(--text-color-light);
+    font-weight: bold;
 }
 
 .label .right{
@@ -31,3 +126,39 @@
     padding: 8px;
 }
 
+.submit {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.submit .button{
+    font-family: var(--font);
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: bold;
+    width: 120px;
+    height: 30px;
+    border-radius: 6px;
+    background-color: var(--btn-color);
+    border: var(--border);
+}
+
+.submit .button:hover {
+    background-color: var(--btn-color-accent);
+    transition : .3s;
+}
+
+.bottom-text{
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-color-light);
+    transition: .8s;
+}
+
+.idcard-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #d9d9d9;
+}

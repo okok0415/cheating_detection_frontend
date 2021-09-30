@@ -10,8 +10,36 @@ function Signup(props: any) {
     const [Name, setName] = useState("");
     const [Birth, setBirth] = useState("");
     const [ConfirmPasword, setConfirmPasword] = useState("");
+    const [IDcard, setIDcard] = useState<any>();
+    const [sfocus, setSfocus] = useState(false);
+    const [nfocus, setNfocus] = useState(false);
+    const [bfocus, setBfocus] = useState(false);
+    const [pfocus, setPfocus] = useState(false);
+    const [cfocus, setCfocus] = useState(false);
+
     const formdata = new FormData();
     const dispatch = useDispatch();
+
+    const onsfocusHandler = (e: any) => {
+        setSfocus(!sfocus);
+    }
+
+    const onnfocusHandler = (e: any) => {
+        setNfocus(!nfocus);
+    }
+
+    const onbfocusHandler = (e: any) => {
+        setBfocus(!bfocus);
+    }
+
+    const onpfocusHandler = (e: any) => {
+        setPfocus(!pfocus);
+    }
+
+    const oncfocusHandler = (e: any) => {
+        setCfocus(!cfocus);
+    }
+
 
     const onSchoolIDHandler = (e: any) => {
         setSchoolID(e.currentTarget.value);
@@ -25,21 +53,24 @@ function Signup(props: any) {
         setBirth(e.currentTarget.value);
     };
 
-    const onPasswordHanlder = (e: any) => {
+    const onPasswordHandler = (e: any) => {
         setPassword(e.currentTarget.value);
     };
 
     const onConfirmPasswordHandler = (e: any) => {
         setConfirmPasword(e.currentTarget.value);
+
     };
 
     const onImageHandler = (e: any) => {
-        const image = e.target.files[0];
-        formdata.append('img', image);
+        setIDcard(e.target.files[0]);
+        formdata.append('img', IDcard);
     }
     const onSubmitHandler = (e: any) => {
         e.preventDefault();
         if (Password === ConfirmPasword) {
+            console.log("비밀번호 불일치");
+        } else {
             let body = {
                 schoolID: SchoolID,
                 name: Name,
@@ -48,14 +79,6 @@ function Signup(props: any) {
                 image: formdata
             };
             dispatch(registerUser(body))
-            /*
-                .then((res: any) => {
-                    alert("가입이 정상적으로 완료되었습니다");
-                    props.history.push("/login");
-                });
-        */
-        } else {
-            alert("비밀번호가 일치하지 않습니다");
         }
     };
     return (
@@ -68,36 +91,62 @@ function Signup(props: any) {
                 <div className="title">
                     회원가입
                 </div>
-                <div className="label">
-                    <label className="left">학번</label>
-                    <input className="right" type="string" value={SchoolID} onChange={onSchoolIDHandler} placeholder="B000000" />
+                <div className={sfocus || SchoolID !== "" ? "input-div one focus" : "input-div one"}>
+                    <div className="i">
+                        <i className="fas fa-id-card"></i>
+                    </div>
+                    <div>
+                        <h5>학번</h5>
+                        <input onClick={onsfocusHandler} className="input" type="string" value={SchoolID} onChange={onSchoolIDHandler} required />
+                    </div>
                 </div>
-                <div className="label">
-                    <label className="left">이름</label>
-                    <input className="right" type="test" value={Name} onChange={onNameHandler} placeholder="홍길동" />
+                <div className={nfocus || Name !== "" ? "input-div one focus" : "input-div one"}>
+                    <div className="i">
+                        <i className="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h5>이름</h5>
+                        <input onClick={onnfocusHandler} className="input" type="string" value={Name} onChange={onNameHandler} required />
+                    </div>
                 </div>
-                <div className="label">
-                    <label className="left">생년월일</label>
-                    <input className="right" type="test" value={Birth} onChange={onBirthHandler} placeholder="YYYYMMDD" />
+                <div className={bfocus || Birth !== "" ? "input-div one focus" : "input-div one"}>
+                    <div className="i">
+                        <i className="fas fa-calendar-week"></i>
+                    </div>
+                    <div>
+                        <h5>생년월일</h5>
+                        <input onClick={onbfocusHandler} className="input" type="string" value={Birth} onChange={onBirthHandler} required />
+                    </div>
                 </div>
-                <div className="label">
-                    <label className="left">비밀번호</label>
-                    <input className="right" type="password" value={Password} onChange={onPasswordHanlder} />
+                {bfocus && <div className="bottom-text">YYYYMMDD 형태로 작성.</div>}
+                <div className={pfocus || Password !== "" ? "input-div one focus" : "input-div one"}>
+                    <div className="i">
+                        <i className="fas fa-lock"></i>
+                    </div>
+                    <div>
+                        <h5>비밀번호</h5>
+                        <input onClick={onpfocusHandler} className="input" type="password" value={Password} onChange={onPasswordHandler} required />
+                    </div>
                 </div>
-                <div className="label">
-                    <label className="left">비밀번호 확인</label>
-                    <input
-                        className="right"
-                        type="password"
-                        value={ConfirmPasword}
-                        onChange={onConfirmPasswordHandler}
-                    />
+                {pfocus && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
+                <div className={cfocus || ConfirmPasword !== "" ? "input-div one focus" : "input-div one"}>
+                    <div className="i">
+                        <i className="fas fa-lock"></i>
+                    </div>
+                    <div>
+                        <h5>비밀번호 확인</h5>
+                        <input onClick={oncfocusHandler} className="input" type="password" value={ConfirmPasword} onChange={onConfirmPasswordHandler} required />
+                    </div>
                 </div>
+                {cfocus && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
                 <div className="label">
-                    <label className="left">신분증</label>
-                    <input className="right" type="file" accept='image/jpg, image/png, image/jpeg, image/gif' onChange={onImageHandler} />
+                    <div className="idcard-icon"><i className="fas fa-id-card idcard"></i></div>
+                    <label className="left">  신분증</label>
+                    <input className="right" type="file" accept='image/jpg, image/png, image/jpeg, image/gif' onChange={onImageHandler} required />
                 </div>
-                <button type="submit">회원 가입</button>
+                <div className="submit">
+                    <button className="button" type="submit">제출</button>
+                </div>
             </form>
         </div>
     );

@@ -3,7 +3,6 @@
 
 :root{
     --font : 'Noto Sans KR', sans-serif;
-    --font-ins: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --background: rgb(246, 246, 246);
     --background-accent: rgb(226, 226, 226);
     --btn-color: rgb(219,219,219);
@@ -11,6 +10,8 @@
     --bg:  white;
     --bg-accent: rgb(50, 50, 50);
     --text-color: rgb(64, 64, 64);
+    --text-color-light: rgb(120, 120, 120);
+    --blue-color : rgb(247, 251, 255);
     --nav-size: 65px;
     --border: 1px solid rgb(219, 219, 219);
     --border-radius: 8px;

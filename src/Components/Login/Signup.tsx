@@ -68,7 +68,7 @@ function Signup(props: any) {
     }
     const onSubmitHandler = (e: any) => {
         e.preventDefault();
-        if (Password === ConfirmPasword) {
+        if (Password !== ConfirmPasword) {
             console.log("비밀번호 불일치");
         } else {
             let body = {

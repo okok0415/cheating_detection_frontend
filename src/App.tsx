@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HomeRouter } from "./Components/Home/HomeRouter";
 import { TestRouter } from "./Components/Test/TestRouter"
-import Navbar from "./Components/Navbar/Navbar";
 import { SigninRouter, SignupRouter } from "./Components/Login/LoginRouter";
 import "./CSS/App.css";
 function App(): any {
@@ -8,8 +8,8 @@ function App(): any {
     <>
 
       <BrowserRouter>
-        <Navbar />
         <Switch>
+          <Route path="/" exact={true} component={HomeRouter} />
           <Route path="/login" component={SigninRouter} />
           <Route path="/register" component={SignupRouter} />
           <Route path="/test" exact={true} component={TestRouter} />

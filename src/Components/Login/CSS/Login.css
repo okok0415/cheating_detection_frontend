@@ -1,11 +1,16 @@
 .register{
     display: flex;
     justify-content: center;
-    background-color: var(--blue-color);
+
+    margin: 70px;
+
 }
 .register-form {
     display: grid;
     margin-bottom: 20px;
+    width: 340px;
+    background-color: var(--blue-color);
+    padding: 60px;
 }
 .register-form svg{
     width:250px;

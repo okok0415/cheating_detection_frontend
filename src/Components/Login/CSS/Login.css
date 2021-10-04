@@ -9,7 +9,7 @@
     display: grid;
     margin-bottom: 20px;
     width: 340px;
-    background-color: var(--blue-color);
+    background-color: var(--input);
     padding: 60px;
 }
 .register-form svg{

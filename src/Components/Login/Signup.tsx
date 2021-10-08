@@ -61,24 +61,19 @@ function Signup(props: any) {
         setConfirmPasword(e.currentTarget.value);
 
     };
-
-    const onImageHandler = (e: any) => {
-        setIDcard(e.target.files[0]);
-        formdata.append('img', IDcard);
-    }
     const onSubmitHandler = (e: any) => {
         e.preventDefault();
         if (Password !== ConfirmPasword) {
             console.log("비밀번호 불일치");
         } else {
-            let body = {
-                schoolID: SchoolID,
-                name: Name,
-                birth: Birth,
-                password: Password,
-                image: formdata
-            };
-            dispatch(registerUser(body))
+            const uploadData = new FormData();
+            uploadData.append('schoolID', SchoolID);
+            uploadData.append('name', Name);
+            uploadData.append('birth', Birth);
+            uploadData.append('password', Password);
+            uploadData.append('image', IDcard, IDcard.name);
+            console.log(uploadData);
+            dispatch(registerUser(uploadData))
         }
     };
     return (
@@ -142,7 +137,7 @@ function Signup(props: any) {
                 <div className="label">
                     <div className="idcard-icon"><i className="fas fa-id-card idcard"></i></div>
                     <label className="left">  신분증</label>
-                    <input className="right" type="file" accept='image/jpg, image/png, image/jpeg, image/gif' onChange={onImageHandler} required />
+                    <input className="right" type="file" accept='image/jpg, image/png, image/jpeg, image/gif' onChange={(e: any) => setIDcard(e.target.files[0])} required />
                 </div>
                 <div className="submit">
                     <button className="button" type="submit">제출</button>

@@ -66,7 +66,7 @@ function Signup(props: any) {
         } else {
 
             const uploadData = new FormData();
-            uploadData.append('Username', Username);
+            uploadData.append('username', Username);
             uploadData.append('name', Name);
             uploadData.append('birth', Birth);
             uploadData.append('password', Password);

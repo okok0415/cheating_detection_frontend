@@ -5,23 +5,21 @@ import { registerUser } from "../../Actions/userAction";
 import { ReactComponent as CDIcon } from "../Navbar/icons/cheating_detection_2.svg";
 import "./CSS/Login.css";
 function Signup(props: any) {
-    const [SchoolID, setSchoolID] = useState("");
+    const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [Name, setName] = useState("");
     const [Birth, setBirth] = useState("");
     const [ConfirmPasword, setConfirmPasword] = useState("");
     const [IDcard, setIDcard] = useState<any>();
-    const [sfocus, setSfocus] = useState(false);
+    const [ufocus, setUfocus] = useState(false);
     const [nfocus, setNfocus] = useState(false);
     const [bfocus, setBfocus] = useState(false);
     const [pfocus, setPfocus] = useState(false);
     const [cfocus, setCfocus] = useState(false);
-
-    const formdata = new FormData();
     const dispatch = useDispatch();
 
-    const onsfocusHandler = (e: any) => {
-        setSfocus(!sfocus);
+    const onufocusHandler = (e: any) => {
+        setUfocus(!ufocus);
     }
 
     const onnfocusHandler = (e: any) => {
@@ -41,8 +39,8 @@ function Signup(props: any) {
     }
 
 
-    const onSchoolIDHandler = (e: any) => {
-        setSchoolID(e.currentTarget.value);
+    const onUsernameHandler = (e: any) => {
+        setUsername(e.currentTarget.value);
     };
 
     const onNameHandler = (e: any) => {
@@ -66,8 +64,9 @@ function Signup(props: any) {
         if (Password !== ConfirmPasword) {
             console.log("비밀번호 불일치");
         } else {
+
             const uploadData = new FormData();
-            uploadData.append('schoolID', SchoolID);
+            uploadData.append('Username', Username);
             uploadData.append('name', Name);
             uploadData.append('birth', Birth);
             uploadData.append('password', Password);
@@ -86,13 +85,13 @@ function Signup(props: any) {
                 <div className="title">
                     회원가입
                 </div>
-                <div className={sfocus || SchoolID !== "" ? "input-div one focus" : "input-div one"}>
+                <div className={ufocus || Username !== "" ? "input-div one focus" : "input-div one"}>
                     <div className="i">
                         <i className="fas fa-id-card"></i>
                     </div>
                     <div>
                         <h5>학번</h5>
-                        <input onClick={onsfocusHandler} className="input" type="string" value={SchoolID} onChange={onSchoolIDHandler} required />
+                        <input onClick={onufocusHandler} className="input" type="string" value={Username} onChange={onUsernameHandler} required />
                     </div>
                 </div>
                 <div className={nfocus || Name !== "" ? "input-div one focus" : "input-div one"}>

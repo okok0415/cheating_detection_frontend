@@ -3,8 +3,8 @@ import { request, requestMedia } from "../utils/fetch";
 
 const USER_URL = "/user";
 
-export function registerUser(dataToSubmit: any) {
-    const data = requestMedia("post", USER_URL + "/register", dataToSubmit);
+export async function registerUser(dataToSubmit: any) {
+    const data = await requestMedia("post", USER_URL + "/register", dataToSubmit);
 
     return {
         type: REGISTER_USER,
@@ -12,8 +12,8 @@ export function registerUser(dataToSubmit: any) {
     };
 }
 
-export function loginUser(dataToSubmit: any) {
-    const data = request("post", USER_URL + "/login", dataToSubmit);
+export async function loginUser(dataToSubmit: any) {
+    const data = await request("post", USER_URL + "/login", dataToSubmit);
 
     return {
         type: LOGIN_USER,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter, Redirect, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../Actions/userAction";
 import { ReactComponent as CDIcon } from "../Navbar/icons/cheating_detection_2.svg";
@@ -72,7 +72,9 @@ function Signin(props: any) {
                     </div>
                 </div>
                 {pfocus && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
-
+                <Link to="/register" className="information">
+                    이미 계정이 있으십니까? ...로그인
+                </Link>
                 <div className="submit">
                     <button className="button" type="submit">제출</button>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../Actions/userAction";
 import { ReactComponent as CDIcon } from "../Navbar/icons/cheating_detection_2.svg";
@@ -112,7 +112,7 @@ function Signup(props: any) {
                         <input onClick={onbfocusHandler} className="input" type="string" value={Birth} onChange={onBirthHandler} required />
                     </div>
                 </div>
-                {bfocus && <div className="bottom-text">YYYYMMDD 형태로 작성.</div>}
+                {(bfocus || Birth !== '') && <div className="bottom-text">YYYYMMDD 형태로 작성.</div>}
                 <div className={pfocus || Password !== "" ? "input-div one focus" : "input-div one"}>
                     <div className="i">
                         <i className="fas fa-lock"></i>
@@ -122,7 +122,7 @@ function Signup(props: any) {
                         <input onClick={onpfocusHandler} className="input" type="password" value={Password} onChange={onPasswordHandler} required />
                     </div>
                 </div>
-                {pfocus && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
+                {(pfocus || Password !=='') && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
                 <div className={cfocus || ConfirmPasword !== "" ? "input-div one focus" : "input-div one"}>
                     <div className="i">
                         <i className="fas fa-lock"></i>
@@ -132,12 +132,15 @@ function Signup(props: any) {
                         <input onClick={oncfocusHandler} className="input" type="password" value={ConfirmPasword} onChange={onConfirmPasswordHandler} required />
                     </div>
                 </div>
-                {cfocus && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
+                {(cfocus || ConfirmPasword !== '') && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
                 <div className="label">
                     <div className="idcard-icon"><i className="fas fa-id-card idcard"></i></div>
                     <label className="left">  신분증</label>
                     <input className="right" type="file" accept='image/jpg, image/png, image/jpeg, image/gif' onChange={(e: any) => setIDcard(e.target.files[0])} required />
                 </div>
+                <Link to="/login" className="information">
+                    이미 계정이 있으십니까? ...로그인
+                </Link>
                 <div className="submit">
                     <button className="button" type="submit">제출</button>
                 </div>

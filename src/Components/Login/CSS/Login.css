@@ -167,3 +167,9 @@
     align-items: center;
     color: #d9d9d9;
 }
+
+.information {
+    font-size : 12px;
+    text-align: end;
+    color: #555;
+}

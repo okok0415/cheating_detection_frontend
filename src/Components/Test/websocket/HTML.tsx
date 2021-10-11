@@ -34,7 +34,7 @@ function HTML() {
     }
 
     return (
-        <>
+        <div className="test">
             <h3 id="label-username">USERNAME</h3>
             <div>
                 <input id="username" /><button id="btn-join">Join Room</button>
@@ -68,7 +68,7 @@ function HTML() {
             </div>
 
 
-        </>
+        </div>
     )
 }
 

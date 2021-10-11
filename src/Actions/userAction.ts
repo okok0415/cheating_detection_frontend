@@ -1,4 +1,4 @@
-import { REGISTER_USER, LOGIN_USER } from "./types";
+import { REGISTER_USER, LOGIN_USER, LOGOUT_USER } from "./types";
 import { request, requestMedia } from "../utils/fetch";
 
 const USER_URL = "/user";
@@ -17,6 +17,15 @@ export async function loginUser(dataToSubmit: any) {
 
     return {
         type: LOGIN_USER,
+        payload: data,
+    };
+}
+
+export async function logoutUser() {
+    const data = await request("post", USER_URL + "/logout", "");
+
+    return {
+        type: LOGOUT_USER,
         payload: data,
     };
 }

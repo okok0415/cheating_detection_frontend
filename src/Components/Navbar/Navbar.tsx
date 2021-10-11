@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavItem from "./Functions/NavItems";
+import Logout from "./Functions/Logout";
 import { ReactComponent as CogIcon } from "./icons/cog.svg";
 import { ReactComponent as LogoutIcon } from "./icons/logout.svg";
 import { ReactComponent as CDIcon } from "./icons/cheating_detection_2.svg";
@@ -53,9 +54,9 @@ function Navbar() {
                     <NavItem item={<CogIcon />} url="/settings" border={settings}>
 
                     </NavItem>
-                    <NavItem item={<LogoutIcon />} url="/login">
+                    <Logout item={<LogoutIcon />} url="/login">
 
-                    </NavItem>
+                    </Logout>
                 </ul>
             </nav>
         </>

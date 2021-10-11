@@ -71,7 +71,6 @@ function Signin(props: any) {
                         <input onClick={onpfocusHandler} className="input" type="password" value={Password} onChange={onPasswordHandler} required />
                     </div>
                 </div>
-                {pfocus && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
                 <Link to="/register" className="information">
                     이미 계정이 있으십니까? ...로그인
                 </Link>

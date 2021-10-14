@@ -122,7 +122,7 @@ function Signup(props: any) {
                         <input onClick={onpfocusHandler} className="input" type="password" value={Password} onChange={onPasswordHandler} required />
                     </div>
                 </div>
-                {(pfocus || Password !=='') && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
+                {(pfocus || Password !== '') && <div className="bottom-text">영문(a~z), 숫자(0~9), 특수문자 모두 포함 8자 이상.</div>}
                 <div className={cfocus || ConfirmPasword !== "" ? "input-div one focus" : "input-div one"}>
                     <div className="i">
                         <i className="fas fa-lock"></i>

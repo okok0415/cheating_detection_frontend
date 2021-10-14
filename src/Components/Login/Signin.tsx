@@ -72,7 +72,7 @@ function Signin(props: any) {
                     </div>
                 </div>
                 <Link to="/register" className="information">
-                    이미 계정이 있으십니까? ...로그인
+                    계정이 없으신가요? ...회원가입
                 </Link>
                 <div className="submit">
                     <button className="button" type="submit">제출</button>

@@ -110,3 +110,12 @@
 #btn-send-msg:hover{
     background-color: var(--background-accent);
 }
+
+.arrow{
+    display:inline-block;
+    background-color: aqua;
+}
+
+.webcam{
+    top:500px;
+}

@@ -17,7 +17,7 @@ function App(): any {
           <PrivateRoute path="/" exact={true} component={HomeRouter} />
           <PublicRoute path="/login" restricted={false} component={SigninRouter} />
           <PublicRoute path="/register" restrited={false} component={SignupRouter} />
-          <PrivateRoute path="/test" exact={true} component={TestRouter} />
+          <PrivateRoute path="/test" component={TestRouter} />
         </Switch>
       </BrowserRouter>
     </>

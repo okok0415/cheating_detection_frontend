@@ -119,3 +119,94 @@
 .webcam{
     top:500px;
 }
+
+:root{
+    height: 100%;
+    overflow: hidden;
+}
+
+.train{
+    background-color: azure;
+    width:100vw;
+    max-width: 100%;
+    height:100vh;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    overflow : hidden;
+}
+
+.first {
+    grid-column: 1;
+    grid-row:1;
+    display:flex;
+    justify-content: flex-start;
+}
+
+.second {
+    grid-column: 8;
+    grid-row:1;
+    display:flex;
+    justify-content: center;
+}
+
+.third {
+    grid-column: 15;
+    grid-row:1;
+    display:flex;
+    justify-content: flex-end;
+}
+
+.fourth {
+    grid-column: 1;
+    grid-row:8;
+    display:flex;
+    justify-content: flex-start;
+}
+
+.fifth {
+    grid-column: 8;
+    grid-row:8;
+    display:flex;
+    justify-content: center;
+}
+
+.sixth {
+    grid-column: 15;
+    grid-row:8;
+    display:flex;
+    justify-content: flex-end;
+}
+
+.seventh {
+    grid-column: 1;
+    grid-row:15;
+    display:flex;
+    justify-content: flex-start;
+}
+
+.eighth {
+    grid-column: 8;
+    grid-row:15;
+    display:flex;
+    justify-content: center;
+}
+
+.ninth {
+    grid-column: 15;
+    grid-row:15;
+    display:flex;
+    justify-content: flex-end;
+}
+
+.random{
+    display:flex;
+    justify-content: center;
+}
+
+.finish{
+    display: none;
+}

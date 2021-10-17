@@ -58,5 +58,6 @@ export const TrainData = [
     {
         id: 15,
         className: "finish",
-    }
+    },
+
 ]

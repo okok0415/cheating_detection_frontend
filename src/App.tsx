@@ -7,6 +7,7 @@ import { HomeRouter } from "./Components/Home/HomeRouter";
 import { TestRouter } from "./Components/Test/TestRouter"
 import { SigninRouter, SignupRouter } from "./Components/Login/LoginRouter";
 import "./CSS/App.css";
+import HTML from "./Components/Test/websocket/HTML";
 
 function App(): any {
   return (
@@ -17,7 +18,8 @@ function App(): any {
           <PrivateRoute path="/" exact={true} component={HomeRouter} />
           <PublicRoute path="/login" restricted={false} component={SigninRouter} />
           <PublicRoute path="/register" restrited={false} component={SignupRouter} />
-          <PrivateRoute path="/test" component={TestRouter} />
+          <PrivateRoute path="/train" component={TestRouter} />
+          <PrivateRoute path="/webcam" component={HTML} />
         </Switch>
       </BrowserRouter>
     </>

@@ -120,10 +120,7 @@
     top:500px;
 }
 
-:root{
-    height: 100%;
-    overflow: hidden;
-}
+
 
 .train{
     background-color: azure;

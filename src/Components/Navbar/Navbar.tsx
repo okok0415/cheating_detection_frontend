@@ -18,7 +18,7 @@ function Navbar() {
             setResult(false);
             setSettings(false);
         }
-        else if (window.location.pathname === "/test") {
+        else if (window.location.pathname === "/test/calibrate" || window.location.pathname === "/test/collect" || window.location.pathname === "/test/test" || window.location.pathname === "/webcam") {
             setTest(true);
             setResult(false);
             setSettings(false);
@@ -45,7 +45,7 @@ function Navbar() {
             <nav className="navbar">
                 <Link to='/' className="navbar-title" onClick={replaceURL}><CDIcon /></Link>
                 <ul className='navbar-nav'>
-                    <NavItem item="Test" url="/train" border={test}>
+                    <NavItem item="Test" url="/test/calibrate" border={test}>
 
                     </NavItem>
                     <NavItem item="Result" url="/result" border={result}>

@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { getUser } from "../../Actions/userAction";
 function Home() {
-    const [name, setName] = useState("lim")
+    const [name, setName] = useState("")
     const dispatch = useDispatch();
-    const click = () => {
+    useEffect(() => {
         const i: any = dispatch(getUser);
         i.then((res: any) => {
             setName(res.payload.username)
         })
         console.log(name);
-    }
-    useEffect(() => {
-
     }, []);
 
     return (
         <>
             <div>
-                hi {name}
+                안녕하세요 {name}!
             </div>
-            <button onClick={click}>
-                hi
-            </button>
         </>
     )
 }

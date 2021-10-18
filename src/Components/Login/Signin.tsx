@@ -39,7 +39,7 @@ function Signin(props: any) {
     };
 
     if (redirect) {
-        //return (<Redirect to="/" />)
+        return (<Redirect to="/" />)
     }
 
     return (

@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 const WebSocketContext = React.createContext<any>(null);
 export { WebSocketContext };
 const API_PATH = 'ws://localhost:8000/ws/train/'

@@ -1,10 +1,9 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import react from "../Train/logo192.png";
 import Webcam from "react-webcam"
 import { TrainData } from "./TrainData";
 import { WebSocketContext } from './TrainWebSocketProvider';
-import { Redirect } from "react-router";
 function Train() {
     const ws = useContext(WebSocketContext);
     const webcamRef = React.useRef<any>(null);

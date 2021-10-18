@@ -1,7 +1,7 @@
 import Navbar from "../Navbar/Navbar"
 import Home from "./Home";
 
-export const HomeRouter = () => {
+export const HomeRouter = (props: any) => {
     return (
         <>
             <Navbar />

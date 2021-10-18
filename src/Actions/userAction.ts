@@ -1,5 +1,5 @@
 import { REGISTER_USER, LOGIN_USER, LOGOUT_USER, GET_USER } from "./types";
-import { request, requestMedia } from "../utils/fetch";
+import { request, requestMedia, requestGet } from "../utils/fetch";
 
 const USER_URL = "/user";
 
@@ -31,7 +31,7 @@ export async function logoutUser() {
 }
 
 export async function getUser() {
-    const data = await request("get", USER_URL + "/user", "");
+    const data = await requestGet("get", USER_URL + "/user");
 
     return {
         type: GET_USER,

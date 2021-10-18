@@ -34,13 +34,12 @@ function Signin(props: any) {
             username: Username,
             password: Password,
         };
-        console.log(body)
         dispatch(await loginUser(body))
         setRedirect(true);
     };
 
     if (redirect) {
-        return (<Redirect to="/" />)
+        //return (<Redirect to="/" />)
     }
 
     return (

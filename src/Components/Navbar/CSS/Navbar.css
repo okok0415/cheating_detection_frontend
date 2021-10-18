@@ -17,13 +17,11 @@
     width : 100vw;
     height: var(--nav-size);
     background-color: var(--bg);
-
     border-bottom: var(--border);
     display: flex;
     justify-content: space-around;
     align-items: center;
     font-size: 1.2rem;
-    background-color: var(--input);
   }
 
 
@@ -90,7 +88,7 @@
     align-items: center;
     justify-content: center;
     transition: filter 300ms;
-
+    font-weight:bold;
     font-size:1em;
   }
 

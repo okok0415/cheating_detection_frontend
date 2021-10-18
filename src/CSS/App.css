@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
 
 :root{
     --font : 'Noto Sans KR', sans-serif;
+    --font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
     --background: rgb(246, 246, 246);
     --background-accent: rgb(226, 226, 226);
     --btn-color: rgb(219,219,219);
@@ -14,6 +14,7 @@
     --blue-color : rgb(251, 251, 255);
     --nav-size: 65px;
     --border: 1px solid rgb(219, 219, 219);
+    --border-solid: 2px solid rgb(209, 209, 209);
     --border-radius: 8px;
     --speed: 500ms; 
     --dark : rgb(38, 38, 38);
@@ -23,8 +24,9 @@
 }
 
 body{
-    font-family: var(--font);
+    font-family: 'Noto Sans KR', sans-serif;
     -webkit-font-smoothing: antialiased;
     margin : 0;
     color: var(--text-color);
+    background-color: var(--background);
 }

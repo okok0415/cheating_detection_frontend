@@ -1,5 +1,6 @@
 import { Switch, Route } from "react-router-dom";
-import WebSocketProvider from "./Train/TrainWebSocketProvider";
+import TrainWebSocketProvider from "./Train/TrainWebSocketProvider";
+import CalibrateWebSocketProvider from "./Calibrate/CalibrateWebSocketProvider";
 import Train from "./Train/Train";
 import TestNav from "./TestNav/TestNav";
 import HTML from "./websocket/HTML";
@@ -7,6 +8,7 @@ import Navbar from "../Navbar/Navbar";
 import calibrate from "./informationPage/calibrate";
 import collect from "./informationPage/collect";
 import test from "./informationPage/test";
+import Calibrate from "./Calibrate/Calibrate";
 
 export const TestRouter = ({ match }: { match: any }) => {
 
@@ -23,12 +25,25 @@ export const TestRouter = ({ match }: { match: any }) => {
     )
 }
 
+export const CalibrateRouter = () => {
+    return (
+        <>
+            <Navbar />
+            <TestNav />
+            <CalibrateWebSocketProvider>
+                <Calibrate />
+            </CalibrateWebSocketProvider>
+        </>
+    )
+}
+
+
 export const TrainRouter = () => {
     return (
         <>
-            <WebSocketProvider>
+            <TrainWebSocketProvider>
                 <Train />
-            </WebSocketProvider>
+            </TrainWebSocketProvider>
         </>
     )
 }

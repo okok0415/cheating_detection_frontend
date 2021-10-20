@@ -46,6 +46,9 @@
     height: 500px;
     background-color: var(--bg);
     border : var(--border);
+    display: grid;
+    grid-template-rows: 1fr 8fr 1fr;
+    border-radius: 10px;
 }
 
 .info-title{
@@ -68,4 +71,19 @@
     height: 40px;
     border: var(--border);
     border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background);
+    font-weight: bold;
+}
+.btn-next:hover {
+    background-color: var(--background-accent);
+    transition: .3s;
+}
+
+.button-bottom{
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }

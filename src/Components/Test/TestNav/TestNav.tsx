@@ -10,7 +10,7 @@ function TestNav() {
     const [test, setTest] = useState(false);
 
     useEffect(() => {
-        if (window.location.pathname === "/test/calibrate") {
+        if (window.location.pathname === "/test/calibrate" || window.location.pathname === "/calibrate") {
             setCalibrate(true);
             setCollect(false);
             setTest(false);

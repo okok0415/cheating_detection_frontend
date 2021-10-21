@@ -3,10 +3,9 @@ import PublicRoute from "./utils/PublicRoute";
 import PrivateRoute from "./utils/PrivateRoute";
 
 import { HomeRouter } from "./Components/Home/HomeRouter";
-import { SupervisorRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
+import { CalibrateRouter, SupervisorRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
 import { SigninRouter, SignupRouter } from "./Components/Login/LoginRouter";
 import "./CSS/App.css";
-import HTML from "./Components/Test/websocket/HTML";
 
 function App(): any {
 
@@ -21,6 +20,7 @@ function App(): any {
           <PrivateRoute path="/test" component={TestRouter} />
           <PrivateRoute path="/train" component={TrainRouter} />
           <PrivateRoute path="/webcam" component={SupervisorRouter} />
+          <PrivateRoute path="/calibrate" component={CalibrateRouter} />
         </Switch>
       </BrowserRouter>
     </>

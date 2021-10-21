@@ -100,7 +100,7 @@ function Signup(props: any) {
                     </div>
                     <div>
                         <h5>이름</h5>
-                        <input onClick={onnfocusHandler} className="input" type="string" value={Name} onChange={onNameHandler} required />
+                        <input onClick={onnfocusHandler} className="input" type="string" value={Name} onChange={onNameHandler} />
                     </div>
                 </div>
                 <div className={bfocus || Birth !== "" ? "input-div one focus" : "input-div one"}>
@@ -109,7 +109,7 @@ function Signup(props: any) {
                     </div>
                     <div>
                         <h5>생년월일</h5>
-                        <input onClick={onbfocusHandler} className="input" type="string" value={Birth} onChange={onBirthHandler} required />
+                        <input onClick={onbfocusHandler} className="input" type="string" value={Birth} onChange={onBirthHandler} />
                     </div>
                 </div>
                 {(bfocus || Birth !== '') && <div className="bottom-text">YYYYMMDD 형태로 작성.</div>}

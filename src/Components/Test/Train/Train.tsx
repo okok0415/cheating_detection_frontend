@@ -4,6 +4,9 @@ import react from "../Train/logo192.png";
 import Webcam from "react-webcam"
 import { TrainData } from "./TrainData";
 import { WebSocketContext } from './TrainWebSocketProvider';
+
+let time = 0;
+
 function Train() {
     const ws = useContext(WebSocketContext);
     const webcamRef = React.useRef<any>(null);
@@ -13,9 +16,9 @@ function Train() {
     const [array, setArray] = React.useState<any>(TrainData[count]);
     const [column, setColumn] = React.useState<number>(0);
     const [row, setRow] = React.useState<number>(0);
+    const [framecount, setFramecount] = React.useState<number>(0);
 
     let localStream: any = null;
-
 
     const clickHandler = () => {
         const imageSrc = webcamRef.current.getScreenshot();
@@ -46,6 +49,22 @@ function Train() {
         if (count !== 0) {
             console.log(JSON.stringify(sendinf))
             ws.current.send(JSON.stringify(sendinf))
+            processImage();
+        }
+    }
+
+    const processImage: any = () => {
+        if (time < 9) {
+            const imageSrc = webcamRef.current.getScreenshot();
+            const sendinf = {
+                'frame': imageSrc
+            }
+            time += 1;
+            console.log(time)
+            ws.current.send(JSON.stringify(sendinf));
+            setTimeout(processImage, 30);
+        } else {
+            time = 0;
         }
     }
     /*
@@ -88,10 +107,12 @@ function Train() {
         clickHandler();
 
     }, []);
-    if (count === 14) {
-        console.log('finished')
-    }
 
+    /*
+    if (count === 15) {
+        window.location.replace("/test/test");
+    }
+    */
     return (
         <div className="third-test">
             <div className="train" >
@@ -101,7 +122,6 @@ function Train() {
             </div>
             <div>
                 <Webcam id="webcam" className="webcam" audio={false} height={500} width={500} ref={webcamRef} screenshotFormat="image/jpeg" />
-                <img src={imgSrc} alt="" />
             </div>
         </div>
     )

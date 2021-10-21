@@ -89,7 +89,7 @@ function Train() {
 
     }, []);
     if (count === 14) {
-        window.location.replace("/webcam");
+        console.log('finished')
     }
 
     return (

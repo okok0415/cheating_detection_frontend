@@ -6,18 +6,16 @@ import { TrainData } from "./TrainData";
 import { WebSocketContext } from './TrainWebSocketProvider';
 
 let time = 0;
-
+// getscreenshot이 문제다. 화면 크기 보내줘야됨.
 function Train() {
     const ws = useContext(WebSocketContext);
-    const webcamRef = React.useRef<any>(null);
+    const webcamRef: any = React.useRef<any>(null);
     //const [json, setJson] = React.useState<any>([]);
     const [imgSrc, setImgSrc] = React.useState<any>(null);
     const [count, setCount] = React.useState(0);
     const [array, setArray] = React.useState<any>(TrainData[count]);
     const [column, setColumn] = React.useState<number>(0);
     const [row, setRow] = React.useState<number>(0);
-    const [framecount, setFramecount] = React.useState<number>(0);
-
     let localStream: any = null;
 
     const clickHandler = () => {
@@ -28,6 +26,7 @@ function Train() {
         const target = document.querySelector("#arrow")
         const clientRect = target?.getBoundingClientRect();
         const sendinf = {
+            'message': 'clicked',
             'bottom': clientRect?.bottom,
             'height': clientRect?.height,
             'left': clientRect?.left,
@@ -36,7 +35,7 @@ function Train() {
             'width': clientRect?.width,
             'x': clientRect?.x,
             'y': clientRect?.y,
-            'frame': imageSrc
+            'frame': imageSrc,
         }
         //setJson((json: any) => [...json, sendinf])
 
@@ -57,7 +56,8 @@ function Train() {
         if (time < 9) {
             const imageSrc = webcamRef.current.getScreenshot();
             const sendinf = {
-                'frame': imageSrc
+                'message': 'only-frame',
+                'frame': imageSrc,
             }
             time += 1;
             console.log(time)
@@ -82,8 +82,6 @@ function Train() {
     console.log(rawdata);
     ws.current.send(rawdata)
     */
-
-
     const getWebcam = (callback: any) => {
         try {
             const constraints = {
@@ -121,6 +119,7 @@ function Train() {
             </div>
             <div>
                 <Webcam id="webcam" className="webcam" audio={false} height={500} width={500} ref={webcamRef} screenshotFormat="image/jpeg" />
+                <img src={imgSrc} alt="" />
             </div>
         </div>
     )

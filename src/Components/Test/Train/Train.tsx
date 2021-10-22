@@ -17,6 +17,7 @@ function Train() {
     const [column, setColumn] = React.useState<number>(0);
     const [row, setRow] = React.useState<number>(0);
     let localStream: any = null;
+    const [loading, setLoading] = React.useState(false);
 
     const clickHandler = () => {
         const imageSrc = webcamRef.current.getScreenshot();

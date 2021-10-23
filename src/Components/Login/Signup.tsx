@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../Actions/userAction";
+import { registerUser, loginUser } from "../../Actions/userAction";
 import { ReactComponent as CDIcon } from "../Navbar/icons/cheating_detection_2.svg";
 import "./CSS/Login.css";
 function Signup(props: any) {
@@ -16,6 +16,8 @@ function Signup(props: any) {
     const [bfocus, setBfocus] = useState(false);
     const [pfocus, setPfocus] = useState(false);
     const [cfocus, setCfocus] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [redirect, setRedirect] = useState(false);
     const dispatch = useDispatch();
 
     const onufocusHandler = (e: any) => {
@@ -64,17 +66,42 @@ function Signup(props: any) {
         if (Password !== ConfirmPasword) {
             console.log("비밀번호 불일치");
         } else {
-
-            const uploadData = new FormData();
-            uploadData.append('username', Username);
-            uploadData.append('name', Name);
-            uploadData.append('birth', Birth);
-            uploadData.append('password', Password);
-            uploadData.append('image', IDcard, IDcard.name);
-            console.log(uploadData);
-            dispatch(registerUser(uploadData))
+            setIsLoading(true);
+            register();
         }
     };
+
+    const register = async () => {
+        const uploadData = new FormData();
+        uploadData.append('username', Username);
+        uploadData.append('name', Name);
+        uploadData.append('birth', Birth);
+        uploadData.append('password', Password);
+        uploadData.append('image', IDcard, IDcard.name);
+        await dispatch(registerUser(uploadData))
+            .then(() => {
+                login();
+            })
+    }
+
+    const login = async () => {
+        let body = {
+            username: Username,
+            password: Password,
+        };
+        dispatch(await loginUser(body))
+        setRedirect(true)
+    }
+
+    if (redirect) {
+        return (<Redirect to="/" />)
+    }
+    if (isLoading) {
+
+        return (
+            <div>loading...</div>
+        )
+    }
     return (
         <div className="register">
             <form
@@ -145,6 +172,7 @@ function Signup(props: any) {
                     <button className="button" type="submit">제출</button>
                 </div>
             </form>
+
         </div>
     );
 }

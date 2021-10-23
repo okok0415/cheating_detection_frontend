@@ -6,6 +6,7 @@ import { HomeRouter } from "./Components/Home/HomeRouter";
 import { CalibrateRouter, SupervisorRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
 import { SigninRouter, SignupRouter } from "./Components/Login/LoginRouter";
 import "./CSS/App.css";
+import SettingsRouter from "./Components/Settings/SettingsRouter";
 
 function App(): any {
 
@@ -21,6 +22,7 @@ function App(): any {
           <PrivateRoute path="/train" component={TrainRouter} />
           <PrivateRoute path="/webcam" component={SupervisorRouter} />
           <PrivateRoute path="/calibrate" component={CalibrateRouter} />
+          <PrivateRoute path="/settings" component={SettingsRouter} />
         </Switch>
       </BrowserRouter>
     </>

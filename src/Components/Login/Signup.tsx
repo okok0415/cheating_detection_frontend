@@ -3,7 +3,9 @@ import { withRouter, Link, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerUser, loginUser } from "../../Actions/userAction";
 import { ReactComponent as CDIcon } from "../Navbar/icons/cheating_detection_2.svg";
+import Loader from "react-loader-spinner";
 import "./CSS/Login.css";
+
 function Signup(props: any) {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
@@ -79,6 +81,9 @@ function Signup(props: any) {
         uploadData.append('password', Password);
         uploadData.append('image', IDcard, IDcard.name);
         await dispatch(registerUser(uploadData))
+            .then((res) => {
+                console.log(res)
+            })
             .then(() => {
                 login();
             })
@@ -99,7 +104,12 @@ function Signup(props: any) {
     if (isLoading) {
 
         return (
-            <div>loading...</div>
+            <div className="register">
+                <div className="register-form">
+                    <div>사진을 확인하는 데 3~4초 정도 소요됩니다. 잠시만 기다려 주세요.</div>
+                    <Loader type="Oval" color="#3d66ba" height="300" width="300" timeout={5000} />
+                </div>
+            </div>
         )
     }
     return (

@@ -51,7 +51,7 @@ function Navbar() {
                     <NavItem item="Result" url="/result" border={result}>
 
                     </NavItem>
-                    <NavItem item={<CogIcon />} url="/settings" border={settings}>
+                    <NavItem item={<CogIcon />} url="/settings/myprofile" border={settings}>
 
                     </NavItem>
                     <Logout item={<LogoutIcon />} url="/login">

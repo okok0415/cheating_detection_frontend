@@ -76,8 +76,6 @@ function Signup(props: any) {
     const register = async () => {
         const uploadData = new FormData();
         uploadData.append('username', Username);
-        uploadData.append('name', Name);
-        uploadData.append('birth', Birth);
         uploadData.append('password', Password);
         uploadData.append('image', IDcard, IDcard.name);
         await dispatch(registerUser(uploadData))
@@ -99,7 +97,8 @@ function Signup(props: any) {
     }
 
     if (redirect) {
-        return (<Redirect to="/" />)
+        alert("신분증에 있는 이름과 생년월일이 맞는지 확인하세요. 다르다면 올바르게 변경해주세요.")
+        return (<Redirect to="/settings/changeprofile" />)
     }
     if (isLoading) {
 
@@ -131,25 +130,6 @@ function Signup(props: any) {
                         <input onClick={onufocusHandler} className="input" type="string" value={Username} onChange={onUsernameHandler} required />
                     </div>
                 </div>
-                <div className={nfocus || Name !== "" ? "input-div one focus" : "input-div one"}>
-                    <div className="i">
-                        <i className="fas fa-user"></i>
-                    </div>
-                    <div>
-                        <h5>이름</h5>
-                        <input onClick={onnfocusHandler} className="input" type="string" value={Name} onChange={onNameHandler} />
-                    </div>
-                </div>
-                <div className={bfocus || Birth !== "" ? "input-div one focus" : "input-div one"}>
-                    <div className="i">
-                        <i className="fas fa-calendar-week"></i>
-                    </div>
-                    <div>
-                        <h5>생년월일</h5>
-                        <input onClick={onbfocusHandler} className="input" type="string" value={Birth} onChange={onBirthHandler} />
-                    </div>
-                </div>
-                {(bfocus || Birth !== '') && <div className="bottom-text">YYYYMMDD 형태로 작성.</div>}
                 <div className={pfocus || Password !== "" ? "input-div one focus" : "input-div one"}>
                     <div className="i">
                         <i className="fas fa-lock"></i>

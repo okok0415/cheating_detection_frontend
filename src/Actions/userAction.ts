@@ -1,4 +1,4 @@
-import { REGISTER_USER, LOGIN_USER, LOGOUT_USER, GET_USER } from "./types";
+import { REGISTER_USER, LOGIN_USER, LOGOUT_USER, GET_USER, UPDATE_USER, UPDATE_USER_NAME } from "./types";
 import { request, requestMedia, requestGet } from "../utils/fetch";
 
 const USER_URL = "/user";
@@ -37,4 +37,22 @@ export async function getUser() {
         type: GET_USER,
         payload: data,
     };
+}
+
+export async function changeName(dataToSubmit: any) {
+    const data = await request("post", USER_URL + "/update-name", dataToSubmit);
+
+    return {
+        type: UPDATE_USER_NAME,
+        payload: data
+    }
+}
+
+export async function changePassword(dataToSubmit: any) {
+    const data = await request("post", USER_URL + "/update", dataToSubmit);
+
+    return {
+        type: UPDATE_USER,
+        payload: data
+    }
 }

@@ -4,6 +4,7 @@ import Navbar from "../Navbar/Navbar";
 import SidebarSettings from "../Sidebar/Sidebar";
 import ChangePassword from "./Pages/ChangePassword";
 import Myprofile from "./Pages/Myprofile";
+import ChangeProfile from "./Pages/ChangeProfile";
 
 function SettingsRouter({ match }: { match: any }) {
     return (
@@ -16,6 +17,7 @@ function SettingsRouter({ match }: { match: any }) {
                 <Switch>
                     <Route exact path={match.path + '/myprofile'} component={Myprofile} />
                     <Route exact path={match.path + '/changepassword'} component={ChangePassword} />
+                    <Route exact path={match.path + '/changeprofile'} component={ChangeProfile} />
                 </Switch>
             </div>
         </>

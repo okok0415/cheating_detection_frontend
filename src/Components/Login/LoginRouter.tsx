@@ -1,7 +1,7 @@
 import React from "react";
 import Signin from "./Signin";
 import Signup from "./Signup";
-
+import CheckItems from "./CheckItems"
 
 function SigninRouter() {
 
@@ -21,4 +21,11 @@ function SignupRouter() {
     )
 }
 
-export { SigninRouter, SignupRouter };
+function CheckItemsRouter() {
+    return (
+        <>
+            <CheckItems />
+        </>
+    )
+}
+export { SigninRouter, SignupRouter, CheckItemsRouter };

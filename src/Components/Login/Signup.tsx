@@ -98,7 +98,7 @@ function Signup(props: any) {
 
     if (redirect) {
         alert("신분증에 있는 이름과 생년월일이 맞는지 확인하세요. 다르다면 올바르게 변경해주세요.")
-        return (<Redirect to="/settings/changeprofile" />)
+        return (<Redirect to="/checkitems" />)
     }
     if (isLoading) {
 

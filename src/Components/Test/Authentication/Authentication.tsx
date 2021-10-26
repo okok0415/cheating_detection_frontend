@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import Webcam from "react-webcam"
 import { WebSocketContext } from './AuthenticationWebSocketProvider';
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getUser } from "../../../Actions/userAction";
 
 
 function Authentication() {
+    const [username, setUsername] = useState("");
+    const dispatch = useDispatch();
     const ws = useContext(WebSocketContext);
     const webcamRef = React.useRef<any>(null);
 
@@ -13,7 +17,11 @@ function Authentication() {
     let localStream: any = null;
     const processImage: any = () => {
         const imageSrc = webcamRef.current.getScreenshot();
-        ws.current.send(imageSrc);
+        let data = {
+            frame: imageSrc,
+            username: username
+        }
+        ws.current.send(JSON.stringify(data));
     }
 
 
@@ -45,6 +53,10 @@ function Authentication() {
             webcamRef.current.srcObject = localStream;
             webcamRef.current.muted = true;
         });
+        const i: any = dispatch(getUser);
+        i.then((res: any) => {
+            setUsername(res.payload.username)
+        })
     }, []);
 
     return (

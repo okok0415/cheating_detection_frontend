@@ -1,21 +1,19 @@
 import React, { useContext } from "react";
 import { useEffect } from "react";
 import Webcam from "react-webcam"
-import { WebSocketContext } from './CalibrateWebSocketProvider';
+import { WebSocketContext } from './AuthenticationWebSocketProvider';
 import { Link } from "react-router-dom";
 
 
-function Calibrate() {
+function Authentication() {
     const ws = useContext(WebSocketContext);
     const webcamRef = React.useRef<any>(null);
-    const [video, setVideo] = React.useState<any>(false);
+
 
     let localStream: any = null;
     const processImage: any = () => {
         const imageSrc = webcamRef.current.getScreenshot();
         ws.current.send(imageSrc);
-        setTimeout(processImage, 30);
-        setVideo(true);
     }
 
 
@@ -35,7 +33,7 @@ function Calibrate() {
     }
     const left = () => {
         clearInterval(processImage);
-        window.location.href = "/test/calibrate"
+        window.location.href = "/test/authentication"
     }
     const right = () => {
         clearInterval(processImage);
@@ -53,14 +51,15 @@ function Calibrate() {
         <>
             <div className="prepare">
                 <div className="info">
-                    <div className="info-title">Calibrate 과정</div>
+                    <div className="info-title">Authentication 과정</div>
                     <div className="info-content">
                         <Webcam audio={false} height={380} width={500} ref={webcamRef} screenshotFormat="image/jpeg" />
                     </div>
 
                     <div className="button-bottom">
-                        <button onClick={processImage}>보여주기</button>
+
                         <div className="btn-next" onClick={left}>이전</div>
+                        <div className="btn-next" onClick={processImage}>보여주기</div>
                         <div className="btn-next" onClick={right}>다음</div>
                     </div>
                 </div>
@@ -71,4 +70,4 @@ function Calibrate() {
 
 
 
-export default Calibrate;
+export default Authentication;

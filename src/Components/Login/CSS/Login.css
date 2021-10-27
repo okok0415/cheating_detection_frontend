@@ -30,6 +30,7 @@
     width: 340px;
     background-color: var(--input);
     padding: 60px;
+    border-radius: 10px;
 }
 .register-form svg{
     width:250px;

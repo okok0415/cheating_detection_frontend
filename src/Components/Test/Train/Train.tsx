@@ -4,7 +4,7 @@ import react from "../Train/logo192.png";
 import Webcam from "react-webcam"
 import { TrainData } from "./TrainData";
 import { WebSocketContext } from './TrainWebSocketProvider';
-
+import Loader from "react-loader-spinner";
 
 let time = 0;
 // getscreenshot이 문제다. 화면 크기 보내줘야됨.
@@ -19,6 +19,7 @@ function Train() {
     const [row, setRow] = React.useState<number>(0);
     let localStream: any = null;
     const [loading, setLoading] = React.useState(false);
+
 
     const clickHandler = () => {
         const imageSrc = webcamRef.current.getScreenshot();
@@ -51,6 +52,7 @@ function Train() {
             console.log(JSON.stringify(sendinf))
             ws.current.send(JSON.stringify(sendinf))
             processImage();
+            //setLoading(true)
         }
     }
 
@@ -109,8 +111,29 @@ function Train() {
             'message': 'screen-size',
             'screen': window.screen,
         }
-        setTimeout(() => { ws.current.send(JSON.stringify(sendinf)) }, 2000);
+        setTimeout(() => { ws.current.send(JSON.stringify(sendinf)) }, 4000);
     }, []);
+
+    ws.current.onmessage = (evt: MessageEvent) => {
+        const data = JSON.parse(evt.data)
+        if (data) {
+            setLoading(false)
+        }
+    }
+    if (loading) {
+
+        return (
+            <div className="register">
+                <div className="absolute">
+                    <Webcam id="webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" />
+                </div>
+                <div className="register-form">
+                    <div>잠시만 기다려 주세요.</div>
+                    <Loader type="Oval" color="#3d66ba" height="300" width="300" timeout={5000} />
+                </div>
+            </div>
+        )
+    }
     /*
     if (count === 15) {
         window.location.replace("/test/test");

@@ -1,0 +1,127 @@
+.home{
+
+}
+.first-block{
+    display: flex;
+    justify-content: center;
+}
+
+.four-block{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width:1000px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+.block-settle{
+    padding: 10px;
+    width: 200px;
+    background-color: white;
+    height:200px;
+    border-radius: 20px;
+
+}
+.block-title{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.block-content{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+.second-block{
+    display: flex;
+    justify-content: center;
+    
+}
+.step{
+
+    border-radius: 20px;
+    width: 970px;
+    height: 350px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: white;
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+}
+
+.icon-space{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.step-icon{
+    border-radius: 10px;
+    width:30px;
+    height: 30px;
+    background-color: var(--sidebar);
+    transition:.7s;
+}
+
+.step-icon2{
+    border-radius: 10px;
+    width:50%;
+    height: 30px;
+    background-color:var(--sidebar-accent);
+    transition: .7s;
+}
+
+.step-icon3{
+    border-radius: 10px;
+    width:100%;
+    height: 30px;
+    background-color:var(--sidebar-accent-accent);
+    transition: .7s;
+}
+
+.step-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.step-title{
+    font-weight: bold;
+    font-size:20px;
+    border-bottom: var(--border);
+    margin-bottom: 10px;
+}
+
+.step-information{
+
+}
+
+.step-left{
+    display: grid;
+    grid-template-rows: 1fr 4fr 2fr;
+}
+
+.step-right{
+    padding:20px;
+}
+
+.step-btn {
+    border: var(--border);
+    display: inline-flex;
+    width:60px;
+    height: 40px;
+    margin:5px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: var(--background);
+}
+
+.step-btn:hover {
+    background-color: var(--background-accent);
+}

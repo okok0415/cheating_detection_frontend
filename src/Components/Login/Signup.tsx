@@ -9,13 +9,9 @@ import "./CSS/Login.css";
 function Signup(props: any) {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
-    const [Name, setName] = useState("");
-    const [Birth, setBirth] = useState("");
     const [ConfirmPasword, setConfirmPasword] = useState("");
     const [IDcard, setIDcard] = useState<any>();
     const [ufocus, setUfocus] = useState(false);
-    const [nfocus, setNfocus] = useState(false);
-    const [bfocus, setBfocus] = useState(false);
     const [pfocus, setPfocus] = useState(false);
     const [cfocus, setCfocus] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -26,13 +22,6 @@ function Signup(props: any) {
         setUfocus(!ufocus);
     }
 
-    const onnfocusHandler = (e: any) => {
-        setNfocus(!nfocus);
-    }
-
-    const onbfocusHandler = (e: any) => {
-        setBfocus(!bfocus);
-    }
 
     const onpfocusHandler = (e: any) => {
         setPfocus(!pfocus);
@@ -45,14 +34,6 @@ function Signup(props: any) {
 
     const onUsernameHandler = (e: any) => {
         setUsername(e.currentTarget.value);
-    };
-
-    const onNameHandler = (e: any) => {
-        setName(e.currentTarget.value);
-    };
-
-    const onBirthHandler = (e: any) => {
-        setBirth(e.currentTarget.value);
     };
 
     const onPasswordHandler = (e: any) => {

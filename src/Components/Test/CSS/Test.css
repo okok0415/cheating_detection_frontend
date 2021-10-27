@@ -114,8 +114,16 @@
     background-color: aqua;
 }
 
+.absolute {
+    background-color: var(--background-accent);
+    border: var(--border);
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    transform:translateX(-50%);
+}
 .webcam{
-    top:500px;
+
 }
 
 
@@ -143,7 +151,7 @@
 
 .second {
     grid-column: 8;
-    grid-row:1;
+    grid-row:6;
     display:flex;
     justify-content: center;
 }

@@ -5,6 +5,7 @@ import Webcam from "react-webcam"
 import { TrainData } from "./TrainData";
 import { WebSocketContext } from './TrainWebSocketProvider';
 
+
 let time = 0;
 // getscreenshot이 문제다. 화면 크기 보내줘야됨.
 function Train() {
@@ -104,7 +105,11 @@ function Train() {
         });
 
         clickHandler();
-
+        const sendinf = {
+            'message': 'screen-size',
+            'screen': window.screen,
+        }
+        setTimeout(() => { ws.current.send(JSON.stringify(sendinf)) }, 2000);
     }, []);
     /*
     if (count === 15) {
@@ -113,14 +118,13 @@ function Train() {
     */
     return (
         <div className="third-test">
+            <div className="absolute">
+                <Webcam id="webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" />
+            </div>
             <div className="train" >
                 <div className={array.className} style={{ gridRow: row, gridColumn: column }}>
                     <img id="arrow" src={react} onClick={clickHandler} alt="" width="50" height="50" />
                 </div>
-            </div>
-            <div>
-                <Webcam id="webcam" className="webcam" audio={false} height={500} width={500} ref={webcamRef} screenshotFormat="image/jpeg" />
-                <img src={imgSrc} alt="" />
             </div>
         </div>
     )

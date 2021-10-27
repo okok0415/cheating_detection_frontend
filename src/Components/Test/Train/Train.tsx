@@ -18,7 +18,7 @@ function Train() {
     const [column, setColumn] = React.useState<number>(0);
     const [row, setRow] = React.useState<number>(0);
     let localStream: any = null;
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
 
 
     const clickHandler = () => {
@@ -43,8 +43,15 @@ function Train() {
         //setJson((json: any) => [...json, sendinf])
 
         if (count >= 9 && count < 14) {
-            setColumn(Math.floor(Math.random() * (16)));
-            setRow(Math.floor(Math.random() * (16)));
+            let column = Math.floor(Math.random() * (16));
+            let row = Math.floor(Math.random() * (16));
+
+            while (row < 6 && (column > 5 && column < 11)) {
+                column = Math.floor(Math.random() * (16));
+                row = Math.floor(Math.random() * (16));
+            }
+            setColumn(column);
+            setRow(row);
 
 
         }
@@ -111,7 +118,10 @@ function Train() {
             'message': 'screen-size',
             'screen': window.screen,
         }
-        setTimeout(() => { ws.current.send(JSON.stringify(sendinf)) }, 4000);
+        setTimeout(() => {
+            ws.current.send(JSON.stringify(sendinf))
+            setLoading(false)
+        }, 2000);
     }, []);
 
     ws.current.onmessage = (evt: MessageEvent) => {
@@ -123,8 +133,8 @@ function Train() {
     if (loading) {
 
         return (
-            <div className="register">
-                <div className="absolute">
+            <div className="third-test">
+                <div>
                     <Webcam id="webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" />
                 </div>
                 <div className="register-form">

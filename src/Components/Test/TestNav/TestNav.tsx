@@ -20,7 +20,7 @@ function TestNav() {
             setCollect(true);
             setTest(false);
         }
-        else if (window.location.pathname === "/test/test") {
+        else if (window.location.pathname === "/test/screensharing") {
             setCalibrate(false);
             setCollect(false);
             setTest(true);
@@ -55,7 +55,7 @@ function TestNav() {
                 <div className={test ? "bordernav" : ""}>
                     <div>
                         <div className="icontext"><TestIcon width="45" height="45" /></div>
-                        <div className="navitem">Test</div>
+                        <div className="navitem">ScreenSharing</div>
                     </div>
                 </div>
                 <div></div>

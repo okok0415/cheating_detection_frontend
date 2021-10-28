@@ -79,7 +79,9 @@ function Step() {
     return (
         <div className="second-block">
             <div className="step">
-
+                <div className="step-big-title">
+                    시험 치기 전 준비 과정
+                </div>
                 <div className="icon-space">
                     <div></div>
                     <div className={check}></div>

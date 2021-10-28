@@ -151,6 +151,12 @@
     padding: 8px;
 }
 
+.label .right-radio {
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: aliceblue;
+}
+
 .submit {
     margin-top: 20px;
     display: flex;

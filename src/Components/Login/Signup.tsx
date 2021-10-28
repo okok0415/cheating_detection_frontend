@@ -11,6 +11,7 @@ function Signup(props: any) {
     const [Password, setPassword] = useState("");
     const [ConfirmPasword, setConfirmPasword] = useState("");
     const [IDcard, setIDcard] = useState<any>();
+    const [supervisor, setSupervisor] = useState(false);
     const [ufocus, setUfocus] = useState(false);
     const [pfocus, setPfocus] = useState(false);
     const [cfocus, setCfocus] = useState(false);
@@ -55,10 +56,11 @@ function Signup(props: any) {
     };
 
     const register = async () => {
-        const uploadData = new FormData();
+        const uploadData: any = new FormData();
         uploadData.append('username', Username);
         uploadData.append('password', Password);
         uploadData.append('image', IDcard, IDcard.name);
+        uploadData.append('supervisor', supervisor)
         await dispatch(registerUser(uploadData))
             .then((res) => {
                 console.log(res)
@@ -135,6 +137,14 @@ function Signup(props: any) {
                     <div className="idcard-icon"><i className="fas fa-id-card idcard"></i></div>
                     <label className="left">  신분증</label>
                     <input className="right" type="file" accept='image/jpg, image/png, image/jpeg, image/gif' onChange={(e: any) => setIDcard(e.target.files[0])} required />
+                </div>
+                <div className="label">
+                    <div className="idcard-icon"><i className="fas fa-id-card idcard"></i></div>
+                    <label className="left"> 신분 </label>
+                    <div className="right">
+                        <input className="right-radio" type="radio" name="supervisor" onClick={() => setSupervisor(false)} checked value="student" />학생
+                        <input className="right-radio" type="radio" name="supervisor" onClick={() => setSupervisor(true)} value="supervisor" />관리자
+                    </div>
                 </div>
                 <Link to="/login" className="information">
                     이미 계정이 있으십니까? ...로그인

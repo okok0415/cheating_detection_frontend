@@ -6,12 +6,22 @@ import { ReactComponent as CogIcon } from "./icons/cog.svg";
 import { ReactComponent as LogoutIcon } from "./icons/logout.svg";
 import { ReactComponent as CDIcon } from "./icons/cheating_detection_2.svg";
 import "./CSS/Navbar.css";
+import { useDispatch } from "react-redux";
+import { getUser } from "../../Actions/userAction";
 
 function Navbar() {
     const [test, setTest] = useState(false);
     const [result, setResult] = useState(false);
     const [settings, setSettings] = useState(false);
+    const [supervisor, setSupervisor] = useState("");
 
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const i: any = dispatch(getUser);
+        i.then((res: any) => {
+            setSupervisor(res.payload.supervisor)
+        })
+    }, []);
     useEffect(() => {
         if (window.location.pathname === "/") {
             setTest(false);
@@ -45,7 +55,7 @@ function Navbar() {
             <nav className="navbar">
                 <Link to='/' className="navbar-title" onClick={replaceURL}><CDIcon /></Link>
                 <ul className='navbar-nav'>
-                    <NavItem item="Test" url="/test/authentication" border={test}>
+                    <NavItem item="Test" url={supervisor === 'true' ? "/video" : "/test/authentication"} border={test}>
 
                     </NavItem>
                     <NavItem item="Result" url="/result" border={result}>

@@ -3,10 +3,11 @@ import PublicRoute from "./utils/PublicRoute";
 import PrivateRoute from "./utils/PrivateRoute";
 
 import { HomeRouter } from "./Components/Home/HomeRouter";
-import { AuthenticationRouter, SupervisorRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
+import { AuthenticationRouter, superRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
 import { SigninRouter, SignupRouter, CheckItemsRouter } from "./Components/Login/LoginRouter";
 import "./CSS/App.css";
 import SettingsRouter from "./Components/Settings/SettingsRouter";
+import SupervisorRouter from "./Components/Supervisor/SupervisorRoute";
 
 function App(): any {
 
@@ -21,10 +22,10 @@ function App(): any {
           <PublicRoute path="/checkitems" component={CheckItemsRouter} />
           <PrivateRoute path="/test" component={TestRouter} />
           <PrivateRoute path="/train" component={TrainRouter} />
-          <PrivateRoute path="/webcam" component={SupervisorRouter} />
+          <PrivateRoute path="/video" exact={true} component={SupervisorRouter} />
+          <PrivateRoute path="/video2" exact={true} component={superRouter} />
           <PrivateRoute path="/authentication" component={AuthenticationRouter} />
           <PrivateRoute path="/settings" component={SettingsRouter} />
-
         </Switch>
       </BrowserRouter>
     </>

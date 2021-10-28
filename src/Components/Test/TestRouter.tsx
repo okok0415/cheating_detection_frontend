@@ -7,7 +7,7 @@ import HTML from "./websocket/HTML";
 import Navbar from "../Navbar/Navbar";
 import authentication from "./informationPage/authentication";
 import collect from "./informationPage/collect";
-import test from "./informationPage/test";
+import screensharing from "./informationPage/screensharing";
 import Authentication from "./Authentication/Authentication";
 
 export const TestRouter = ({ match }: { match: any }) => {
@@ -19,7 +19,7 @@ export const TestRouter = ({ match }: { match: any }) => {
             <Switch>
                 <Route path={match.path + '/authentication'} component={authentication} />
                 <Route path={match.path + '/collect'} component={collect} />
-                <Route path={match.path + '/test'} component={test} />
+                <Route path={match.path + '/screensharing'} component={screensharing} />
             </Switch>
         </>
     )
@@ -48,7 +48,7 @@ export const TrainRouter = () => {
     )
 }
 
-export const SupervisorRouter = () => {
+export const superRouter = () => {
     return (
         <>
             <Navbar />

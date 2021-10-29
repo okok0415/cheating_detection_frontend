@@ -1,8 +1,9 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
+
 import { getUser } from '../../../Actions/userAction';
+var mapPeers: any = {};
 
 function Test() {
     const [username, setUsername] = useState("");
@@ -10,14 +11,20 @@ function Test() {
     const [videoconnect, setVideoconnect] = useState(false)
     const [imageSrc, setImageSrc] = useState<any>();
     const [message, setMessage] = useState<string[]>([""]);
+    const [text, setText] = useState<string>("");
     const [video, setVideo] = useState<any>([]);
+    //const [mapPeers, setMapPeers] = useState<any>({});
+    //let mapPeers: any = {};
+    const inputRef: any = useRef<any>(null);
     const dispatch = useDispatch();
     const webcamRef: any = React.useRef<any>(null);
+    const studentRef: any = React.useRef<any>(null);
     const webSocketURL: string = "ws://localhost:8000/ws/chat/lobby/"
     const webSocketVideoURL: string = "ws://localhost:8000/ws/test/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
-    let localStream: MediaStream
+    //let localStream: any = new MediaStream();
+    const [localStream, setLocalStream] = useState<MediaStream>();
     const InitialConnect = () => { //PeertoPeerConnection Websocket
         ws.current = new WebSocket(webSocketURL);
 
@@ -45,17 +52,34 @@ function Test() {
         const peerUsername = parsedData['peer'];
         const action = parsedData['action'];
 
+
         if (username == peerUsername) {
             return;
         }
 
         const receiver_channel_name = parsedData['message']['receiver_channel_name']
 
-        if (action == 'new-peer') {
+        if (action === 'new-peer') {
             createOfferer(peerUsername, receiver_channel_name)
 
             return;
         }
+
+        if (action === 'new-offer') {
+            const offer = parsedData['message']['sdp']
+            createAnswerer(offer, peerUsername, receiver_channel_name);
+
+            return;
+        }
+
+        if (action === 'new-answer') {
+            const answer = parsedData['message']['sdp'];
+
+            const peer = mapPeers[peerUsername][0]
+            console.log(peer)
+            peer.setRemoteDescription(answer);
+        }
+
     }
 
     const sendSignal = (action: string, message: Object) => {
@@ -81,30 +105,120 @@ function Test() {
             dcOnMessage(event)
         }
 
-        const remoteVideo = createVideo(peerUsername);
+        const remoteVideo = CreateVideo(peerUsername);
         setOnTrack(peer, remoteVideo);
+
+        /*
+        setMapPeers({
+            ...mapPeers,
+            peerUsername : [peer, dc],           
+        })
+        */
+        mapPeers[peerUsername] = [peer, dc];
+        peer.oniceconnectionstatechange = () => {
+            const iceConnectionState = peer.iceConnectionState;
+
+            if (iceConnectionState === 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
+                delete mapPeers[peerUsername];
+                if (iceConnectionState != 'closed') {
+                    peer.close();
+                }
+                removeVideo(remoteVideo)
+            }
+
+
+        }
+
+        peer.onicecandidate = (event: any) => {
+            if (event.candidate) {
+                console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
+
+                return;
+            }
+
+            sendSignal('new-offer', {
+                'sdp': peer.localDescription,
+                'receiver_channel_name': receiver_channel_name
+            })
+        }
+
+        peer.createOffer()
+            .then(o => peer.setLocalDescription(o))
+            .then(() => {
+                console.log('Local description set successfully');
+            })
+    }
+
+    const createAnswerer = (offer: any, peerUsername: string, receiver_channel_name: string) => {
+        const peer: any = new RTCPeerConnection(undefined);
+
+        addLocalTracks(peer);
+
+        const remoteVideo = CreateVideo(peerUsername);
+        setOnTrack(peer, remoteVideo);
+
+        peer.ondatachannel = (event: any) => {
+            peer.dc = event.channel
+            peer.dc.onopen = () => {
+                console.log("Connection opened!");
+            }
+            peer.dc.onmessage = (event: any) => {
+                dcOnMessage(event)
+            }
+            mapPeers[peerUsername] = [peer, peer.dc];
+        }
+
+        peer.oniceconnectionstatechange = () => {
+            const iceConnectionState = peer.iceConnectionState;
+
+            if (iceConnectionState === 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
+                delete mapPeers[peerUsername];
+
+                if (iceConnectionState != 'closed') {
+                    peer.close();
+                }
+                removeVideo(remoteVideo)
+            }
+
+
+        }
+
+        peer.onicecandidate = (event: any) => {
+            if (event.candidate) {
+                console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
+
+                return;
+            }
+
+            sendSignal('new-answer', {
+                'sdp': peer.localDescription,
+                'receiver_channel_name': receiver_channel_name
+            })
+        }
+
+        peer.setRemoteDescription(offer)
+            .then(() => {
+                console.log('Remote description set successfully for %s.', peerUsername);
+                return peer.createAnswer();
+            })
+            .then((a: any) => {
+                console.log('Answer created!');
+
+                peer.setLocalDescription(a);
+            })
     }
 
     const addLocalTracks = (peer: RTCPeerConnection) => {
-        localStream.getTracks().forEach(track => {
+        console.log(localStream)
+        localStream?.getTracks().forEach((track: any) => {
             peer.addTrack(track, localStream)
         })
     }
 
     const dcOnMessage = (event: any) => {
         const data = JSON.parse(event.data);
-        if (message.length <= 10) {
-            setMessage([
-                ...message,
-                `${data.peer} : ${data.message}`
-            ])
-        } else {
-            message.splice(1, 1);
-            setMessage([
-                ...message,
-                `${data.peer} : ${data.message}`
-            ])
-        }
+        if (data.dcAction === 'message')
+            setMessage(data.dcData)
     }
     /*
     const createVideo = (peerUsername: string) => {
@@ -118,39 +232,110 @@ function Test() {
         return webcamRef;
     }
     */
-    const createVideo = (peerUsername: string) => {
-        const videoContainer = document.querySelector('#video-container')
-        const remoteVideo = document.createElement('video')
+    const CreateVideo = (peerUsername: string) => {
 
+
+        const videoContainer = document.querySelector('#video-container')
+        const remoteVideo: any = document.createElement('video')
+
+        remoteVideo.ref = webcamRef
         remoteVideo.id = peerUsername + '-video';
         remoteVideo.autoplay = true;
         remoteVideo.playsInline = true
 
+
         var videoWrapper = document.createElement('div');
         videoContainer?.appendChild(videoWrapper);
         videoWrapper.appendChild(remoteVideo)
-
         return remoteVideo
     }
-    const setOnTrack = (peer: RTCPeerConnection, remoteVideo: HTMLVideoElement) => {
+    const setOnTrack = (peer: RTCPeerConnection, remoteVideo: any) => {
         const remoteStream: any = new MediaStream();
-
-        remoteVideo.srcObject = remoteStream;
+        console.log(remoteStream)
         peer.ontrack = async (event: any) => {
             remoteStream.addTrack(event.track, remoteStream);
+            console.log(remoteStream)
+        }
+        remoteVideo.srcObject = remoteStream;
+        console.log(remoteStream)
+    }
+
+    const removeVideo = (video: any) => {
+        const videoWrapper = video.parentNode;
+
+        videoWrapper.parentNode.removeChild(videoWrapper)
+    }
+
+    const getDataChannels = () => {
+        var dataChannels = [];
+
+        for (const peerUsername in mapPeers) {
+            console.log('mapPeers[', peerUsername, ']: ', mapPeers[peerUsername]);
+            var dataChannel = mapPeers[peerUsername][1];
+            console.log('dataChannel: ', dataChannel);
+
+            dataChannels.push(dataChannel);
+        }
+
+        return dataChannels;
+    }
+
+    const btnSendMsg = () => {
+        let currenttext;
+
+        if (message.length <= 10) {
+            setMessage([
+                ...message,
+                `${username} : ${text}`
+            ])
+            currenttext = [...message, `${username} : ${text}`]
+        } else {
+            message.splice(1, 1);
+            setMessage([
+                ...message,
+                `${username} : ${text}`
+            ])
+            currenttext = [...message, `${username} : ${text}`]
+        }
+
+        const sendmsg = {
+            'dcAction': 'message',
+            'dcData': currenttext
+        }
+
+        var dataChannels = getDataChannels();
+        console.log(dataChannels)
+        console.log('Sending: ', currenttext);
+
+        // send to all data channels
+        for (const index in dataChannels) {
+            dataChannels[index].send(JSON.stringify(sendmsg));
+        }
+
+        setText("")
+        inputRef.current.focus()
+
+    }
+    const onKeyPress = (event: any) => {
+        if (event.key == 'Enter') {
+            btnSendMsg()
         }
     }
     useEffect(() => {
-        InitialConnect();
-        InitialVideoConnect();
-        setTimeout(processImage, 3000);
+
+        //InitialVideoConnect();
+        //
 
         getWebcam((stream: any) => {
-            localStream = stream;
+            console.log(stream);
+            setLocalStream(stream);
+            console.log(localStream)
             webcamRef.current.srcObject = localStream;
             webcamRef.current.muted = true;
         });
 
+        inputRef.current.focus()
+        /*
         const i: any = dispatch(getUser);
         i.then((res: any) => {
             setUsername(res.payload.username)
@@ -158,8 +343,14 @@ function Test() {
             console.log(username);
             console.log(name);
         })
-
+        */
     }, []);
+    const btnClick = () => {
+        InitialConnect();
+        //InitialVideoConnect();
+        //setTimeout(processImage, 3000);
+    }
+
 
     const InitialVideoConnect = () => { //backend로 보낼 Video Websocket
         wsVideo.current = new WebSocket(webSocketVideoURL);
@@ -209,12 +400,37 @@ function Test() {
         setTimeout(processImage, 30);
     }
     return (
+
+
         <div className="test">
-            <div id="video-container">
-                {video}
+            <h3 id="label-username">USERNAME</h3>
+            <div>
+                <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} /><button id="btn-join" onClick={btnClick}>Join Room</button>
+                {username}
             </div>
-            <Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" />
-            <div>{message}</div>
+            <div className="main-grid-container">
+                <div className="main-side">
+                    <div id="video-container">
+                        {video}
+                    </div>
+
+                </div>
+                <div className="right-side">
+                    <div id="lim"><Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" /></div>
+                    <div className="btn-control">
+                        <div> </div>
+                        <div> </div>
+                    </div>
+                    <div id="chat">
+                        <div className="chat-title">채팅</div>
+                        {message.map((data: string) => <div>{data}</div>)}
+                        <div id="ct"><input ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div onClick={btnSendMsg}>전송</div></div>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
     )
 }

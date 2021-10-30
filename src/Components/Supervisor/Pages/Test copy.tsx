@@ -7,23 +7,26 @@ var mapPeers: any = {};
 
 function Test() {
     const [username, setUsername] = useState("");
-
+    const [name, setName] = useState("");
+    const [videoconnect, setVideoconnect] = useState(false)
+    const [imageSrc, setImageSrc] = useState<any>();
     const [message, setMessage] = useState<string[]>([""]);
     const [text, setText] = useState<string>("");
+    const [video, setVideo] = useState<any>([]);
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
     //const [mapPeers, setMapPeers] = useState<any>({});
     //let mapPeers: any = {};
     const inputRef: any = useRef<any>(null);
+    const dispatch = useDispatch();
     const webcamRef: any = React.useRef<any>(null);
+    const studentRef: any = React.useRef<any>(null);
     const webSocketURL: string = "ws://localhost:8000/ws/chat/lobby/"
+    const webSocketVideoURL: string = "ws://localhost:8000/ws/test/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
-    const [coordinate, setCoordinate] = useState([{
-        "username": "0",
-        "x": 0,
-        "y": 0
-    }]);
     const InitialConnect = () => { //PeertoPeerConnection Websocket
         ws.current = new WebSocket(webSocketURL);
 
@@ -33,6 +36,9 @@ function Test() {
             sendSignal('new-peer', {})
         };
         ws.current.onmessage = (event: any) => {
+            if (JSON.parse(event.data)['action'] === 'get-frame') {
+                webSocketVideoOnMessage(event)
+            }
             webSocketOnMessage(event)
         }
         ws.current.onclose = (error: string) => {
@@ -218,12 +224,6 @@ function Test() {
         const data = JSON.parse(event.data);
         if (data.dcAction === 'message')
             setMessage(data.dcData)
-        else if (data.dcAction === 'coordinate') {
-            //setCoordinate(
-            //    ...coordinate,
-            //    data.dcData
-            //)
-        }
     }
     /*
     const createVideo = (peerUsername: string) => {
@@ -290,16 +290,16 @@ function Test() {
         if (message.length <= 10) {
             setMessage([
                 ...message,
-                `${username + "(관리자)"} : ${text}`
+                `${username} : ${text}`
             ])
-            currenttext = [...message, `${username + "(관리자)"} : ${text}`]
+            currenttext = [...message, `${username} : ${text}`]
         } else {
             message.splice(1, 1);
             setMessage([
                 ...message,
-                `${username + "(관리자)"} : ${text}`
+                `${username} : ${text}`
             ])
-            currenttext = [...message, `${username + "(관리자)"} : ${text}`]
+            currenttext = [...message, `${username} : ${text}`]
         }
 
         const sendmsg = {
@@ -351,11 +351,40 @@ function Test() {
     }, []);
     const btnClick = () => {
         InitialConnect();
-        //InitialVideoConnect();
-        //setTimeout(processImage, 3000);
+        InitialVideoConnect();
+        setTimeout(processImage, 3000);
     }
 
 
+    const InitialVideoConnect = () => { //backend로 보낼 Video Websocket
+        wsVideo.current = new WebSocket(webSocketVideoURL);
+
+        wsVideo.current.onopen = () => {
+            console.log("connected to " + webSocketVideoURL);
+            setVideoconnect(true)
+        };
+        wsVideo.current.onmessage = (event: any) => {
+            webSocketVideoOnMessage(event)
+        }
+        wsVideo.current.onclose = (error: string) => {
+            console.log("disconnect from " + webSocketVideoURL);
+            console.log(error)
+            setVideoconnect(false)
+        };
+        wsVideo.current.onerror = (error: string) => {
+            console.log("connection error " + webSocketVideoURL);
+            console.log(error);
+            setVideoconnect(false)
+        };
+    }
+    const webSocketVideoOnMessage = (event: any) => {
+        const parsedData = JSON.parse(event.data)
+        const message = parsedData
+        setX(message['x'])
+        setY(message['y'])
+        console.log(message)
+
+    }
 
     const getWebcam = (callback: any) => {
         try {
@@ -394,6 +423,7 @@ function Test() {
             <div className="main-grid-container">
                 <div className="main-side">
                     <div id="video-container">
+                        {video}
                     </div>
 
                 </div>
@@ -409,6 +439,7 @@ function Test() {
                         <div id="ct"><input ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div onClick={btnSendMsg}>전송</div></div>
                     </div>
                 </div>
+                <div>{x}{y}</div>
             </div>
 
 

@@ -24,7 +24,7 @@ function Screensharing() {
                         {supervisor === 'true' ? '당신은 관리자입니다.' : '당신은 학생입니다.'}
                     </div>
                     <div className="button-bottom">
-                        <Link to="/webcam">
+                        <Link to="/student/test">
                             <div className="btn-next">네!</div>
                         </Link>
                     </div>

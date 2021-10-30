@@ -9,6 +9,7 @@ import authentication from "./informationPage/authentication";
 import collect from "./informationPage/collect";
 import screensharing from "./informationPage/screensharing";
 import Authentication from "./Authentication/Authentication";
+import Test from "./Student/Test";
 
 export const TestRouter = ({ match }: { match: any }) => {
 
@@ -48,11 +49,11 @@ export const TrainRouter = () => {
     )
 }
 
-export const superRouter = () => {
+export const StudentRouter = () => {
     return (
         <>
             <Navbar />
-            <HTML />
+            <Test />
         </>
     )
 }

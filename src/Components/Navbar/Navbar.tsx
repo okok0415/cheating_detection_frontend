@@ -55,7 +55,7 @@ function Navbar() {
             <nav className="navbar">
                 <Link to='/' className="navbar-title" onClick={replaceURL}><CDIcon /></Link>
                 <ul className='navbar-nav'>
-                    <NavItem item="Test" url={supervisor === 'true' ? "/video" : "/test/authentication"} border={test}>
+                    <NavItem item="Test" url={supervisor === 'true' ? "/supervisor/test" : "/test/authentication"} border={test}>
 
                     </NavItem>
                     <NavItem item="Result" url="/result" border={result}>

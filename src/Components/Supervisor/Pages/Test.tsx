@@ -13,6 +13,8 @@ function Test() {
     const [message, setMessage] = useState<string[]>([""]);
     const [text, setText] = useState<string>("");
     const [video, setVideo] = useState<any>([]);
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
     //const [mapPeers, setMapPeers] = useState<any>({});
     //let mapPeers: any = {};
     const inputRef: any = useRef<any>(null);
@@ -34,6 +36,9 @@ function Test() {
             sendSignal('new-peer', {})
         };
         ws.current.onmessage = (event: any) => {
+            if (JSON.parse(event.data)['action'] === 'get-frame') {
+                webSocketVideoOnMessage(event)
+            }
             webSocketOnMessage(event)
         }
         ws.current.onclose = (error: string) => {
@@ -51,7 +56,6 @@ function Test() {
 
         const peerUsername = parsedData['peer'];
         const action = parsedData['action'];
-
 
         if (username == peerUsername) {
             return;
@@ -79,6 +83,7 @@ function Test() {
             console.log(peer)
             peer.setRemoteDescription(answer);
         }
+
 
     }
 
@@ -236,13 +241,14 @@ function Test() {
 
 
         const videoContainer = document.querySelector('#video-container')
-        const remoteVideo: any = document.createElement('video')
+        const remoteVideo = document.createElement('video')
 
-        remoteVideo.ref = webcamRef
+        //remoteVideo.ref = webcamRef
         remoteVideo.id = peerUsername + '-video';
         remoteVideo.autoplay = true;
         remoteVideo.playsInline = true
-
+        remoteVideo.width = 300
+        remoteVideo.height = 200
 
         var videoWrapper = document.createElement('div');
         videoContainer?.appendChild(videoWrapper);
@@ -254,10 +260,8 @@ function Test() {
         console.log(remoteStream)
         peer.ontrack = async (event: any) => {
             remoteStream.addTrack(event.track, remoteStream);
-            console.log(remoteStream)
         }
         remoteVideo.srcObject = remoteStream;
-        console.log(remoteStream)
     }
 
     const removeVideo = (video: any) => {
@@ -347,8 +351,8 @@ function Test() {
     }, []);
     const btnClick = () => {
         InitialConnect();
-        //InitialVideoConnect();
-        //setTimeout(processImage, 3000);
+        InitialVideoConnect();
+        setTimeout(processImage, 3000);
     }
 
 
@@ -376,6 +380,8 @@ function Test() {
     const webSocketVideoOnMessage = (event: any) => {
         const parsedData = JSON.parse(event.data)
         const message = parsedData
+        setX(message['x'])
+        setY(message['y'])
         console.log(message)
 
     }
@@ -396,7 +402,13 @@ function Test() {
 
     const processImage: any = () => {
         const imageSrc = webcamRef.current.getScreenshot();
-        wsVideo.current.send(imageSrc);
+        const jsonStr = JSON.stringify({
+            'peer': username,
+            'action': "get-frame",
+            'message': "",
+            'frame': imageSrc
+        })
+        ws.current.send(jsonStr);
         setTimeout(processImage, 30);
     }
     return (
@@ -427,7 +439,7 @@ function Test() {
                         <div id="ct"><input ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div onClick={btnSendMsg}>전송</div></div>
                     </div>
                 </div>
-
+                <div>{x}{y}</div>
             </div>
 
 

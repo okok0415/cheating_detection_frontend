@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
-
+import "../CSS/Supervisor.css";
 import { getUser } from '../../../Actions/userAction';
 var mapPeers: any = {};
 
 function Test() {
+
     const [username, setUsername] = useState("");
 
     const [message, setMessage] = useState<string[]>([""]);
     const [text, setText] = useState<string>("");
+    const [checkNickname, setCheckNickname] = useState(true)
     //const [mapPeers, setMapPeers] = useState<any>({});
     //let mapPeers: any = {};
     const inputRef: any = useRef<any>(null);
@@ -19,11 +21,13 @@ function Test() {
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
-    const [coordinate, setCoordinate] = useState([{
+    const [coordinate, setCoordinate] = useState({
         "username": "0",
         "x": 0,
         "y": 0
-    }]);
+    });
+
+    const [userxy, setUserxy] = useState<any>([])
     const InitialConnect = () => { //PeertoPeerConnection Websocket
         ws.current = new WebSocket(webSocketURL);
 
@@ -130,7 +134,7 @@ function Test() {
 
         peer.onicecandidate = (event: any) => {
             if (event.candidate) {
-                console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
+                //console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
 
                 return;
             }
@@ -184,7 +188,7 @@ function Test() {
 
         peer.onicecandidate = (event: any) => {
             if (event.candidate) {
-                console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
+                //console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
 
                 return;
             }
@@ -197,7 +201,7 @@ function Test() {
 
         peer.setRemoteDescription(offer)
             .then(() => {
-                console.log('Remote description set successfully for %s.', peerUsername);
+                //console.log('Remote description set successfully for %s.', peerUsername);
                 return peer.createAnswer();
             })
             .then((a: any) => {
@@ -219,10 +223,11 @@ function Test() {
         if (data.dcAction === 'message')
             setMessage(data.dcData)
         else if (data.dcAction === 'coordinate') {
-            //setCoordinate(
-            //    ...coordinate,
-            //    data.dcData
-            //)
+            //if (userxy.filter((array: any) => array.username === data.dcData.username)) {
+            //    setUserxy(userxy.filter((array: any) => array.username !== data.dcData.username))
+            //}
+            setUserxy(data.dcData)
+
         }
     }
     /*
@@ -250,9 +255,16 @@ function Test() {
         remoteVideo.width = 300
         remoteVideo.height = 200
 
-        var videoWrapper = document.createElement('div');
+        const videoWrapper = document.createElement('div');
+
+
+        const xy = document.createElement('div')
+
+
         videoContainer?.appendChild(videoWrapper);
-        videoWrapper.appendChild(remoteVideo)
+        videoWrapper.appendChild(remoteVideo);
+        videoWrapper.appendChild(xy);
+
         return remoteVideo
     }
     const setOnTrack = (peer: RTCPeerConnection, remoteVideo: any) => {
@@ -287,7 +299,7 @@ function Test() {
     const btnSendMsg = () => {
         let currenttext;
 
-        if (message.length <= 10) {
+        if (message.length <= 13) {
             setMessage([
                 ...message,
                 `${username + "(관리자)"} : ${text}`
@@ -326,6 +338,9 @@ function Test() {
         }
     }
     useEffect(() => {
+        //userxy.filter((array: any) => array.username === )
+    }, [userxy]);
+    useEffect(() => {
 
         //InitialVideoConnect();
         //
@@ -353,6 +368,7 @@ function Test() {
         InitialConnect();
         //InitialVideoConnect();
         //setTimeout(processImage, 3000);
+        setCheckNickname(false)
     }
 
 
@@ -382,31 +398,37 @@ function Test() {
         ws.current.send(jsonStr);
         setTimeout(processImage, 30);
     }
+
+
     return (
 
 
         <div className="test">
-            <h3 id="label-username">관리자페이지</h3>
-            <div>
-                <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} /><button id="btn-join" onClick={btnClick}>Join Room</button>
-                {username}
+            <div className={checkNickname ? "" : "display-none"}>
+                <h3 id="label-username">관리자페이지</h3>
+                <div>
+                    <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} /><button id="btn-join" onClick={btnClick}>Join Room</button>
+                    {username}
+                </div>
             </div>
-            <div className="main-grid-container">
+            <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
                     </div>
-
+                    <div>{JSON.stringify(userxy)}</div>
                 </div>
                 <div className="right-side">
-                    <div id="lim"><Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" /></div>
-                    <div className="btn-control">
-                        <div> </div>
-                        <div> </div>
-                    </div>
-                    <div id="chat">
-                        <div className="chat-title">채팅</div>
-                        {message.map((data: string) => <div>{data}</div>)}
-                        <div id="ct"><input ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div onClick={btnSendMsg}>전송</div></div>
+                    <div className="user-box" >
+                        <div id="lim"><Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" /></div>
+                        <div id="chat">
+                            <div className="chat-title">채팅</div>
+                            <div className="chat-content">
+                                {message.map((data: string) => <div>{data}</div>)}
+                            </div>
+                            <div id="ct"><input className="input-send" ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div className="btn-send" onClick={btnSendMsg}>전송</div></div>
+                        </div>
+                        <div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -14,6 +14,8 @@ function Test() {
     const [video, setVideo] = useState<any>([]);
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
+    const [userxy, setUserxy] = useState<any>([]);
+    const [checkNickname, setCheckNickname] = useState(true)
     //const [mapPeers, setMapPeers] = useState<any>({});
     //let mapPeers: any = {};
     const inputRef: any = useRef<any>(null);
@@ -109,8 +111,8 @@ function Test() {
             dcOnMessage(event)
         }
 
-        const remoteVideo = CreateVideo(peerUsername);
-        setOnTrack(peer, remoteVideo);
+        //const remoteVideo = CreateVideo(peerUsername);
+        //setOnTrack(peer, remoteVideo);
 
         /*
         setMapPeers({
@@ -127,7 +129,7 @@ function Test() {
                 if (iceConnectionState !== 'closed') {
                     peer.close();
                 }
-                removeVideo(remoteVideo)
+                //removeVideo(remoteVideo)
             }
 
 
@@ -223,7 +225,13 @@ function Test() {
         const data = JSON.parse(event.data);
         if (data.dcAction === 'message')
             setMessage(data.dcData)
+        else if (data.dcAction === 'coordinate') {
+            //if (userxy.filter((array: any) => array.username === data.dcData.username)) {
+            //    setUserxy(userxy.filter((array: any) => array.username !== data.dcData.username))
 
+            //}
+            setUserxy(data.dcData)
+        }
     }
     /*
     const createVideo = (peerUsername: string) => {
@@ -237,24 +245,26 @@ function Test() {
         return webcamRef;
     }
     */
-    const CreateVideo = (peerUsername: string) => {
-
-
-        const videoContainer = document.querySelector('#video-container')
-        const remoteVideo = document.createElement('video')
-
-        //remoteVideo.ref = webcamRef
-        remoteVideo.id = peerUsername + '-video';
-        remoteVideo.autoplay = true;
-        remoteVideo.playsInline = true
-        remoteVideo.width = 300
-        remoteVideo.height = 200
-
-        var videoWrapper = document.createElement('div');
-        videoContainer?.appendChild(videoWrapper);
-        videoWrapper.appendChild(remoteVideo)
-        return remoteVideo
-    }
+    /*
+     const CreateVideo = (peerUsername: string) => {
+ 
+ 
+         const videoContainer = document.querySelector('#video-container')
+         const remoteVideo = document.createElement('video')
+ 
+         //remoteVideo.ref = webcamRef
+         remoteVideo.id = peerUsername + '-video';
+         remoteVideo.autoplay = true;
+         remoteVideo.playsInline = true
+         remoteVideo.width = 300
+         remoteVideo.height = 200
+ 
+         var videoWrapper = document.createElement('div');
+         videoContainer?.appendChild(videoWrapper);
+         videoWrapper.appendChild(remoteVideo)
+         return remoteVideo
+     }
+     */
     const setOnTrack = (peer: RTCPeerConnection, remoteVideo: any) => {
         const remoteStream: any = new MediaStream();
         console.log(remoteStream)
@@ -287,7 +297,7 @@ function Test() {
     const btnSendMsg = () => {
         let currenttext;
 
-        if (message.length <= 10) {
+        if (message.length <= 13) {
             setMessage([
                 ...message,
                 `${username} : ${text}`
@@ -350,14 +360,22 @@ function Test() {
         */
     }, []);
     useEffect(() => {
-        const sendmsg = {
-            'dcAction': 'coordinate',
-            'dcData': {
+
+        let currentxy;
+        setUserxy([
+            ...userxy,
+            {
+                'username': username,
                 'x': x,
                 'y': y
             }
+        ])
+        currentxy = [...userxy, { 'username': username, 'x': x, 'y': y }]
+        console.log(currentxy)
+        const sendmsg = {
+            'dcAction': 'coordinate',
+            'dcData': currentxy
         }
-
         var dataChannels = getDataChannels();
         console.log(dataChannels)
         console.log('Sending : ', x, y)
@@ -366,11 +384,12 @@ function Test() {
         for (const index in dataChannels) {
             dataChannels[index].send(JSON.stringify(sendmsg));
         }
-    }, [x, y]);
+    }, [x && y]);
     const btnClick = () => {
         InitialConnect();
         InitialVideoConnect();
-        setTimeout(processImage, 3000);
+        //setTimeout(processImage, 3000);
+        setCheckNickname(false);
     }
 
 
@@ -400,7 +419,7 @@ function Test() {
         const message = parsedData
         setX(message['x'])
         setY(message['y'])
-        console.log(message)
+        //console.log(message)
 
     }
 
@@ -429,16 +448,20 @@ function Test() {
         ws.current.send(jsonStr);
         setTimeout(processImage, 30);
     }
+
+
     return (
 
 
         <div className="test">
-            <h3 id="label-username">학생페이지</h3>
-            <div>
-                <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} /><button id="btn-join" onClick={btnClick}>Join Room</button>
-                {username}
+            <div className={checkNickname ? "" : "display-none"}>
+                <h3 id="label-username">학생페이지</h3>
+                <div>
+                    <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} /><button id="btn-join" onClick={btnClick}>Join Room</button>
+                    {username}
+                </div>
             </div>
-            <div className="main-grid-container">
+            <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
                         {video}
@@ -446,16 +469,17 @@ function Test() {
 
                 </div>
                 <div className="right-side">
-                    <div id="lim"><Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" /></div>
-                    <div className="btn-control">
-                        <div> </div>
-                        <div> </div>
+                    <div className="user-box" >
+                        <div id="lim"><Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" /></div>
+                        <div id="chat">
+                            <div className="chat-title">채팅</div>
+                            <div className="chat-content">
+                                {message.map((data: string) => <div>{data}</div>)}
+                            </div>
+                            <div id="ct"><input className="input-send" ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div className="btn-send" onClick={btnSendMsg}>전송</div></div>
+                        </div>
                     </div>
-                    <div id="chat">
-                        <div className="chat-title">채팅</div>
-                        {message.map((data: string) => <div>{data}</div>)}
-                        <div id="ct"><input ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div onClick={btnSendMsg}>전송</div></div>
-                    </div>
+                    <button onClick={processImage}>보내기</button>
                 </div>
                 <div>{x}{y}</div>
             </div>

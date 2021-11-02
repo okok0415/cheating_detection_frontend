@@ -3,11 +3,11 @@ import PublicRoute from "./utils/PublicRoute";
 import PrivateRoute from "./utils/PrivateRoute";
 
 import { HomeRouter } from "./Components/Home/HomeRouter";
-import { AuthenticationRouter, StudentRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
+import { AuthenticationRouter, StudentRouter, StudentScreenRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
 import { SigninRouter, SignupRouter, CheckItemsRouter } from "./Components/Login/LoginRouter";
 import "./CSS/App.css";
 import SettingsRouter from "./Components/Settings/SettingsRouter";
-import SupervisorRouter from "./Components/Supervisor/SupervisorRoute";
+import { SupervisorRouter, SupervisorScreenRouter } from "./Components/Supervisor/SupervisorRoute";
 
 function App(): any {
 
@@ -26,6 +26,8 @@ function App(): any {
           <PrivateRoute path="/student/test" exact={true} component={StudentRouter} />
           <PrivateRoute path="/authentication" component={AuthenticationRouter} />
           <PrivateRoute path="/settings" component={SettingsRouter} />
+          <PrivateRoute path="/supervisor/screen" exact={true} component={SupervisorScreenRouter} />
+          <PrivateRoute path="/student/screen" exact={true} component={StudentScreenRouter} />
         </Switch>
       </BrowserRouter>
     </>

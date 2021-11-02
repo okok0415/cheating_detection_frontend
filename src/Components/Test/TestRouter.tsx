@@ -10,6 +10,7 @@ import collect from "./informationPage/collect";
 import screensharing from "./informationPage/screensharing";
 import Authentication from "./Authentication/Authentication";
 import Test from "./Student/Test";
+import Screen from "./Student/Screen";
 
 export const TestRouter = ({ match }: { match: any }) => {
 
@@ -57,6 +58,16 @@ export const StudentRouter = () => {
         </>
     )
 }
+
+export const StudentScreenRouter = () => {
+    return (
+        <>
+            <Navbar />
+            <Screen />
+        </>
+    )
+}
+
 
 /*
             <WebSocketProvider>

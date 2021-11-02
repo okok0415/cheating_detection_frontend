@@ -1,7 +1,7 @@
 import { Route, Switch } from "react-router";
 import Navbar from "../Navbar/Navbar";
 import Test from "./Pages/Test"
-
+import Screen from "./Pages/Screen";
 export const SupervisorRouter = () => {
     return (
         <>
@@ -11,4 +11,12 @@ export const SupervisorRouter = () => {
     )
 }
 
-export default SupervisorRouter;
+export const SupervisorScreenRouter = () => {
+    return (
+        <>
+            <Navbar />
+            <Screen />
+        </>
+    )
+}
+

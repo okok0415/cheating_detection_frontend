@@ -36,7 +36,8 @@ function Train() {
             'width': clientRect?.width,
             'x': clientRect?.x,
             'y': clientRect?.y,
-            'frame': imageSrc
+            'frame': imageSrc,
+            'clicked' : true
         }
         //setJson((json: any) => [...json, sendinf])
 
@@ -57,6 +58,7 @@ function Train() {
         if (time < 9) {
             const imageSrc = webcamRef.current.getScreenshot();
             const sendinf = {
+                'clicked' : false,
                 'frame': imageSrc
             }
             time += 1;
@@ -67,6 +69,12 @@ function Train() {
             time = 0;
         }
     }
+
+    ws.current.onmessage = (evt: MessageEvent) =>{
+        console.log(evt['data'])
+    };
+
+
     /*
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d');

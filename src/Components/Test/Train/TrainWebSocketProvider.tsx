@@ -19,6 +19,7 @@ export default ({ children }: { children: React.ReactNode }) => {
             console.log("connection error " + webSocketURL);
             console.log(error);
         };
+
     }
 
     return (

@@ -63,6 +63,9 @@
 .info-content{
     font-size: 18px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-next{
@@ -76,6 +79,8 @@
     justify-content: center;
     background-color: var(--background);
     font-weight: bold;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .btn-next:hover {
     background-color: var(--background-accent);

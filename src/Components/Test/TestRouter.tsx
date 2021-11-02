@@ -1,14 +1,15 @@
 import { Switch, Route } from "react-router-dom";
 import TrainWebSocketProvider from "./Train/TrainWebSocketProvider";
-import CalibrateWebSocketProvider from "./Calibrate/CalibrateWebSocketProvider";
+import AuthenticationWebSocketProvider from "./Authentication/AuthenticationWebSocketProvider";
 import Train from "./Train/Train";
 import TestNav from "./TestNav/TestNav";
 import HTML from "./websocket/HTML";
 import Navbar from "../Navbar/Navbar";
-import calibrate from "./informationPage/calibrate";
+import authentication from "./informationPage/authentication";
 import collect from "./informationPage/collect";
-import test from "./informationPage/test";
-import Calibrate from "./Calibrate/Calibrate";
+import screensharing from "./informationPage/screensharing";
+import Authentication from "./Authentication/Authentication";
+import Test from "./Student/Test";
 
 export const TestRouter = ({ match }: { match: any }) => {
 
@@ -17,22 +18,22 @@ export const TestRouter = ({ match }: { match: any }) => {
             <Navbar />
             <TestNav />
             <Switch>
-                <Route path={match.path + '/calibrate'} component={calibrate} />
+                <Route path={match.path + '/authentication'} component={authentication} />
                 <Route path={match.path + '/collect'} component={collect} />
-                <Route path={match.path + '/test'} component={test} />
+                <Route path={match.path + '/screensharing'} component={screensharing} />
             </Switch>
         </>
     )
 }
 
-export const CalibrateRouter = () => {
+export const AuthenticationRouter = () => {
     return (
         <>
             <Navbar />
             <TestNav />
-            <CalibrateWebSocketProvider>
-                <Calibrate />
-            </CalibrateWebSocketProvider>
+            <AuthenticationWebSocketProvider>
+                <Authentication />
+            </AuthenticationWebSocketProvider>
         </>
     )
 }
@@ -48,11 +49,11 @@ export const TrainRouter = () => {
     )
 }
 
-export const SupervisorRouter = () => {
+export const StudentRouter = () => {
     return (
         <>
             <Navbar />
-            <HTML />
+            <Test />
         </>
     )
 }

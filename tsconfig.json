@@ -22,6 +22,6 @@
   },
   "include": [
     "src",
-    "public/RTCPeerConnection.js"
+    //"public/RTCPeerConnection.js"
   ]
 }

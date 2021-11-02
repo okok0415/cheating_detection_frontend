@@ -1,22 +1,19 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getUser } from "../../Actions/userAction";
+import FourBlock from "./FourBlock";
+import "./CSS/Home.css";
+import Step from "./Step";
+
+
 function Home() {
-    const [name, setName] = useState("")
-    const dispatch = useDispatch();
-    useEffect(() => {
-        const i: any = dispatch(getUser);
-        i.then((res: any) => {
-            setName(res.payload.username)
-        })
-        console.log(name);
-    }, []);
+
 
     return (
         <>
-            <div>
-                안녕하세요 {name}!
+            <div className="home">
+
+                <FourBlock />
+                <Step />
             </div>
+
         </>
     )
 }

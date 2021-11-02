@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../CSS/infNav.css";
-import { ReactComponent as ChessIcon } from "./chess-board-solid.svg";
+import { ReactComponent as AuthIcon } from "./address-card-solid.svg";
 import { ReactComponent as CollectIcon } from "./collect.svg";
 import { ReactComponent as TestIcon } from "./laptop-house-solid.svg";
 
@@ -10,7 +10,7 @@ function TestNav() {
     const [test, setTest] = useState(false);
 
     useEffect(() => {
-        if (window.location.pathname === "/test/calibrate" || window.location.pathname === "/calibrate") {
+        if (window.location.pathname === "/test/authentication" || window.location.pathname === "/authentication") {
             setCalibrate(true);
             setCollect(false);
             setTest(false);
@@ -20,7 +20,7 @@ function TestNav() {
             setCollect(true);
             setTest(false);
         }
-        else if (window.location.pathname === "/test/test") {
+        else if (window.location.pathname === "/test/screensharing") {
             setCalibrate(false);
             setCollect(false);
             setTest(true);
@@ -40,8 +40,8 @@ function TestNav() {
                 <div></div>
                 <div className={calibrate ? "bordernav" : ""}>
                     <div>
-                        <div className="icontext"><ChessIcon width="40" height="40" /></div>
-                        <div className="navitem">Calibrate</div>
+                        <div className="icontext"><AuthIcon width="40" height="40" /></div>
+                        <div className="navitem">Authentication</div>
                     </div>
                 </div>
                 <div></div>
@@ -55,7 +55,7 @@ function TestNav() {
                 <div className={test ? "bordernav" : ""}>
                     <div>
                         <div className="icontext"><TestIcon width="45" height="45" /></div>
-                        <div className="navitem">Test</div>
+                        <div className="navitem">ScreenSharing</div>
                     </div>
                 </div>
                 <div></div>

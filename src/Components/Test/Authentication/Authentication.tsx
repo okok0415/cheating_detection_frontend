@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
 import Webcam from "react-webcam"
-import { WebSocketContext } from './AuthenticationWebSocketProvider';
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../../Actions/userAction";
@@ -10,8 +9,39 @@ import { getUser } from "../../../Actions/userAction";
 function Authentication() {
     const [username, setUsername] = useState("");
     const dispatch = useDispatch();
-    const ws = useContext(WebSocketContext);
+    //const ws = useContext(WebSocketContext);
     const webcamRef = React.useRef<any>(null);
+    const webSocketURL: string = "ws://localhost:8000/ws/authentication/"
+    let ws = useRef<WebSocket | any>(null);
+
+    const InitialConnect = () => { //PeertoPeerConnection Websocket
+        ws.current = new WebSocket(webSocketURL);
+
+        ws.current.onopen = () => {
+            console.log("connected to " + webSocketURL);
+
+        };
+        ws.current.onmessage = (event: any) => {
+            console.log(event)
+            const parsedData = JSON.parse(event.data)
+            console.log(parsedData)
+            if (parsedData['result'] === 'True') {
+                alert("인증완료")
+                window.location.href = "/test/calibrate"
+            }
+            else {
+                alert("당신은 신분증의 인물과 다릅니다.")
+            }
+        }
+        ws.current.onclose = (error: string) => {
+            console.log("disconnect from " + webSocketURL);
+            console.log(error)
+        };
+        ws.current.onerror = (error: string) => {
+            console.log("connection error " + webSocketURL);
+            console.log(error);
+        };
+    }
 
 
     let localStream: any = null;
@@ -45,7 +75,7 @@ function Authentication() {
     }
     const right = () => {
         clearInterval(processImage);
-        window.location.href = "/test/collect"
+        window.location.href = "/test/calibrate"
     }
     useEffect(() => {
         getWebcam((stream: any) => {
@@ -57,6 +87,7 @@ function Authentication() {
         i.then((res: any) => {
             setUsername(res.payload.username)
         })
+        InitialConnect()
     }, []);
 
     return (
@@ -71,7 +102,7 @@ function Authentication() {
                     <div className="button-bottom">
 
                         <div className="btn-next" onClick={left}>이전</div>
-                        <div className="btn-next" onClick={processImage}>보여주기</div>
+                        <div className="btn-next" onClick={processImage}>인증하기</div>
                         <div className="btn-next" onClick={right}>다음</div>
                     </div>
                 </div>

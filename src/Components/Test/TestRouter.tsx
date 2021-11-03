@@ -1,6 +1,5 @@
 import { Switch, Route } from "react-router-dom";
 import TrainWebSocketProvider from "./Train/TrainWebSocketProvider";
-import AuthenticationWebSocketProvider from "./Authentication/AuthenticationWebSocketProvider";
 import Train from "./Train/Train";
 import TestNav from "./TestNav/TestNav";
 import HTML from "./websocket/HTML";
@@ -11,6 +10,9 @@ import screensharing from "./informationPage/screensharing";
 import Authentication from "./Authentication/Authentication";
 import Test from "./Student/Test";
 import Screen from "./Student/Screen";
+import Calibrate from "./Calibrate/Calibrate";
+import CalibrateWebSocketProvider from "./Calibrate/CalibrateWebSocketProvider";
+import calibrate from "./informationPage/calibrate";
 
 export const TestRouter = ({ match }: { match: any }) => {
 
@@ -20,6 +22,7 @@ export const TestRouter = ({ match }: { match: any }) => {
             <TestNav />
             <Switch>
                 <Route path={match.path + '/authentication'} component={authentication} />
+                <Route path={match.path + '/calibrate'} component={calibrate} />
                 <Route path={match.path + '/collect'} component={collect} />
                 <Route path={match.path + '/screensharing'} component={screensharing} />
             </Switch>
@@ -32,13 +35,23 @@ export const AuthenticationRouter = () => {
         <>
             <Navbar />
             <TestNav />
-            <AuthenticationWebSocketProvider>
-                <Authentication />
-            </AuthenticationWebSocketProvider>
+            <Authentication />
+
         </>
     )
 }
 
+export const CalibrateRouter = () => {
+    return (
+        <>
+            <Navbar />
+            <TestNav />
+            <CalibrateWebSocketProvider>
+                <Calibrate />
+            </CalibrateWebSocketProvider>
+        </>
+    )
+}
 
 export const TrainRouter = () => {
     return (

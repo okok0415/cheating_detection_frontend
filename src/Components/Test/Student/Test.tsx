@@ -8,10 +8,10 @@ function Test() {
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
     const [videoconnect, setVideoconnect] = useState(false)
-    const [imageSrc, setImageSrc] = useState<any>();
+
     const [message, setMessage] = useState<string[]>([""]);
     const [text, setText] = useState<string>("");
-    const [video, setVideo] = useState<any>([]);
+
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
     const [userxy, setUserxy] = useState<any>([]);
@@ -19,13 +19,10 @@ function Test() {
     //const [mapPeers, setMapPeers] = useState<any>({});
     //let mapPeers: any = {};
     const inputRef: any = useRef<any>(null);
-    const dispatch = useDispatch();
+
     const webcamRef: any = React.useRef<any>(null);
-    const studentRef: any = React.useRef<any>(null);
     const webSocketURL: string = "ws://localhost:8000/ws/chat/lobby/"
-    const webSocketVideoURL: string = "ws://localhost:8000/ws/test/"
     let ws = useRef<WebSocket | any>(null);
-    let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
     const InitialConnect = () => { //PeertoPeerConnection Websocket
@@ -387,33 +384,11 @@ function Test() {
     }, [x && y]);
     const btnClick = () => {
         InitialConnect();
-        InitialVideoConnect();
         //setTimeout(processImage, 3000);
         setCheckNickname(false);
     }
 
 
-    const InitialVideoConnect = () => { //backend로 보낼 Video Websocket
-        wsVideo.current = new WebSocket(webSocketVideoURL);
-
-        wsVideo.current.onopen = () => {
-            console.log("connected to " + webSocketVideoURL);
-            setVideoconnect(true)
-        };
-        wsVideo.current.onmessage = (event: any) => {
-            webSocketVideoOnMessage(event)
-        }
-        wsVideo.current.onclose = (error: string) => {
-            console.log("disconnect from " + webSocketVideoURL);
-            console.log(error)
-            setVideoconnect(false)
-        };
-        wsVideo.current.onerror = (error: string) => {
-            console.log("connection error " + webSocketVideoURL);
-            console.log(error);
-            setVideoconnect(false)
-        };
-    }
     const webSocketVideoOnMessage = (event: any) => {
         const parsedData = JSON.parse(event.data)
         const message = parsedData
@@ -464,7 +439,7 @@ function Test() {
             <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
-                        {video}
+
                     </div>
 
                 </div>

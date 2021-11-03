@@ -10,23 +10,16 @@ function Screen() {
     const [username, setUsername] = useState("");
 
     const [message, setMessage] = useState<string[]>([""]);
-    const [text, setText] = useState<string>("");
+
     const [checkNickname, setCheckNickname] = useState(true)
     //const [mapPeers, setMapPeers] = useState<any>({});
     //let mapPeers: any = {};
-    const inputRef: any = useRef<any>(null);
-    const webcamRef: any = React.useRef<any>(null);
+
     const webSocketURL: string = "ws://localhost:8000/ws/screen/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
-    const [localVideoStream, setLocalVideoStream] = useState<MediaStream>();
-    const [coordinate, setCoordinate] = useState({
-        "username": "0",
-        "x": 0,
-        "y": 0
-    });
 
     const [userxy, setUserxy] = useState<any>([])
     const InitialConnect = () => { //PeertoPeerConnection Websocket
@@ -231,18 +224,7 @@ function Screen() {
 
         }
     }
-    /*
-    const createVideo = (peerUsername: string) => {
-        const newVideo = <Webcam id={peerUsername + "-video"} className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" />
 
-        setVideo([
-            ...video,
-            newVideo
-        ])
-
-        return webcamRef;
-    }
-    */
     const CreateVideo = (peerUsername: string) => {
 
 
@@ -259,12 +241,8 @@ function Screen() {
         const videoWrapper = document.createElement('div');
 
 
-        const xy = document.createElement('div')
-
-
         videoContainer?.appendChild(videoWrapper);
         videoWrapper.appendChild(remoteVideo);
-        videoWrapper.appendChild(xy);
 
         return remoteVideo
     }
@@ -283,119 +261,14 @@ function Screen() {
         videoWrapper.parentNode.removeChild(videoWrapper)
     }
 
-    const getDataChannels = () => {
-        var dataChannels = [];
 
-        for (const peerUsername in mapPeers) {
-            console.log('mapPeers[', peerUsername, ']: ', mapPeers[peerUsername]);
-            var dataChannel = mapPeers[peerUsername][1];
-            console.log('dataChannel: ', dataChannel);
 
-            dataChannels.push(dataChannel);
-        }
 
-        return dataChannels;
-    }
-
-    const btnSendMsg = () => {
-        let currenttext;
-
-        if (message.length <= 13) {
-            setMessage([
-                ...message,
-                `${username + "(관리자)"} : ${text}`
-            ])
-            currenttext = [...message, `${username + "(관리자)"} : ${text}`]
-        } else {
-            message.splice(1, 1);
-            setMessage([
-                ...message,
-                `${username + "(관리자)"} : ${text}`
-            ])
-            currenttext = [...message, `${username + "(관리자)"} : ${text}`]
-        }
-
-        const sendmsg = {
-            'dcAction': 'message',
-            'dcData': currenttext
-        }
-
-        var dataChannels = getDataChannels();
-        console.log(dataChannels)
-        console.log('Sending: ', currenttext);
-
-        // send to all data channels
-        for (const index in dataChannels) {
-            dataChannels[index].send(JSON.stringify(sendmsg));
-        }
-
-        setText("")
-        inputRef.current.focus()
-
-    }
-    const onKeyPress = (event: any) => {
-        if (event.key == 'Enter') {
-            btnSendMsg()
-        }
-    }
-    useEffect(() => {
-        //userxy.filter((array: any) => array.username === )
-    }, [userxy]);
-    useEffect(() => {
-
-        //InitialVideoConnect();
-        //
-
-        getWebcam((stream: any) => {
-            setLocalStream(stream);
-            webcamRef.current.srcObject = localStream;
-            webcamRef.current.muted = true;
-        });
-
-        inputRef.current.focus()
-        /*
-        const i: any = dispatch(getUser);
-        i.then((res: any) => {
-            setUsername(res.payload.username)
-            setName(res.payload.name)
-            console.log(username);
-            console.log(name);
-        })
-        */
-    }, []);
     const btnClick = () => {
         InitialConnect();
         //InitialVideoConnect();
         //setTimeout(processImage, 3000);
         setCheckNickname(false)
-    }
-
-
-
-    const getWebcam = (callback: any) => {
-        try {
-            const constraints = {
-                'video': true,
-                'audio': false
-            }
-            navigator.mediaDevices.getUserMedia(constraints)
-                .then(callback);
-        } catch (err) {
-            console.log(err);
-            return undefined;
-        }
-    }
-
-    const processImage: any = () => {
-        const imageSrc = webcamRef.current.getScreenshot();
-        const jsonStr = JSON.stringify({
-            'peer': username,
-            'action': "get-frame",
-            'message': "",
-            'frame': imageSrc
-        })
-        ws.current.send(jsonStr);
-        setTimeout(processImage, 30);
     }
 
 
@@ -413,22 +286,6 @@ function Screen() {
             <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
-                    </div>
-                    <div>{JSON.stringify(userxy)}</div>
-                </div>
-                <div className="right-side">
-                    <div className="user-box" >
-                        <div id="lim"><Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" /></div>
-                        <div id="chat">
-                            <div className="chat-title">채팅</div>
-                            <div className="chat-content">
-                                {message.map((data: string) => <div>{data}</div>)}
-                            </div>
-                            <div id="ct"><input className="input-send" ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div className="btn-send" onClick={btnSendMsg}>전송</div></div>
-                        </div>
-                        <div>
-
-                        </div>
                     </div>
                 </div>
             </div>

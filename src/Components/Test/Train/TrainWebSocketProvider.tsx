@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 const WebSocketContext = React.createContext<any>(null);
 export { WebSocketContext };
-const API_PATH = 'ws://localhost:9898/ws/train/'
+const API_PATH = 'ws://localhost:8000/ws/train/'
 export default ({ children }: { children: React.ReactNode }) => {
     const webSocketURL = API_PATH
     let ws = useRef<WebSocket | any>(null);

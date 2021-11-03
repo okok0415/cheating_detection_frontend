@@ -70,14 +70,15 @@ function Train() {
                 'message': 'only-frame',
                 'frame': imageSrc,
             }
+            console.log(JSON.stringify(sendinf))
             time += 1;
-            console.log(time)
             ws.current.send(JSON.stringify(sendinf));
             setTimeout(processImage, 30);
         } else {
             time = 0;
         }
     }
+
     /*
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d');
@@ -114,12 +115,13 @@ function Train() {
         clickHandler();
         const sendinf = {
             'message': 'screen-size',
-            'screen': window.screen,
+            'width': window.screen.width,
+            'height': window.screen.height
         }
         setTimeout(() => {
             ws.current.send(JSON.stringify(sendinf))
             setLoading(false)
-        }, 2000);
+        }, 5000);
     }, []);
 
     ws.current.onmessage = (evt: MessageEvent) => {

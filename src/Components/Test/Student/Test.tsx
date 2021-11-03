@@ -23,7 +23,7 @@ function Test() {
     const webcamRef: any = React.useRef<any>(null);
     const studentRef: any = React.useRef<any>(null);
     const webSocketURL: string = "ws://localhost:8000/ws/chat/lobby/"
-    const webSocketVideoURL: string = "ws://localhost:8000/ws/test/"
+    const webSocketVideoURL: string = "ws://localhost:8000/chat/lobby/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();

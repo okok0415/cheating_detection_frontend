@@ -1,16 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
-import "../CSS/Supervisor.css";
-import { getUser } from '../../../Actions/userAction';
+import "../CSS/Test.css";
 var mapPeers: any = {};
 
-function Test() {
-
+function Screen() {
     const [username, setUsername] = useState("");
-
+    const [name, setName] = useState("");
+    const [videoconnect, setVideoconnect] = useState(false)
+    const [imageSrc, setImageSrc] = useState<any>();
     const [message, setMessage] = useState<string[]>([""]);
     const [text, setText] = useState<string>("");
+    const [video, setVideo] = useState<any>([]);
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
+    const [userxy, setUserxy] = useState<any>([]);
     const [checkNickname, setCheckNickname] = useState(true)
     //const [mapPeers, setMapPeers] = useState<any>({});
     //let mapPeers: any = {};
@@ -21,13 +25,6 @@ function Test() {
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
-    const [coordinate, setCoordinate] = useState({
-        "username": "0",
-        "x": 0,
-        "y": 0
-    });
-
-    const [userxy, setUserxy] = useState<any>([])
     const InitialConnect = () => { //PeertoPeerConnection Websocket
         ws.current = new WebSocket(webSocketURL);
 
@@ -37,6 +34,9 @@ function Test() {
             sendSignal('new-peer', {})
         };
         ws.current.onmessage = (event: any) => {
+            if (JSON.parse(event.data)['action'] === 'get-frame') {
+                webSocketVideoOnMessage(event)
+            }
             webSocketOnMessage(event)
         }
         ws.current.onclose = (error: string) => {
@@ -55,7 +55,7 @@ function Test() {
         const peerUsername = parsedData['peer'];
         const action = parsedData['action'];
 
-        if (username == peerUsername) {
+        if (username === peerUsername) {
             return;
         }
 
@@ -108,8 +108,8 @@ function Test() {
             dcOnMessage(event)
         }
 
-        const remoteVideo = CreateVideo(peerUsername);
-        setOnTrack(peer, remoteVideo);
+        //const remoteVideo = CreateVideo(peerUsername);
+        //setOnTrack(peer, remoteVideo);
 
         /*
         setMapPeers({
@@ -123,10 +123,10 @@ function Test() {
 
             if (iceConnectionState === 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
                 delete mapPeers[peerUsername];
-                if (iceConnectionState != 'closed') {
+                if (iceConnectionState !== 'closed') {
                     peer.close();
                 }
-                removeVideo(remoteVideo)
+                //removeVideo(remoteVideo)
             }
 
 
@@ -134,7 +134,7 @@ function Test() {
 
         peer.onicecandidate = (event: any) => {
             if (event.candidate) {
-                //console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
+                console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
 
                 return;
             }
@@ -157,8 +157,8 @@ function Test() {
 
         addLocalTracks(peer);
 
-        const remoteVideo = CreateVideo(peerUsername);
-        setOnTrack(peer, remoteVideo);
+        //const remoteVideo = CreateVideo(peerUsername);
+        //setOnTrack(peer, remoteVideo);
 
         peer.ondatachannel = (event: any) => {
             peer.dc = event.channel
@@ -177,10 +177,10 @@ function Test() {
             if (iceConnectionState === 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
                 delete mapPeers[peerUsername];
 
-                if (iceConnectionState != 'closed') {
+                if (iceConnectionState !== 'closed') {
                     peer.close();
                 }
-                removeVideo(remoteVideo)
+                //removeVideo(remoteVideo)
             }
 
 
@@ -188,7 +188,7 @@ function Test() {
 
         peer.onicecandidate = (event: any) => {
             if (event.candidate) {
-                //console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
+                console.log('New ice candidate : ', JSON.stringify(peer.localDescription));
 
                 return;
             }
@@ -201,7 +201,7 @@ function Test() {
 
         peer.setRemoteDescription(offer)
             .then(() => {
-                //console.log('Remote description set successfully for %s.', peerUsername);
+                console.log('Remote description set successfully for %s.', peerUsername);
                 return peer.createAnswer();
             })
             .then((a: any) => {
@@ -225,9 +225,9 @@ function Test() {
         else if (data.dcAction === 'coordinate') {
             //if (userxy.filter((array: any) => array.username === data.dcData.username)) {
             //    setUserxy(userxy.filter((array: any) => array.username !== data.dcData.username))
+
             //}
             setUserxy(data.dcData)
-
         }
     }
     /*
@@ -242,31 +242,26 @@ function Test() {
         return webcamRef;
     }
     */
-    const CreateVideo = (peerUsername: string) => {
-
-
-        const videoContainer = document.querySelector('#video-container')
-        const remoteVideo = document.createElement('video')
-
-        //remoteVideo.ref = webcamRef
-        remoteVideo.id = peerUsername + '-video';
-        remoteVideo.autoplay = true;
-        remoteVideo.playsInline = true
-        remoteVideo.width = 300
-        remoteVideo.height = 200
-
-        const videoWrapper = document.createElement('div');
-
-
-        const xy = document.createElement('div')
-
-
-        videoContainer?.appendChild(videoWrapper);
-        videoWrapper.appendChild(remoteVideo);
-        videoWrapper.appendChild(xy);
-
-        return remoteVideo
-    }
+    /*
+     const CreateVideo = (peerUsername: string) => {
+ 
+ 
+         const videoContainer = document.querySelector('#video-container')
+         const remoteVideo = document.createElement('video')
+ 
+         //remoteVideo.ref = webcamRef
+         remoteVideo.id = peerUsername + '-video';
+         remoteVideo.autoplay = true;
+         remoteVideo.playsInline = true
+         remoteVideo.width = 300
+         remoteVideo.height = 200
+ 
+         var videoWrapper = document.createElement('div');
+         videoContainer?.appendChild(videoWrapper);
+         videoWrapper.appendChild(remoteVideo)
+         return remoteVideo
+     }
+     */
     const setOnTrack = (peer: RTCPeerConnection, remoteVideo: any) => {
         const remoteStream: any = new MediaStream();
         console.log(remoteStream)
@@ -302,16 +297,16 @@ function Test() {
         if (message.length <= 13) {
             setMessage([
                 ...message,
-                `${username + "(관리자)"} : ${text}`
+                `${username} : ${text}`
             ])
-            currenttext = [...message, `${username + "(관리자)"} : ${text}`]
+            currenttext = [...message, `${username} : ${text}`]
         } else {
             message.splice(1, 1);
             setMessage([
                 ...message,
-                `${username + "(관리자)"} : ${text}`
+                `${username} : ${text}`
             ])
-            currenttext = [...message, `${username + "(관리자)"} : ${text}`]
+            currenttext = [...message, `${username} : ${text}`]
         }
 
         const sendmsg = {
@@ -333,20 +328,19 @@ function Test() {
 
     }
     const onKeyPress = (event: any) => {
-        if (event.key == 'Enter') {
+        if (event.key === 'Enter') {
             btnSendMsg()
         }
     }
-    useEffect(() => {
-        //userxy.filter((array: any) => array.username === )
-    }, [userxy]);
     useEffect(() => {
 
         //InitialVideoConnect();
         //
 
         getWebcam((stream: any) => {
+            console.log(stream);
             setLocalStream(stream);
+            console.log(localStream)
             webcamRef.current.srcObject = localStream;
             webcamRef.current.muted = true;
         });
@@ -362,14 +356,45 @@ function Test() {
         })
         */
     }, []);
+    useEffect(() => {
+
+        let currentxy;
+        setUserxy([
+            ...userxy,
+            {
+                'username': username,
+                'x': x,
+                'y': y
+            }
+        ])
+        currentxy = [...userxy, { 'username': username, 'x': x, 'y': y }]
+        console.log(currentxy)
+        const sendmsg = {
+            'dcAction': 'coordinate',
+            'dcData': currentxy
+        }
+        var dataChannels = getDataChannels();
+        console.log(dataChannels)
+        console.log('Sending : ', x, y)
+
+        // send to all data channels
+        for (const index in dataChannels) {
+            dataChannels[index].send(JSON.stringify(sendmsg));
+        }
+    }, [x && y]);
     const btnClick = () => {
         InitialConnect();
-        //InitialVideoConnect();
-        //setTimeout(processImage, 3000);
-        setCheckNickname(false)
+        setCheckNickname(false);
     }
 
+    const webSocketVideoOnMessage = (event: any) => {
+        const parsedData = JSON.parse(event.data)
+        const message = parsedData
+        setX(message['x'])
+        setY(message['y'])
+        //console.log(message)
 
+    }
 
     const getWebcam = (callback: any) => {
         try {
@@ -377,7 +402,7 @@ function Test() {
                 'video': true,
                 'audio': false
             }
-            navigator.mediaDevices.getUserMedia(constraints)
+            navigator.mediaDevices.getDisplayMedia(constraints)
                 .then(callback);
         } catch (err) {
             console.log(err);
@@ -403,7 +428,7 @@ function Test() {
 
         <div className="test">
             <div className={checkNickname ? "" : "display-none"}>
-                <h3 id="label-username">관리자페이지</h3>
+                <h3 id="label-username">학생페이지</h3>
                 <div>
                     <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} /><button id="btn-join" onClick={btnClick}>Join Room</button>
                     {username}
@@ -412,8 +437,9 @@ function Test() {
             <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
+                        {video}
                     </div>
-                    <div>{JSON.stringify(userxy)}</div>
+
                 </div>
                 <div className="right-side">
                     <div className="user-box" >
@@ -425,10 +451,10 @@ function Test() {
                             </div>
                             <div id="ct"><input className="input-send" ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div className="btn-send" onClick={btnSendMsg}>전송</div></div>
                         </div>
-                        <div>
-                        </div>
                     </div>
+                    <button onClick={processImage}>보내기</button>
                 </div>
+                <div>{x}{y}</div>
             </div>
 
 
@@ -436,4 +462,4 @@ function Test() {
     )
 }
 
-export default Test;
+export default Screen;

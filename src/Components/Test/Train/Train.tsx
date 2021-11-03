@@ -121,7 +121,7 @@ function Train() {
         setTimeout(() => {
             ws.current.send(JSON.stringify(sendinf))
             setLoading(false)
-        }, 5000);
+        }, 4000);
     }, []);
 
     ws.current.onmessage = (evt: MessageEvent) => {

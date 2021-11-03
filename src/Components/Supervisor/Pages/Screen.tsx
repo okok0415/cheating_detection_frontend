@@ -5,7 +5,7 @@ import "../CSS/Supervisor.css";
 import { getUser } from '../../../Actions/userAction';
 var mapPeers: any = {};
 
-function Test() {
+function Screen() {
 
     const [username, setUsername] = useState("");
 
@@ -16,11 +16,12 @@ function Test() {
     //let mapPeers: any = {};
     const inputRef: any = useRef<any>(null);
     const webcamRef: any = React.useRef<any>(null);
-    const webSocketURL: string = "ws://localhost:8000/ws/chat/lobby/"
+    const webSocketURL: string = "ws://localhost:8000/ws/screen/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
+    const [localVideoStream, setLocalVideoStream] = useState<MediaStream>();
     const [coordinate, setCoordinate] = useState({
         "username": "0",
         "x": 0,
@@ -426,6 +427,7 @@ function Test() {
                             <div id="ct"><input className="input-send" ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div className="btn-send" onClick={btnSendMsg}>전송</div></div>
                         </div>
                         <div>
+
                         </div>
                     </div>
                 </div>
@@ -436,4 +438,4 @@ function Test() {
     )
 }
 
-export default Test;
+export default Screen;

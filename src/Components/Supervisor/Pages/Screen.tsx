@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
 import "../CSS/Supervisor.css";
 import { getUser } from '../../../Actions/userAction';
-var mapPeers: any = {};
+var mapScreenPeers: any = {};
 
 function Screen() {
 
@@ -12,8 +12,8 @@ function Screen() {
     const [message, setMessage] = useState<string[]>([""]);
 
     const [checkNickname, setCheckNickname] = useState(true)
-    //const [mapPeers, setMapPeers] = useState<any>({});
-    //let mapPeers: any = {};
+    //const [mapScreenPeers, setmapScreenPeers] = useState<any>({});
+    //let mapScreenPeers: any = {};
 
     const webSocketURL: string = "ws://localhost:8000/ws/screen/"
     let ws = useRef<WebSocket | any>(null);
@@ -71,7 +71,7 @@ function Screen() {
         if (action === 'new-answer') {
             const answer = parsedData['message']['sdp'];
 
-            const peer = mapPeers[peerUsername][0]
+            const peer = mapScreenPeers[peerUsername][0]
             console.log(peer)
             peer.setRemoteDescription(answer);
         }
@@ -106,17 +106,17 @@ function Screen() {
         setOnTrack(peer, remoteVideo);
 
         /*
-        setMapPeers({
-            ...mapPeers,
+        setmapScreenPeers({
+            ...mapScreenPeers,
             peerUsername : [peer, dc],           
         })
         */
-        mapPeers[peerUsername] = [peer, dc];
+        mapScreenPeers[peerUsername] = [peer, dc];
         peer.oniceconnectionstatechange = () => {
             const iceConnectionState = peer.iceConnectionState;
 
             if (iceConnectionState === 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
-                delete mapPeers[peerUsername];
+                delete mapScreenPeers[peerUsername];
                 if (iceConnectionState != 'closed') {
                     peer.close();
                 }
@@ -162,14 +162,14 @@ function Screen() {
             peer.dc.onmessage = (event: any) => {
                 dcOnMessage(event)
             }
-            mapPeers[peerUsername] = [peer, peer.dc];
+            mapScreenPeers[peerUsername] = [peer, peer.dc];
         }
 
         peer.oniceconnectionstatechange = () => {
             const iceConnectionState = peer.iceConnectionState;
 
             if (iceConnectionState === 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
-                delete mapPeers[peerUsername];
+                delete mapScreenPeers[peerUsername];
 
                 if (iceConnectionState != 'closed') {
                     peer.close();

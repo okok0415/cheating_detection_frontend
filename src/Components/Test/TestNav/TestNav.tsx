@@ -18,7 +18,7 @@ function TestNav() {
             setCollect(false);
             setTest(false);
         }
-        else if (window.location.pathname === "/test/calibrate") {
+        else if (window.location.pathname === "/test/calibrate" || window.location.pathname === "/calibrate") {
             setAuth(false);
             setCalibrate(true);
             setCollect(false);

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
 import "../CSS/Test.css";
-var mapPeers: any = {};
+var mapScreenPeers: any = {};
 
 function Screen() {
     const [username, setUsername] = useState("");
@@ -16,8 +16,8 @@ function Screen() {
     const [y, setY] = useState(0);
     const [userxy, setUserxy] = useState<any>([]);
     const [checkNickname, setCheckNickname] = useState(true)
-    //const [mapPeers, setMapPeers] = useState<any>({});
-    //let mapPeers: any = {};
+    //const [mapScreenPeers, setmapScreenPeers] = useState<any>({});
+    //let mapScreenPeers: any = {};
     const inputRef: any = useRef<any>(null);
     const webcamRef: any = React.useRef<any>(null);
     const webSocketURL: string = "ws://localhost:8000/ws/screen/"
@@ -77,7 +77,7 @@ function Screen() {
         if (action === 'new-answer') {
             const answer = parsedData['message']['sdp'];
 
-            const peer = mapPeers[peerUsername][0]
+            const peer = mapScreenPeers[peerUsername][0]
             console.log(peer)
             peer.setRemoteDescription(answer);
         }
@@ -112,17 +112,17 @@ function Screen() {
         //setOnTrack(peer, remoteVideo);
 
         /*
-        setMapPeers({
-            ...mapPeers,
+        setmapScreenPeers({
+            ...mapScreenPeers,
             peerUsername : [peer, dc],           
         })
         */
-        mapPeers[peerUsername] = [peer, dc];
+        mapScreenPeers[peerUsername] = [peer, dc];
         peer.oniceconnectionstatechange = () => {
             const iceConnectionState = peer.iceConnectionState;
 
             if (iceConnectionState === 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
-                delete mapPeers[peerUsername];
+                delete mapScreenPeers[peerUsername];
                 if (iceConnectionState !== 'closed') {
                     peer.close();
                 }
@@ -168,14 +168,14 @@ function Screen() {
             peer.dc.onmessage = (event: any) => {
                 dcOnMessage(event)
             }
-            mapPeers[peerUsername] = [peer, peer.dc];
+            mapScreenPeers[peerUsername] = [peer, peer.dc];
         }
 
         peer.oniceconnectionstatechange = () => {
             const iceConnectionState = peer.iceConnectionState;
 
             if (iceConnectionState === 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed') {
-                delete mapPeers[peerUsername];
+                delete mapScreenPeers[peerUsername];
 
                 if (iceConnectionState !== 'closed') {
                     peer.close();
@@ -280,9 +280,9 @@ function Screen() {
     const getDataChannels = () => {
         var dataChannels = [];
 
-        for (const peerUsername in mapPeers) {
-            console.log('mapPeers[', peerUsername, ']: ', mapPeers[peerUsername]);
-            var dataChannel = mapPeers[peerUsername][1];
+        for (const peerUsername in mapScreenPeers) {
+            console.log('mapScreenPeers[', peerUsername, ']: ', mapScreenPeers[peerUsername]);
+            var dataChannel = mapScreenPeers[peerUsername][1];
             console.log('dataChannel: ', dataChannel);
 
             dataChannels.push(dataChannel);
@@ -324,7 +324,6 @@ function Screen() {
         }
 
         setText("")
-        inputRef.current.focus()
 
     }
     const onKeyPress = (event: any) => {
@@ -336,7 +335,7 @@ function Screen() {
 
         //InitialVideoConnect();
         //
-
+        InitialConnect();
         getWebcam((stream: any) => {
             console.log(stream);
             setLocalStream(stream);
@@ -345,7 +344,7 @@ function Screen() {
             webcamRef.current.muted = true;
         });
 
-        inputRef.current.focus()
+
         /*
         const i: any = dispatch(getUser);
         i.then((res: any) => {

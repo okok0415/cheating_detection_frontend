@@ -23,7 +23,7 @@ function Test() {
     const webcamRef: any = React.useRef<any>(null);
     const studentRef: any = React.useRef<any>(null);
     const webSocketURL: string = "ws://localhost:8000/ws/chat/lobby/"
-    const webSocketVideoURL: string = "ws://localhost:8000/chat/lobby/"
+    const webSocketVideoURL: string = "ws://localhost:8000/ws/chat/lobby/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
@@ -387,12 +387,12 @@ function Test() {
     }, [x && y]);
     const btnClick = () => {
         InitialConnect();
-        InitialVideoConnect();
+        //InitialVideoConnect();
         //setTimeout(processImage, 3000);
         setCheckNickname(false);
     }
 
-
+    /*
     const InitialVideoConnect = () => { //backend로 보낼 Video Websocket
         wsVideo.current = new WebSocket(webSocketVideoURL);
 
@@ -414,6 +414,7 @@ function Test() {
             setVideoconnect(false)
         };
     }
+    */
     const webSocketVideoOnMessage = (event: any) => {
         const parsedData = JSON.parse(event.data)
         const message = parsedData
@@ -445,6 +446,7 @@ function Test() {
             'message': "",
             'frame': imageSrc
         })
+        console.log(jsonStr)
         ws.current.send(jsonStr);
         setTimeout(processImage, 30);
     }

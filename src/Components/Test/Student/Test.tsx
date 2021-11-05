@@ -421,7 +421,7 @@ function Test() {
             'frame': imageSrc
         })
         ws.current.send(jsonStr);
-        setTimeout(processImage, 30);
+        setTimeout(processImage, 500);
     }
 
 

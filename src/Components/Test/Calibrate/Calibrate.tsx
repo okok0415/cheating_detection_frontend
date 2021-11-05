@@ -9,12 +9,13 @@ function Calibrate() {
     const ws = useContext(WebSocketContext);
     const webcamRef = React.useRef<any>(null);
     const [video, setVideo] = React.useState<any>(false);
+    const [count, setCount] = React.useState(0);
 
     let localStream: any = null;
     const processImage: any = () => {
         const imageSrc = webcamRef.current.getScreenshot();
         ws.current.send(imageSrc);
-        setTimeout(processImage, 30);
+        setTimeout(processImage, 1000);
         setVideo(true);
     }
 

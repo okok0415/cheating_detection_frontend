@@ -116,16 +116,18 @@ function Train() {
         clickHandler();
         const sendinf = {
             'message': 'screen-size',
-            'screen': window.screen,
+            'height': window.screen.height,
+            'width': window.screen.width
         }
         setTimeout(() => {
             ws.current.send(JSON.stringify(sendinf))
             setLoading(false)
-        }, 2000);
+        }, 5000);
     }, []);
 
     ws.current.onmessage = (evt: MessageEvent) => {
         const data = JSON.parse(evt.data)
+        console.log(data)
         if (data) {
             setLoading(false)
         }

@@ -98,8 +98,8 @@ function Calibrate() {
                     </div>
 
                     <div className="button-bottom">
-                        <button onClick={onclick}>보여주기</button>
                         <div className="btn-next" onClick={left}>이전</div>
+                        <div className="btn-next" onClick={onclick}>보여주기</div>
                         <div className="btn-next" onClick={right}>다음</div>
                     </div>
                 </div>

@@ -27,6 +27,8 @@ function Test() {
         "y": 0
     });
 
+    const dispatch = useDispatch();
+
     const [userxy, setUserxy] = useState<any>([])
     const InitialConnect = () => { //PeertoPeerConnection Websocket
         ws.current = new WebSocket(webSocketURL);
@@ -352,15 +354,14 @@ function Test() {
         });
 
         inputRef.current.focus()
-        /*
+
         const i: any = dispatch(getUser);
         i.then((res: any) => {
             setUsername(res.payload.username)
-            setName(res.payload.name)
-            console.log(username);
-            console.log(name);
+
         })
-        */
+
+        setTimeout(btnClick, 1000);
     }, []);
     const btnClick = () => {
         InitialConnect();
@@ -402,18 +403,12 @@ function Test() {
 
 
         <div className="test">
-            <div className={checkNickname ? "" : "display-none"}>
-                <h3 id="label-username">관리자페이지</h3>
-                <div>
-                    <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} /><button id="btn-join" onClick={btnClick}>Join Room</button>
-                    {username}
-                </div>
-            </div>
-            <div className={checkNickname ? "display-none" : "main-grid-container"}>
+            <div className={"main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
+                        <button onClick={btnClick}>h</button>
                     </div>
-                    <div>{JSON.stringify(userxy)}</div>
+                    <div>{userxy.map((data: any) => { <div>{data}</div> })}</div>
                 </div>
                 <div className="right-side">
                     <div className="user-box" >

@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { useEffect } from "react";
 import react from "../Train/logo192.png";
 import Webcam from "react-webcam"
 import { TrainData } from "./TrainData";
-import { WebSocketContext } from './TrainWebSocketProvider';
 import Loader from "react-loader-spinner";
 
 let time = 0;
 // getscreenshot이 문제다. 화면 크기 보내줘야됨.
 function Train() {
-    const ws = useContext(WebSocketContext);
     const webcamRef: any = React.useRef<any>(null);
     //const [json, setJson] = React.useState<any>([]);
     const [imgSrc, setImgSrc] = React.useState<any>(null);
@@ -19,6 +17,40 @@ function Train() {
     const [row, setRow] = React.useState<number>(0);
     let localStream: any = null;
     const [loading, setLoading] = React.useState(true);
+    const [trainloading, setTrainloading] = React.useState(false)
+    const webSocketURL: string = "ws://localhost:8000/ws/train/"
+    let ws = useRef<WebSocket | any>(null);
+
+    const InitialConnect = () => { //PeertoPeerConnection Websocket
+        ws.current = new WebSocket(webSocketURL);
+
+        ws.current.onopen = () => {
+            console.log("connected to " + webSocketURL);
+            const sendinf = {
+                'message': 'screen-size',
+                'width': window.screen.width,
+                'height': window.screen.height
+            }
+            console.log(sendinf)
+            ws.current.send(JSON.stringify(sendinf))
+            setLoading(false)
+        };
+        ws.current.onmessage = (event: any) => {
+            console.log(event.data)
+            setTrainloading(false)
+            window.location.href = "/test/screensharing"
+        }
+        ws.current.onclose = (error: string) => {
+            console.log("disconnect from " + webSocketURL);
+            console.log(error)
+        };
+        ws.current.onerror = (error: string) => {
+            console.log("connection error " + webSocketURL);
+            console.log(error);
+        };
+    }
+
+
 
 
     const clickHandler = () => {
@@ -55,11 +87,16 @@ function Train() {
 
 
         }
+
         if (count !== 0) {
             console.log(JSON.stringify(sendinf))
             ws.current.send(JSON.stringify(sendinf))
             processImage();
             //setLoading(true)
+        }
+        if (count === 14) {
+            setTrainloading(true)
+
         }
     }
 
@@ -112,35 +149,42 @@ function Train() {
             webcamRef.current.srcObject = localStream;
             webcamRef.current.muted = true;
         });
-
+        InitialConnect();
         clickHandler();
-        const sendinf = {
-            'message': 'screen-size',
-            'width': window.screen.width,
-            'height': window.screen.height
-        }
-        setTimeout(() => {
-            ws.current.send(JSON.stringify(sendinf))
-            setLoading(false)
-        }, 2000);
     }, []);
 
-    ws.current.onmessage = (evt: MessageEvent) => {
-        const data = JSON.parse(evt.data)
-        if (data) {
-            setLoading(false)
-        }
-    }
     if (loading) {
 
         return (
-            <div className="third-test">
-                <div>
-                    <Webcam id="webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" />
+
+            <div className="prepare">
+                <div className="loading">
+                    <div className="loading-title">잠시만 기다려주세요.</div>
+                    <div className="loading-content">
+                        <Webcam id="webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" />
+                        <div className="loading-icon">
+                            <Loader type="Oval" color="#3d66ba" height="200" width="200" timeout={500000} />
+                        </div>
+                    </div>
                 </div>
-                <div className="register-form">
-                    <div>잠시만 기다려 주세요.</div>
-                    <Loader type="Oval" color="#3d66ba" height="300" width="300" timeout={5000} />
+            </div>
+        )
+    }
+
+    if (trainloading) {
+
+        return (
+
+
+            <div className="prepare">
+                <div className="loading">
+                    <div className="loading-title">모델 생성 중입니다. 1~2분 정도 소요됩니다.</div>
+                    <div className="loading-content">
+                        <Webcam id="webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" />
+                        <div className="loading-icon">
+                            <Loader type="Oval" color="#3d66ba" height="200" width="200" timeout={500000} />
+                        </div>
+                    </div>
                 </div>
             </div>
         )

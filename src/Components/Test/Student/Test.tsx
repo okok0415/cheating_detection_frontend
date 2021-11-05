@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
 import "../CSS/Test.css";
+import Math1 from "./Math1.jpg"
+import Math2 from "./Math2.jpg"
 var mapPeers: any = {};
 
 function Test() {
@@ -31,8 +33,17 @@ function Test() {
 
         ws.current.onopen = () => {
             console.log("connected to " + webSocketURL);
-
+            processImage()
             sendSignal('new-peer', {})
+            const sendinf = {
+                'peer': username,
+                'action': 'screen-size',
+                'message': {},
+                'width': window.screen.width,
+                'height': window.screen.height
+            }
+            console.log(sendinf)
+            ws.current.send(JSON.stringify(sendinf))
         };
         ws.current.onmessage = (event: any) => {
             if (JSON.parse(event.data)['action'] === 'get-frame') {
@@ -356,6 +367,7 @@ function Test() {
             console.log(name);
         })
         */
+
     }, []);
     useEffect(() => {
 
@@ -383,6 +395,9 @@ function Test() {
         for (const index in dataChannels) {
             dataChannels[index].send(JSON.stringify(sendmsg));
         }
+
+        document.documentElement.style.setProperty('--hover', `${x}px`)
+        document.documentElement.style.setProperty('--hover2', `${y}px`)
     }, [x && y]);
     const btnClick = () => {
         InitialConnect();
@@ -442,8 +457,10 @@ function Test() {
             </div>
             <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
-                    <div id="video-container">
-
+                    <div className="problem">
+                        <img src={Math1} alt="" />
+                        <div> </div>
+                        <img src={Math2} alt="" />
                     </div>
 
                 </div>
@@ -458,9 +475,10 @@ function Test() {
                             <div id="ct"><input className="input-send" ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div className="btn-send" onClick={btnSendMsg}>전송</div></div>
                         </div>
                     </div>
-                    <button onClick={processImage}>보내기</button>
                 </div>
-                <div>{x}{y}</div>
+
+                <div className="x"><div></div></div>
+
             </div>
 
 

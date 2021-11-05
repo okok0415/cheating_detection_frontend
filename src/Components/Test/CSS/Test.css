@@ -10,10 +10,11 @@
 
 .right-side{
 
-    background-color: var(--bg);
-    justify-items: center;
 }
 .user-box{
+    top: 100px;
+    position:sticky;
+    background-color: var(--bg);
     height: 700px;
     display: grid;
     grid-template-rows: 300px 400px;
@@ -244,4 +245,26 @@
 
 .finish{
     display: none;
+}
+
+.problem{
+    display: grid;
+    justify-content: center;
+}
+
+.coordinate {
+    width : 100vw;
+    height: 100vh;
+    background-color: aliceblue;
+}
+
+.x {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    border-radius: 130px;
+    top: var(--hover);
+    left: var(--hover2);
+    position: absolute;
+    background-color: var(--btn-color-accent);
 }

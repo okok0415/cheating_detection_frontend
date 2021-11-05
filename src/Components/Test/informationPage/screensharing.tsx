@@ -17,6 +17,7 @@ function Screensharing() {
     const [y, setY] = useState(0);
     const [userxy, setUserxy] = useState<any>([]);
     const [checkNickname, setCheckNickname] = useState(true)
+    const [disable, setDisable] = useState(false)
     //const [mapScreenPeers, setmapScreenPeers] = useState<any>({});
     //let mapScreenPeers: any = {};
     const inputRef: any = useRef<any>(null);
@@ -336,7 +337,6 @@ function Screensharing() {
 
         //InitialVideoConnect();
         //
-        InitialConnect();
         getWebcam((stream: any) => {
             console.log(stream);
             setLocalStream(stream);
@@ -344,7 +344,6 @@ function Screensharing() {
             webcamRef.current.srcObject = localStream;
             webcamRef.current.muted = true;
         });
-
 
         /*
         const i: any = dispatch(getUser);
@@ -384,7 +383,7 @@ function Screensharing() {
     }, [x && y]);
     const btnClick = () => {
         InitialConnect();
-        setCheckNickname(false);
+        setDisable(true)
     }
 
     const webSocketVideoOnMessage = (event: any) => {
@@ -429,10 +428,14 @@ function Screensharing() {
                 <div className="info">
                     <div className="info-title">ScreenSharing 과정</div>
                     <div className="info-content">
-                        <video id="supervisor-webcam" className="webcam" height={224} width={295} ref={webcamRef} />
+                        응시자의 화면 공유를 통해 웹 서핑, 컴퓨터 내 부정행위를 막는 과정입니다.<br /><br />
+                        1. 본인의 전체 화면을 공유합니다. <br /><br />
+                        2. 화면 공유 버튼을 누릅니다.<br /><br />
+                        3. 시험 단계로 넘어갑니다.
+                        <video ref={webcamRef} width={1} height={1} />
                     </div>
                     <div className="button-bottom">
-                        <button onClick={btnClick}>ScreenShare 버튼</button>
+                        <div className={disable ? "display-none" : "btn-next-bigger"} onClick={btnClick}>ScreenShare 버튼</div>
                         <Link to="/student/test">
                             <div className="btn-next">네!</div>
                         </Link>

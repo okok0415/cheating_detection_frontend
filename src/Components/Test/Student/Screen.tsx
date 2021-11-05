@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
+
 import "../CSS/Test.css";
 var mapScreenPeers: any = {};
 
@@ -423,7 +424,7 @@ function Screen() {
 
 
     return (
-
+        //
 
         <div className="test">
             <div className={checkNickname ? "" : "display-none"}>
@@ -436,7 +437,6 @@ function Screen() {
             <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
-                        {video}
                     </div>
 
                 </div>

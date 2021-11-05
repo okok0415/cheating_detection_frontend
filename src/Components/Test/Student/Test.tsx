@@ -14,6 +14,7 @@ function Test() {
 
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
+    const [cheating, setCheating] = useState("")
     const [userxy, setUserxy] = useState<any>([]);
     const [checkNickname, setCheckNickname] = useState(true)
     //const [mapPeers, setMapPeers] = useState<any>({});
@@ -363,11 +364,12 @@ function Test() {
             ...userxy,
             {
                 'username': username,
+                'cheating': cheating,
                 'x': x,
                 'y': y
             }
         ])
-        currentxy = [...userxy, { 'username': username, 'x': x, 'y': y }]
+        currentxy = [...userxy, { 'username': username, 'cheating': cheating, 'x': x, 'y': y }]
         console.log(currentxy)
         const sendmsg = {
             'dcAction': 'coordinate',
@@ -392,9 +394,11 @@ function Test() {
     const webSocketVideoOnMessage = (event: any) => {
         const parsedData = JSON.parse(event.data)
         const message = parsedData
+
         setX(message['x'])
         setY(message['y'])
-        //console.log(message)
+        setCheating(message['cheating'])
+        console.log(message)
 
     }
 

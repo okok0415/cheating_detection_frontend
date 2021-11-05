@@ -116,7 +116,8 @@ function Train() {
         clickHandler();
         const sendinf = {
             'message': 'screen-size',
-            'screen': window.screen,
+            'width': window.screen.width,
+            'height': window.screen.height
         }
         setTimeout(() => {
             ws.current.send(JSON.stringify(sendinf))

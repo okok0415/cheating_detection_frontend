@@ -419,7 +419,7 @@ function Test() {
                 <div className="main-side">
                     <div id="video-container">
                     </div>
-                    <div>{userxy.map((data: any) => { <div>{data}</div> })}</div>
+                    <div>{JSON.stringify(userxy)}</div>
                 </div>
                 <div className="right-side">
                     <div className="user-box" >

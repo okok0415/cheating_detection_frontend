@@ -9,7 +9,7 @@
 .four-block{
     margin-top: 50px;
     margin-bottom: 50px;
-    width:1000px;
+    width:800px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -54,7 +54,7 @@
 .step{
 
     border-radius: 20px;
-    width: 970px;
+    width: 900px;
     height: 540px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -102,7 +102,7 @@
 
 .step-content{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr;
 }
 
 .step-title{

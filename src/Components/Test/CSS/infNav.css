@@ -144,3 +144,25 @@
     justify-content: center;
     align-items: center;
 }
+
+.input-value{
+    background-color: var(--background);
+    border-radius: 5px;
+    border : var(--border);
+    padding: 8px;
+    text-align: left;
+
+    color: var(--text-color);
+}
+
+.check-nickname {
+    font-size: 20px;
+    padding: 30px;
+    width:500px;
+    height: 250px;
+    background-color: var(--bg);
+    border : var(--border);
+    display: grid;
+    grid-template-rows: 1fr 8fr 1fr;
+    border-radius: 10px;
+}

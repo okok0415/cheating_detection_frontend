@@ -361,7 +361,7 @@ function Test() {
 
         })
 
-        setTimeout(btnClick, 1000);
+        //setTimeout(btnClick, 1000);
     }, []);
     const btnClick = () => {
         InitialConnect();
@@ -403,10 +403,21 @@ function Test() {
 
 
         <div className="test">
-            <div className={"main-grid-container"}>
+            <div className={checkNickname ? "prepare" : "display-none"}>
+                <div className="check-nickname">
+                    <div className="loading-title">닉네임을 설정하세요</div>
+                    <div className="info-content">
+                        <input className="input-value" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    </div>
+
+                    <div className="button-bottom">
+                        <div className="btn-next" id="btn-join" onClick={btnClick}>Join Room</div>
+                    </div>
+                </div>
+            </div>
+            <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
-                        <button onClick={btnClick}>h</button>
                     </div>
                     <div>{userxy.map((data: any) => { <div>{data}</div> })}</div>
                 </div>

@@ -98,7 +98,7 @@ function Step() {
                             <div className="step-btn" onClick={nextHandler}>다음</div>
                         </div>
                     </div>
-                    <div className="step-right"><img src={image} width="400" /></div>
+                    <div className="step-right"><img src={image} width="300" /></div>
                 </div>
             </div>
         </div>

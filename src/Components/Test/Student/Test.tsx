@@ -448,11 +448,16 @@ function Test() {
 
 
         <div className="test">
-            <div className={checkNickname ? "" : "display-none"}>
-                <h3 id="label-username">학생페이지</h3>
-                <div>
-                    <input id="username" value={username} onChange={(e) => setUsername(e.target.value)} /><button id="btn-join" onClick={btnClick}>Join Room</button>
-                    {username}
+            <div className={checkNickname ? "prepare" : "display-none"}>
+                <div className="check-nickname">
+                    <div className="loading-title">닉네임을 설정하세요</div>
+                    <div className="info-content">
+                        <input className="input-value" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    </div>
+
+                    <div className="button-bottom">
+                        <div className="btn-next" id="btn-join" onClick={btnClick}>Join Room</div>
+                    </div>
                 </div>
             </div>
             <div className={checkNickname ? "display-none" : "main-grid-container"}>

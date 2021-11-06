@@ -21,6 +21,14 @@
     justify-items: center;
     align-items: center;
 }
+.user-box-supervisor{
+    top: 100px;
+    position:sticky;
+    background-color: var(--bg);
+    height: 420px;
+    justify-items: center;
+    align-items: center;
+}
 #local-video {
     width:100%;
     height: 100%;

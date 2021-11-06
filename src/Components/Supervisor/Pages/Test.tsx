@@ -422,8 +422,8 @@ function Test() {
                     <div>{JSON.stringify(userxy)}</div>
                 </div>
                 <div className="right-side">
-                    <div className="user-box" >
-                        <div id="lim"><Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" /></div>
+                    <div className="user-box-supervisor" >
+                        <Webcam id="supervisor-webcam" className="webcam" audio={false} height={1} width={1} ref={webcamRef} screenshotFormat="image/jpeg" />
                         <div id="chat">
                             <div className="chat-title">채팅</div>
                             <div className="chat-content">

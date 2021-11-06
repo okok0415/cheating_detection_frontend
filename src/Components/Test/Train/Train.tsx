@@ -95,7 +95,7 @@ function Train() {
             //setLoading(true)
         }
         if (count === 14) {
-            setTimeout(() => setTrainloading(true), 1000);
+            setTimeout(() => setTrainloading(true), 2000);
         }
     }
 

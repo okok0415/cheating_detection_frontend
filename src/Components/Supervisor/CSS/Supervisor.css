@@ -34,3 +34,14 @@
     border-bottom: var(--border);
     margin-bottom: 20px;
 }
+
+.alarm-content{
+    height: 120px;
+    overflow: auto;
+}
+
+.participant-content{
+    height: 100px;
+    width: 300px;
+    overflow: auto;
+}

@@ -26,7 +26,9 @@ function Test() {
 
     const dispatch = useDispatch();
 
-    const [userxy, setUserxy] = useState([])
+    const [userxy, setUserxy] = useState([]);
+    const today = new Date();
+
     const printxy = (
         <div>{userxy.map((data: any, index: any) => (
             <div key={index}>{data.username} {data.x} {data.y}</div>
@@ -349,18 +351,10 @@ function Test() {
     }
     useEffect(() => {
         students.map((student: any) => {
-            if (userxy.filter((data: any) => data.username === student).length > 5) {
-                setCoordinate(
-                    userxy.filter((data: any) => data.username === student).slice(-5)
-                )
-            }
-            else {
-                setCoordinate(
-                    userxy.filter((data: any) => data.username === student)
-                )
-            }
+            setCoordinate(
+                userxy
+            )
         })
-        console.log(coordinate)
     }, [userxy]);
     useEffect(() => {
 
@@ -450,10 +444,11 @@ function Test() {
                         <Webcam id="supervisor-webcam" className="webcam" audio={false} height={1} width={1} ref={webcamRef} screenshotFormat="image/jpeg" />
                         <div className="participant">
                             <div className="alarm-title">참가자 목록</div>
-
-                            {students.map((data: any, index: any) => (
-                                <div key={index}>{data}</div>
-                            ))}
+                            <div className="participant-content">
+                                {students.map((data: any, index: any) => (
+                                    <div key={index}>{data}</div>
+                                ))}
+                            </div>
                         </div>
                         <div id="chat">
                             <div className="chat-title">채팅</div>
@@ -464,9 +459,14 @@ function Test() {
                         </div>
                         <div className="alarm">
                             <div className="alarm-title">알람 로그</div>
-                            {coordinate.map((data: any, index: any) => (
-                                <div key={index}>{data.username} {data.x} {data.y} {data.cheating}</div>
-                            ))}
+                            <div className="alarm-content">
+                                {coordinate.map((data: any, index: any) => (
+                                    <div key={index}>
+                                        참가자 : {data.username} 좌표 : {data.x} {data.y} <br />
+                                        {today.getHours()}:{today.getMinutes()}:{today.getSeconds()} {data.cheating}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

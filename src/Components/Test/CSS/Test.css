@@ -25,9 +25,10 @@
     top: 100px;
     position:sticky;
     background-color: var(--bg);
-    height: 420px;
+    height: 80vh;
     justify-items: center;
     align-items: center;
+    padding : 10px;
 }
 #local-video {
     width:100%;
@@ -54,7 +55,7 @@
     height:400px;
 }
 #chat{
-    width:300px;
+
     height:400px;
 }
 .chat-title{

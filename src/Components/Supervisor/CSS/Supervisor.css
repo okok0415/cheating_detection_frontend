@@ -1,3 +1,36 @@
 .display-none{
     display: none;
 }
+
+.test-user {
+    font-size: 20px;
+    padding: 30px;
+    width:300px;
+    height: 300px;
+    background-color: var(--bg);
+    border : var(--border);
+    display: grid;
+    grid-template-rows: 1fr 8fr 1fr;
+    border-radius: 10px;
+}
+
+.test-user-title {
+    font-size: 24px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom : var(--border);
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.alarm{
+
+}
+
+.alarm-title{
+    display: flex;
+    justify-content: center;
+    border-bottom: var(--border);
+    margin-bottom: 20px;
+}

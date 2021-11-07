@@ -21,17 +21,12 @@ function Test() {
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
-    const [coordinate, setCoordinate] = useState({
-        "username": "0",
-        "x": 0,
-        "y": 0
-    });
-
-
+    const [students, setStudents] = useState<string[]>([]);
+    const [coordinate, setCoordinate] = useState([]);
 
     const dispatch = useDispatch();
 
-    const [userxy, setUserxy] = useState<any>([])
+    const [userxy, setUserxy] = useState([])
     const printxy = (
         <div>{userxy.map((data: any, index: any) => (
             <div key={index}>{data.username} {data.x} {data.y}</div>
@@ -135,7 +130,7 @@ function Test() {
                 if (iceConnectionState != 'closed') {
                     peer.close();
                 }
-                removeVideo(remoteVideo)
+                removeVideo(remoteVideo, peerUsername)
             }
 
 
@@ -189,7 +184,7 @@ function Test() {
                 if (iceConnectionState != 'closed') {
                     peer.close();
                 }
-                removeVideo(remoteVideo)
+                removeVideo(remoteVideo, peerUsername)
             }
 
 
@@ -256,7 +251,6 @@ function Test() {
 
         const videoContainer = document.querySelector('#video-container')
         const remoteVideo = document.createElement('video')
-
         //remoteVideo.ref = webcamRef
         remoteVideo.id = peerUsername + '-video';
         remoteVideo.autoplay = true;
@@ -264,30 +258,37 @@ function Test() {
         remoteVideo.width = 300
         remoteVideo.height = 200
 
+
         const videoWrapper = document.createElement('div');
+        videoWrapper.className = "test-user"
 
-
+        setStudents((students: any) => [
+            ...students,
+            peerUsername
+        ]
+        )
         const xy = document.createElement('div')
-
+        xy.innerText = peerUsername
+        xy.className = 'test-user-title'
 
         videoContainer?.appendChild(videoWrapper);
-        videoWrapper.appendChild(remoteVideo);
         videoWrapper.appendChild(xy);
+        videoWrapper.appendChild(remoteVideo);
+
 
         return remoteVideo
     }
     const setOnTrack = (peer: RTCPeerConnection, remoteVideo: any) => {
         const remoteStream: any = new MediaStream();
-        console.log(remoteStream)
         peer.ontrack = async (event: any) => {
             remoteStream.addTrack(event.track, remoteStream);
         }
         remoteVideo.srcObject = remoteStream;
     }
 
-    const removeVideo = (video: any) => {
+    const removeVideo = (video: any, peerUsername: string) => {
         const videoWrapper = video.parentNode;
-
+        setStudents(students.filter(student => student !== peerUsername))
         videoWrapper.parentNode.removeChild(videoWrapper)
     }
 
@@ -347,7 +348,19 @@ function Test() {
         }
     }
     useEffect(() => {
-        //userxy.filter((array: any) => array.username === )
+        students.map((student: any) => {
+            if (userxy.filter((data: any) => data.username === student).length > 5) {
+                setCoordinate(
+                    userxy.filter((data: any) => data.username === student).slice(-5)
+                )
+            }
+            else {
+                setCoordinate(
+                    userxy.filter((data: any) => data.username === student)
+                )
+            }
+        })
+        console.log(coordinate)
     }, [userxy]);
     useEffect(() => {
 
@@ -426,12 +439,22 @@ function Test() {
             <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
-                    </div>
 
+                    </div>
+                    <div>
+                        <div></div>
+                    </div>
                 </div>
                 <div className="right-side">
                     <div className="user-box-supervisor" >
                         <Webcam id="supervisor-webcam" className="webcam" audio={false} height={1} width={1} ref={webcamRef} screenshotFormat="image/jpeg" />
+                        <div className="participant">
+                            <div className="alarm-title">참가자 목록</div>
+
+                            {students.map((data: any, index: any) => (
+                                <div key={index}>{data}</div>
+                            ))}
+                        </div>
                         <div id="chat">
                             <div className="chat-title">채팅</div>
                             <div className="chat-content">
@@ -439,7 +462,11 @@ function Test() {
                             </div>
                             <div id="ct"><input className="input-send" ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div className="btn-send" onClick={btnSendMsg}>전송</div></div>
                         </div>
-                        <div>
+                        <div className="alarm">
+                            <div className="alarm-title">알람 로그</div>
+                            {coordinate.map((data: any, index: any) => (
+                                <div key={index}>{data.username} {data.x} {data.y} {data.cheating}</div>
+                            ))}
                         </div>
                     </div>
                 </div>

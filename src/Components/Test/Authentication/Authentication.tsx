@@ -29,10 +29,13 @@ function Authentication() {
                 alert("인증완료")
                 window.location.href = "/test/calibrate"
             }
-            else if (parsedData['result'] === 'False'){
-                alert("당신은 신분증의 인물과 다릅니다.")
+            else if (parsedData['result'] === 'False') {
+                alert("당신은 신분증의 인물과 다릅니다. 다시 시도하세요.")
             }
-            else if (parsedData['result'] === 'Undetected'){
+            else if (parsedData['result'] === 'fake') {
+                alert("부정한 방법을 이용하고 있습니다. 다시 시도하세요.")
+            }
+            else if (parsedData['result'] === 'Undetected') {
                 alert("사람 인식에 실패했습니다.")
             }
         }

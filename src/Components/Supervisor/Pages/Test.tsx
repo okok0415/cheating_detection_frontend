@@ -27,9 +27,16 @@ function Test() {
         "y": 0
     });
 
+
+
     const dispatch = useDispatch();
 
     const [userxy, setUserxy] = useState<any>([])
+    const printxy = (
+        <div>{userxy.map((data: any, index: any) => (
+            <div key={index}>{data.username} {data.x} {data.y}</div>
+        ))}</div>
+    )
     const InitialConnect = () => { //PeertoPeerConnection Websocket
         ws.current = new WebSocket(webSocketURL);
 
@@ -399,6 +406,7 @@ function Test() {
     }
 
 
+
     return (
 
 
@@ -419,7 +427,7 @@ function Test() {
                 <div className="main-side">
                     <div id="video-container">
                     </div>
-                    <div>{JSON.stringify(userxy)}</div>
+
                 </div>
                 <div className="right-side">
                     <div className="user-box-supervisor" >

@@ -5,7 +5,7 @@ import "../CSS/Supervisor.css";
 import { getUser } from '../../../Actions/userAction';
 import { COLUMNS } from "../Table/AlarmColumns";
 import { Table } from '../Table/Table';
-import MOCK_DATA from "../Table/MOCK_DATA_STATE.json"
+
 import { ReactComponent as AlarmIcon } from "../icons/bell-solid.svg";
 import { ReactComponent as ChatIcon } from "../icons/comments-solid.svg";
 import { ReactComponent as ParticipantIcon } from "../icons/user-friends-solid.svg";

@@ -10,7 +10,7 @@ function Test() {
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
     const [videoconnect, setVideoconnect] = useState(false)
-
+    let today = new Date();
     const [message, setMessage] = useState<string[]>([""]);
     const [text, setText] = useState<string>("");
 
@@ -378,10 +378,11 @@ function Test() {
                 'username': username,
                 'cheating': cheating,
                 'x': x,
-                'y': y
+                'y': y,
+                'time': `${today.getHours()}시 ${today.getMinutes()}분 ${today.getSeconds()}초`
             }
         ])
-        currentxy = [...userxy, { 'username': username, 'cheating': cheating, 'x': x, 'y': y }]
+        currentxy = [...userxy, { 'username': username, 'cheating': cheating, 'x': x, 'y': y, 'time': `${today.getHours()}시 ${today.getMinutes()}분 ${today.getSeconds()}초` }]
         console.log(currentxy)
         const sendmsg = {
             'dcAction': 'coordinate',

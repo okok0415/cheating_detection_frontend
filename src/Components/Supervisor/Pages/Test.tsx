@@ -3,6 +3,13 @@ import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
 import "../CSS/Supervisor.css";
 import { getUser } from '../../../Actions/userAction';
+import { COLUMNS } from "../Table/AlarmColumns";
+import { Table } from '../Table/Table';
+import MOCK_DATA from "../Table/MOCK_DATA_STATE.json"
+import { ReactComponent as AlarmIcon } from "../icons/bell-solid.svg";
+import { ReactComponent as ChatIcon } from "../icons/comments-solid.svg";
+import { ReactComponent as ParticipantIcon } from "../icons/user-friends-solid.svg";
+
 var mapPeers: any = {};
 
 function Test() {
@@ -28,6 +35,10 @@ function Test() {
 
     const [userxy, setUserxy] = useState([]);
     const today = new Date();
+
+    const [participant, setParticipant] = useState(false);
+    const [chat, setChat] = useState(false);
+    const [alarm, setAlarm] = useState(false);
 
     const printxy = (
         <div>{userxy.map((data: any, index: any) => (
@@ -234,6 +245,7 @@ function Test() {
             //}
             setUserxy(data.dcData)
 
+
         }
     }
     /*
@@ -257,13 +269,13 @@ function Test() {
         remoteVideo.id = peerUsername + '-video';
         remoteVideo.autoplay = true;
         remoteVideo.playsInline = true
-        remoteVideo.width = 300
-        remoteVideo.height = 200
+        remoteVideo.width = 500;
+        remoteVideo.height = 350
 
 
         const videoWrapper = document.createElement('div');
         videoWrapper.className = "test-user"
-
+        videoWrapper.id = peerUsername
         setStudents((students: any) => [
             ...students,
             peerUsername
@@ -310,7 +322,7 @@ function Test() {
 
     const btnSendMsg = () => {
         let currenttext;
-
+        /*
         if (message.length <= 13) {
             setMessage([
                 ...message,
@@ -325,7 +337,12 @@ function Test() {
             ])
             currenttext = [...message, `${username + "(관리자)"} : ${text}`]
         }
-
+        */
+        setMessage([
+            ...message,
+            `${username + "(관리자)"} : ${text}`
+        ])
+        currenttext = [...message, `${username + "(관리자)"} : ${text}`]
         const sendmsg = {
             'dcAction': 'message',
             'dcData': currenttext
@@ -355,7 +372,19 @@ function Test() {
                 userxy
             )
         })
+
+
     }, [userxy]);
+    useEffect(() => {
+        students.map((student: any) => {
+            const user = coordinate.filter((data: any) => data.username === student)
+            const lastUser: any = user[user.length - 1]
+            const findRef: any = document.getElementById(`${lastUser.username}`)
+            findRef.style.backgroundColor = "#fb9191";
+        })
+
+
+    }, [coordinate]);
     useEffect(() => {
 
         //InitialVideoConnect();
@@ -413,6 +442,41 @@ function Test() {
     }
 
 
+    function BottomIcon() {
+        const today = new Date();
+        return (
+            <>
+                <nav className="bottom-navbar">
+                    <div className="clock">가장 최근 알람 : {today.getHours()}시 {today.getMinutes()}분 {today.getSeconds()}초</div>
+                    <ul className='bottom-navbar-nav'>
+                        <li className="bottom-nav-item" onClick={participantOnClick}><ParticipantIcon width="30" /></li>
+                        <li className="bottom-nav-item" onClick={chatOnClick}><ChatIcon width="30" /></li>
+                        <li className="bottom-nav-item" onClick={alarmOnClick}><AlarmIcon width="28" /></li>
+
+                    </ul>
+                </nav>
+            </>
+        )
+    }
+
+    const participantOnClick = () => {
+        setParticipant(!participant)
+        setChat(false)
+        setAlarm(false)
+    }
+    const chatOnClick = () => {
+        setParticipant(false)
+        setChat(!chat)
+        setAlarm(false)
+    }
+    const alarmOnClick = () => {
+        setParticipant(false)
+        setChat(false)
+        setAlarm(!alarm)
+    }
+
+    const columns = COLUMNS
+    const data = coordinate
 
     return (
 
@@ -433,48 +497,56 @@ function Test() {
             <div className={checkNickname ? "display-none" : "main-grid-container"}>
                 <div className="main-side">
                     <div id="video-container">
-
                     </div>
                     <div>
                         <div></div>
                     </div>
                 </div>
                 <div className="right-side">
-                    <div className="user-box-supervisor" >
+                    <div className={participant || chat ? "user-box-supervisor-trans" : "user-box-supervisor display-none"} >
+
                         <Webcam id="supervisor-webcam" className="webcam" audio={false} height={1} width={1} ref={webcamRef} screenshotFormat="image/jpeg" />
-                        <div className="participant">
+                        <div className={participant ? "participant" : 'display-none'}>
                             <div className="alarm-title">참가자 목록</div>
                             <div className="participant-content">
                                 {students.map((data: any, index: any) => (
-                                    <div key={index}>{data}</div>
+                                    <div key={index} className="participant-list">{data}</div>
                                 ))}
                             </div>
                         </div>
-                        <div id="chat">
+                        <div id="chat" className={chat ? "chat" : 'display-none'}>
                             <div className="chat-title">채팅</div>
-                            <div className="chat-content">
+                            <div className="chat-content-supervisor">
                                 {message.map((data: string) => <div>{data}</div>)}
                             </div>
                             <div id="ct"><input className="input-send" ref={inputRef} onKeyPress={onKeyPress} value={text} onChange={(e) => setText(e.target.value)} /><div className="btn-send" onClick={btnSendMsg}>전송</div></div>
                         </div>
-                        <div className="alarm">
-                            <div className="alarm-title">알람 로그</div>
-                            <div className="alarm-content">
-                                {coordinate.map((data: any, index: any) => (
-                                    <div key={index}>
-                                        참가자 : {data.username} 좌표 : {data.x} {data.y} <br />
-                                        {today.getHours()}:{today.getMinutes()}:{today.getSeconds()} {data.cheating}
-                                    </div>
-                                ))}
+                    </div>
+
+                </div>
+                <div className={alarm ? "user-box-supervisor-alarm-trans" : "user-box-supervisor display-none"} >
+                    <div className={alarm ? "alarm" : 'display-none'}>
+                        <div className="alarm-title">알람 로그</div>
+                        <div className="alarm-content">
+                            <div className="table">
+                                <Table columns={columns} data={data} />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <BottomIcon />
 
         </div>
     )
 }
 
+/*
+                        {coordinate.map((data: any, index: any) => (
+                            <div key={index}>
+                                참가자 : {data.username} 좌표 : {data.x} {data.y} <br />
+                                {data.time} {data.cheating}
+                            </div>
+                        ))}
+*/
 export default Test;

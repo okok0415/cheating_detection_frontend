@@ -4,7 +4,8 @@
 }
 #video-container{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
 }
 
 
@@ -25,10 +26,47 @@
     top: 100px;
     position:sticky;
     background-color: var(--bg);
-    height: 80vh;
+    height: 700px;
     justify-items: center;
     align-items: center;
     padding : 10px;
+    border : var(--border);
+    border-radius: 5px;
+    transition : .9s;
+    position: absolute;
+    right:-10%;
+}
+
+.user-box-supervisor-trans{
+    top: 100px;
+    width:300px;
+    position:sticky;
+    background-color: var(--bg);
+    height: 700px;
+    justify-items: center;
+    align-items: center;
+    padding : 10px;
+    border : var(--border);
+    border-radius: 5px;
+    transition : .9s;
+    position: absolute;
+    right:30px;
+}
+
+.user-box-supervisor-alarm-trans{
+    top: 100px;
+    width:700px;
+    position:sticky;
+    background-color: var(--bg);
+    height: 700px;
+    justify-items: center;
+    align-items: center;
+    padding : 10px;
+    border : var(--border);
+    border-radius: 5px;
+    transition : .9s;
+    position: absolute;
+    right:30px;
 }
 #local-video {
     width:100%;
@@ -54,8 +92,8 @@
 #messages{
     height:400px;
 }
-#chat{
 
+.chat{
     height:400px;
 }
 .chat-title{
@@ -64,10 +102,17 @@
     border-bottom: var(--border);
 }
 
+.chat-content-supervisor{
+    padding-top: 20px;
+    height: 570px;
+    margin-bottom: 20px;
+    overflow:auto;
+}
 .chat-content{
     padding-top: 20px;
     height: 300px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
+    overflow:auto;
 }
 .btn-control {
     display: grid;

@@ -275,7 +275,8 @@ function Test() {
 
         const videoWrapper = document.createElement('div');
         videoWrapper.className = "test-user"
-        videoWrapper.id = peerUsername
+        videoWrapper.id = peerUsername;
+        videoWrapper.style.backgroundColor = "#fff";
         setStudents((students: any) => [
             ...students,
             peerUsername

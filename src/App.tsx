@@ -8,6 +8,7 @@ import { SigninRouter, SignupRouter, CheckItemsRouter } from "./Components/Login
 import "./CSS/App.css";
 import SettingsRouter from "./Components/Settings/SettingsRouter";
 import { SupervisorRouter, SupervisorScreenRouter } from "./Components/Supervisor/SupervisorRoute";
+import { ResultRouter } from "./Components/Result/ResultRouter";
 
 function App(): any {
 
@@ -29,6 +30,7 @@ function App(): any {
           <PrivateRoute path="/settings" component={SettingsRouter} />
           <PrivateRoute path="/supervisor/screen" exact={true} component={SupervisorScreenRouter} />
           <PrivateRoute path="/student/screen" exact={true} component={StudentScreenRouter} />
+          <PrivateRoute path="/result" component={ResultRouter} />
         </Switch>
       </BrowserRouter>
     </>

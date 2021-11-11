@@ -25,6 +25,7 @@ function Screensharing() {
     const webSocketURL: string = "ws://localhost:8000/ws/screen/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
+    const dispatch = useDispatch();
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
     const InitialConnect = () => { //PeertoPeerConnection Websocket
@@ -345,15 +346,9 @@ function Screensharing() {
             webcamRef.current.muted = true;
         });
 
-        /*
-        const i: any = dispatch(getUser);
-        i.then((res: any) => {
-            setUsername(res.payload.username)
-            setName(res.payload.name)
-            console.log(username);
-            console.log(name);
-        })
-        */
+
+        setUsername("ScreenSharing")
+
     }, []);
     useEffect(() => {
 

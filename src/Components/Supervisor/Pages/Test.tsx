@@ -378,10 +378,31 @@ function Test() {
     }, [userxy]);
     useEffect(() => {
         students.map((student: any) => {
-            const user = coordinate.filter((data: any) => data.username === student)
-            const lastUser: any = user[user.length - 1]
-            const findRef: any = document.getElementById(`${lastUser.username}`)
-            findRef.style.backgroundColor = "#fb9191";
+            let user = coordinate.filter((data: any) => data.username === student)
+            console.log(user)
+            try {
+                let lastUser: any = user[user.length - 1]
+                console.log(lastUser)
+                let findRef: any = document.getElementById(`${lastUser.username}`)
+                if (user.length < 3) {
+                    console.log("1")
+                    findRef.style.backgroundColor = "#F6BDC0";
+                } else if (user.length < 5) {
+                    console.log("2")
+                    findRef.style.backgroundColor = "#F1959B";
+                } else if (user.length < 7) {
+                    console.log("3")
+                    findRef.style.backgroundColor = "#F07470";
+                } else if (user.length < 9) {
+                    console.log("4")
+                    findRef.style.backgroundColor = "#EA4C46";
+                } else if (user.length < 11) {
+                    findRef.style.backgroundColor = "#DC1C13";
+                }
+            }
+            catch {
+                console.log("ㅠㅠ");
+            }
         })
 
 

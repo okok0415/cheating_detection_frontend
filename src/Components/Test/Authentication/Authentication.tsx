@@ -31,6 +31,8 @@ function Authentication() {
             }
             else if (parsedData['result'] === 'False') {
                 alert("당신은 신분증의 인물과 다릅니다. 다시 시도하세요.")
+                const color: any = document.getElementById('authentication')
+                color.style.backgroundColor = "#EA4C46"
             }
             else if (parsedData['result'] === 'fake') {
                 alert("부정한 방법을 이용하고 있습니다. 다시 시도하세요.")
@@ -99,7 +101,7 @@ function Authentication() {
     return (
         <>
             <div className="prepare">
-                <div className="info">
+                <div className="info" id="authentication">
                     <div className="info-title">Authentication 과정</div>
                     <div className="info-content">
                         <Webcam audio={false} height={380} width={500} ref={webcamRef} screenshotFormat="image/jpeg" />

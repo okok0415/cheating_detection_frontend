@@ -421,7 +421,7 @@ function Screensharing() {
         <>
             <div className="prepare">
                 <div className="info">
-                    <div className="info-title">ScreenSharing 과정</div>
+                    <div className="info-title">ScreenSharing</div>
                     <div className="info-content">
                         응시자의 화면 공유를 통해 웹 서핑, 컴퓨터 내 부정행위를 막는 과정입니다.<br /><br />
                         1. 본인의 전체 화면을 공유합니다. <br /><br />

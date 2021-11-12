@@ -6,7 +6,7 @@ function authentication() {
         <>
             <div className="prepare">
                 <div className="info">
-                    <div className="info-title">Authentication 과정</div>
+                    <div className="info-title">Authentication</div>
                     <div className="info-content">
                         <div>
                             시험 응시자와 신분증의 사진이 일치하는 지 대조하는 과정입니다.<br /><br />

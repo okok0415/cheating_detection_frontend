@@ -6,7 +6,7 @@ function calibrate() {
         <>
             <div className="prepare">
                 <div className="info">
-                    <div className="info-title">Calibrate 과정</div>
+                    <div className="info-title">Calibrate</div>
                     <div className="info-content">
                         3D 좌표와 2D좌표의 변환 행렬을 구하는 과정입니다.<br /><br />
                         1. 체스보드판 이미지를 출력 혹은 핸드폰 이미지로 준비합니다.<br /><br />

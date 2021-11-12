@@ -5,7 +5,7 @@ function collect() {
         <>
             <div className="prepare">
                 <div className="info">
-                    <div className="info-title">Collect 과정</div>
+                    <div className="info-title">Collect</div>
                     <div className="info-content">
                         <div>
                             시험 응시자의 현재 환경에 맞는 영상 데이터를 수집하여 Eye Tracking의 정확도를 높이기 위한 과정입니다.<br /><br />

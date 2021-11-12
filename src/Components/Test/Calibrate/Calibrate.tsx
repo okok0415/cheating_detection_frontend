@@ -92,7 +92,7 @@ function Calibrate() {
         <>
             <div className="prepare">
                 <div className="info">
-                    <div className="info-title">Calibrate 과정</div>
+                    <div className="info-title">Calibrate</div>
                     <div className="info-content">
                         <Webcam audio={false} height={380} width={500} ref={webcamRef} screenshotFormat="image/jpeg" />
                     </div>

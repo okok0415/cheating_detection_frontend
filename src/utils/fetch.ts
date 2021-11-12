@@ -1,5 +1,6 @@
 
 const DOMAIN = "http://localhost:8000";
+
 export const request = (method: any, url: string, data: any) => {
     return fetch(DOMAIN + url, {
         method,

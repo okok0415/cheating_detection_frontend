@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { useEffect } from "react";
-import react from "../Train/logo192.png";
+import { ReactComponent as CheckIcon } from "./check-circle-solid.svg";
 import Webcam from "react-webcam"
 import { TrainData } from "./TrainData";
 import Loader from "react-loader-spinner";
@@ -200,7 +200,7 @@ function Train() {
             </div>
             <div className="train" >
                 <div className={array.className} style={{ gridRow: row, gridColumn: column }}>
-                    <img id="arrow" src={react} onClick={clickHandler} alt="" width="50" height="50" />
+                    <CheckIcon className="check-icon" onClick={clickHandler} width="50" height="50" />
                 </div>
             </div>
         </div>

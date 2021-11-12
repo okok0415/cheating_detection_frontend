@@ -30,3 +30,4 @@ export const requestGet = (method: any, url: string,) => {
         .then((data) => data.json())
         .catch((err) => console.log(err));
 };
+

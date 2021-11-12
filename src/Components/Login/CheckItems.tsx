@@ -14,7 +14,7 @@ function CheckItems(props: any) {
     const [redirectskip, setRedirectskip] = useState(false);
 
     const dispatch = useDispatch();
-
+    /*
     useEffect(() => {
         const i: any = dispatch(getUser);
         i.then((res: any) => {
@@ -23,6 +23,17 @@ function CheckItems(props: any) {
             setBirth(res.payload.birth)
         })
     }, []);
+*/
+    useEffect(() => {
+        fetch("", {
+            method: "GET",
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then((data) => data.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
+    }, [])
 
     const onsubmitHandler = (e: any) => {
         e.preventDefault();

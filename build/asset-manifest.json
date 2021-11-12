@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.164d0f2e.chunk.css",
+    "main.js": "/static/js/main.ec684b5e.chunk.js",
+    "main.js.map": "/static/js/main.ec684b5e.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.6edeec13.js",
+    "runtime-main.js.map": "/static/js/runtime-main.6edeec13.js.map",
+    "static/js/2.6d3ec0d6.chunk.js": "/static/js/2.6d3ec0d6.chunk.js",
+    "static/js/2.6d3ec0d6.chunk.js.map": "/static/js/2.6d3ec0d6.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.164d0f2e.chunk.css.map": "/static/css/main.164d0f2e.chunk.css.map",
+    "static/js/2.6d3ec0d6.chunk.js.LICENSE.txt": "/static/js/2.6d3ec0d6.chunk.js.LICENSE.txt",
+    "static/media/Auth.6c4105cc.png": "/static/media/Auth.6c4105cc.png",
+    "static/media/Math1.1daa1aa7.jpg": "/static/media/Math1.1daa1aa7.jpg",
+    "static/media/Math2.6dd6df3b.jpg": "/static/media/Math2.6dd6df3b.jpg",
+    "static/media/address-card-solid.a2602c32.svg": "/static/media/address-card-solid.a2602c32.svg",
+    "static/media/arrow-down-solid.c622c76e.svg": "/static/media/arrow-down-solid.c622c76e.svg",
+    "static/media/bell-solid.43ca01a5.svg": "/static/media/bell-solid.43ca01a5.svg",
+    "static/media/cheating_detection_2.e05a7ffc.svg": "/static/media/cheating_detection_2.e05a7ffc.svg",
+    "static/media/check-circle-solid.926e82de.svg": "/static/media/check-circle-solid.926e82de.svg",
+    "static/media/chess-pawn-solid.6c81f4df.svg": "/static/media/chess-pawn-solid.6c81f4df.svg",
+    "static/media/cog.8c5b9138.svg": "/static/media/cog.8c5b9138.svg",
+    "static/media/collect.37d57b68.svg": "/static/media/collect.37d57b68.svg",
+    "static/media/comments-solid.6a1318dc.svg": "/static/media/comments-solid.6a1318dc.svg",
+    "static/media/desktop-solid.e0759f19.svg": "/static/media/desktop-solid.e0759f19.svg",
+    "static/media/eye-solid.8e7e265e.svg": "/static/media/eye-solid.8e7e265e.svg",
+    "static/media/id-card-solid.77e353f6.svg": "/static/media/id-card-solid.77e353f6.svg",
+    "static/media/laptop-house-solid.2f8189af.svg": "/static/media/laptop-house-solid.2f8189af.svg",
+    "static/media/logout.b382cc9b.svg": "/static/media/logout.b382cc9b.svg",
+    "static/media/slideshare-brands.212665ef.svg": "/static/media/slideshare-brands.212665ef.svg",
+    "static/media/user-check-solid.4ce17157.svg": "/static/media/user-check-solid.4ce17157.svg",
+    "static/media/user-friends-solid.7077d9b7.svg": "/static/media/user-friends-solid.7077d9b7.svg",
+    "static/media/video-slash-solid.51218eba.svg": "/static/media/video-slash-solid.51218eba.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6edeec13.js",
+    "static/js/2.6d3ec0d6.chunk.js",
+    "static/css/main.164d0f2e.chunk.css",
+    "static/js/main.ec684b5e.chunk.js"
+  ]
+}

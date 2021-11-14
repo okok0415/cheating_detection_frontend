@@ -20,10 +20,10 @@ function Test() {
     const [text, setText] = useState<string>("");
     const [checkNickname, setCheckNickname] = useState(true)
     //const [mapPeers, setMapPeers] = useState<any>({});
-    //let mapPeers: any = {};
+    //let mapPeers: any = {};/
     const inputRef: any = useRef<any>(null);
     const webcamRef: any = React.useRef<any>(null);
-    const webSocketURL: string = "ws://localhost:8000/ws/chat/lobby/"
+    const webSocketURL: string = "ws://125.129.130.86:8000/ws/chat/lobby/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
@@ -277,11 +277,19 @@ function Test() {
         videoWrapper.className = "test-user"
         videoWrapper.id = peerUsername;
         videoWrapper.style.backgroundColor = "#fff";
-        setStudents((students: any) => [
-            ...students,
-            peerUsername
-        ]
-        )
+        console.log(peerUsername)
+        console.log(peerUsername.indexOf('ScreenSharing'))
+        if (peerUsername.indexOf('ScreenSharing') === 0) {
+
+        }
+        else {
+            setStudents((students: any) => [
+                ...students,
+                peerUsername
+            ]
+            )
+        }
+
         const xy = document.createElement('div')
         xy.innerText = peerUsername
         xy.className = 'test-user-title'

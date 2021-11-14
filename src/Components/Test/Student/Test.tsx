@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Webcam from 'react-webcam';
 import "../CSS/Test.css";
+import { CheckAnswer } from './CheckAnswer';
 import Math1 from "./Math1.jpg"
 import Math2 from "./Math2.jpg"
 var mapPeers: any = {};
@@ -24,7 +25,7 @@ function Test() {
     const inputRef: any = useRef<any>(null);
 
     const webcamRef: any = React.useRef<any>(null);
-    const webSocketURL: string = "ws://localhost:8000/ws/chat/lobby/"
+    const webSocketURL: string = "ws://125.129.130.86:8000/ws/chat/lobby/"
     let ws = useRef<WebSocket | any>(null);
     //let localStream: any = new MediaStream();
     const [localStream, setLocalStream] = useState<MediaStream>();
@@ -440,6 +441,7 @@ function Test() {
             'message': "",
             'frame': imageSrc
         })
+        console.log(jsonStr);
         ws.current.send(jsonStr);
         setTimeout(processImage, 800);
     }
@@ -473,6 +475,9 @@ function Test() {
                 <div className="right-side">
                     <div className="user-box" >
                         <div id="lim"><Webcam id="supervisor-webcam" className="webcam" audio={false} height={224} width={295} ref={webcamRef} screenshotFormat="image/jpeg" /></div>
+                        <div className="answer">
+                            <CheckAnswer />
+                        </div>
                         <div id="chat">
                             <div className="chat-title">채팅</div>
                             <div className="chat-content">

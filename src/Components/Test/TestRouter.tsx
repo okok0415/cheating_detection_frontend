@@ -8,7 +8,6 @@ import collect from "./informationPage/collect";
 import screensharing from "./informationPage/screensharing";
 import Authentication from "./Authentication/Authentication";
 import Test from "./Student/Test";
-import Screen from "./Student/Screen";
 import Calibrate from "./Calibrate/Calibrate";
 import CalibrateWebSocketProvider from "./Calibrate/CalibrateWebSocketProvider";
 import calibrate from "./informationPage/calibrate";
@@ -70,14 +69,6 @@ export const StudentRouter = () => {
     )
 }
 
-export const StudentScreenRouter = () => {
-    return (
-        <>
-            <Navbar />
-            <Screen />
-        </>
-    )
-}
 
 
 /*

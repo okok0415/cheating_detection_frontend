@@ -22,7 +22,7 @@ function Screensharing() {
     //let mapScreenPeers: any = {};
     const inputRef: any = useRef<any>(null);
     const webcamRef: any = React.useRef<any>(null);
-    const webSocketURL: string = "ws://localhost:8000/ws/screen/"
+    const webSocketURL: string = "ws://125.129.130.86:8000/ws/screen/"
     let ws = useRef<WebSocket | any>(null);
     let wsVideo = useRef<WebSocket | any>(null);
     const dispatch = useDispatch();
@@ -347,7 +347,7 @@ function Screensharing() {
         });
 
 
-        setUsername("ScreenSharing")
+        setUsername(`ScreenSharing ${Math.floor(Math.random() * (100))}`)
 
     }, []);
     useEffect(() => {

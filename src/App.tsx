@@ -3,7 +3,7 @@ import PublicRoute from "./utils/PublicRoute";
 import PrivateRoute from "./utils/PrivateRoute";
 
 import { HomeRouter } from "./Components/Home/HomeRouter";
-import { AuthenticationRouter, CalibrateRouter, StudentRouter, StudentScreenRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
+import { AuthenticationRouter, CalibrateRouter, StudentRouter, TestRouter, TrainRouter } from "./Components/Test/TestRouter"
 import { SigninRouter, SignupRouter, CheckItemsRouter } from "./Components/Login/LoginRouter";
 import "./CSS/App.css";
 import SettingsRouter from "./Components/Settings/SettingsRouter";
@@ -29,7 +29,7 @@ function App(): any {
           <PrivateRoute path="/calibrate" component={CalibrateRouter} />
           <PrivateRoute path="/settings" component={SettingsRouter} />
           <PrivateRoute path="/supervisor/screen" exact={true} component={SupervisorScreenRouter} />
-          <PrivateRoute path="/student/screen" exact={true} component={StudentScreenRouter} />
+
           <PrivateRoute path="/result" component={ResultRouter} />
         </Switch>
       </BrowserRouter>

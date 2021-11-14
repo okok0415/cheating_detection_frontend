@@ -11,7 +11,7 @@ function Authentication() {
     const dispatch = useDispatch();
     //const ws = useContext(WebSocketContext);
     const webcamRef = React.useRef<any>(null);
-    const webSocketURL: string = "ws://localhost:8000/ws/authentication/"
+    const webSocketURL: string = "ws://125.129.130.86:8000/ws/authentication/"
     let ws = useRef<WebSocket | any>(null);
 
     const InitialConnect = () => { //PeertoPeerConnection Websocket

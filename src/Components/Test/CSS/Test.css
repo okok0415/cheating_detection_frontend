@@ -16,9 +16,9 @@
     top: 100px;
     position:sticky;
     background-color: var(--bg);
-    height: 700px;
+    height: 800px;
     display: grid;
-    grid-template-rows: 300px 400px;
+    grid-template-rows: 300px 100px 400px;
     justify-items: center;
     align-items: center;
 }
@@ -325,4 +325,30 @@
 
 .train path:hover{
     fill: var(--dark)
+}
+.answer {
+    height: 100px;
+    width:250px;
+    overflow: auto;
+}
+
+.answer-detail {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: 20px 1fr 1fr 1fr 1fr 1fr;
+
+}
+.answer-detail-ju {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: 20px 1fr;
+
+}
+
+.btn-center{
+    margin-top: 10px;
+    display:flex;
+    justify-content: center;
 }

@@ -60,6 +60,7 @@ function Train() {
         setArray(TrainData[count]);
         const target = document.querySelector("#arrow")
         const clientRect = target?.getBoundingClientRect();
+        console.log(clientRect)
         const sendinf = {
             'message': 'clicked',
             'bottom': clientRect?.bottom,
@@ -200,7 +201,7 @@ function Train() {
             </div>
             <div className="train" >
                 <div className={array.className} style={{ gridRow: row, gridColumn: column }}>
-                    <CheckIcon className="check-icon" onClick={clickHandler} width="50" height="50" />
+                    <CheckIcon id="arrow" className="check-icon" onClick={clickHandler} width="50" height="50" />
                 </div>
             </div>
         </div>

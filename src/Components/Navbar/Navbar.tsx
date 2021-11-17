@@ -22,7 +22,7 @@ function Navbar() {
             setSupervisor(res.payload.supervisor)
         })
     }, []);
-    
+
     useEffect(() => {
         if (window.location.pathname === "/") {
             setTest(false);

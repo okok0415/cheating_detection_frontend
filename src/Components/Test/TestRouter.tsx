@@ -1,7 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import Train from "./Train/Train";
 import TestNav from "./TestNav/TestNav";
-import HTML from "./websocket/HTML";
 import Navbar from "../Navbar/Navbar";
 import authentication from "./informationPage/authentication";
 import collect from "./informationPage/collect";

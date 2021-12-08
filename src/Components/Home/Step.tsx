@@ -32,7 +32,11 @@ function Step() {
 
     const thirdStep = {
         title: "Screen Sharing 과정",
-        inf: "Screen Sharing 과정은 다음과 같이 이루어집니다.",
+        inf: <div>
+            시험 응시자의 웹 서핑을 방지하고 컴퓨터 내 부정행위를 막기위한 과정입니다.<br /><br />
+            1.	크롬에서 제공하는 화면공유에서 전체화면을 공유합니다.<br /><br />
+            2.	ScreenSharing 버튼을 클릭하면 전체화면을 관리자에게 전송합니다.<br /><br />
+        </div>,
         image: AuthIcon
     }
 

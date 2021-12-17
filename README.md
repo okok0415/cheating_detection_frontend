@@ -11,4 +11,8 @@
 3. npm start
 
 
+## Only Frontend!
 
+실제 구동하기 위해서는 백엔드 서버도 실행해야 합니다. 
+
+Backend URL : https://github.com/okok0415/cheating_detection_backend
